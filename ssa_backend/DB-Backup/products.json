@@ -1,0 +1,322 @@
+[{
+  "_id": {
+    "$oid": "6331be7e678a1434e199f5ee"
+  },
+  "product_id": "prod_001",
+  "product_code": "1234",
+  "product_name": "light",
+  "product_slug": "light",
+  "product_variant": "v1",
+  "quantity": 10,
+  "original_quantity": 10,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:43:25 GMT--led_product.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F1234%2FThu%2C%2013%20Oct%202022%2009%3A43%3A25%20GMT--led_product.png?alt=media&token=48bee384-3f81-4411-9d3a-3ca1e50eb8b2",
+      "path": "/mineeshop/products/1234/",
+      "_id": {
+        "$oid": "6347ddc05dc6a9851bba1c17"
+      }
+    },
+    {
+      "image_name": "Thu, 13 Oct 2022 09:43:27 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F1234%2FThu%2C%2013%20Oct%202022%2009%3A43%3A27%20GMT--led.jpg?alt=media&token=83b147ee-8a07-4d3e-9a43-038033424c6c",
+      "path": "/mineeshop/products/1234/",
+      "_id": {
+        "$oid": "6347ddc05dc6a9851bba1c18"
+      }
+    }
+  ],
+  "product_main_category": "ev category",
+  "product_main_category_slug": "ev-category",
+  "product_category": "ev brand 2",
+  "product_category_slug": "ev-brand-2",
+  "product_subcategory": "ev sub brand 4",
+  "product_subcategory_slug": "ev-sub-brand-4",
+  "product_description": "new bike light",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664204414815"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665654217065"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331bfc3678a1434e199f637"
+  },
+  "product_id": "prod_002",
+  "product_code": "123456231",
+  "product_name": "new light",
+  "product_slug": "new-light",
+  "product_variant": "v20",
+  "quantity": 20,
+  "original_quantity": 20,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:42:58 GMT--led_product.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456231%2FThu%2C%2013%20Oct%202022%2009%3A42%3A58%20GMT--led_product.png?alt=media&token=c38c90e7-6a48-4218-b1c5-6fc38fb227f8",
+      "path": "/mineeshop/products/123456231/",
+      "_id": {
+        "$oid": "6347dda55dc6a9851bba1bf7"
+      }
+    },
+    {
+      "image_name": "Thu, 13 Oct 2022 09:43:00 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456231%2FThu%2C%2013%20Oct%202022%2009%3A43%3A00%20GMT--led.jpg?alt=media&token=9407e1c3-c185-41ae-8e52-677a774d2de9",
+      "path": "/mineeshop/products/123456231/",
+      "_id": {
+        "$oid": "6347dda55dc6a9851bba1bf8"
+      }
+    }
+  ],
+  "product_main_category": "ev category",
+  "product_main_category_slug": "ev-category",
+  "product_category": "brand 3",
+  "product_category_slug": "brand-3",
+  "product_subcategory": "sub brand 3",
+  "product_subcategory_slug": "sub-brand-3",
+  "product_description": "new bike light for testing",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664204739816"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665654181794"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331c024678a1434e199f64c"
+  },
+  "product_id": "prod_003",
+  "product_code": "123456",
+  "product_name": "new light 2",
+  "product_slug": "new light 2",
+  "product_variant": "v3",
+  "quantity": 10,
+  "original_quantity": 10,
+  "product_images": [
+    {
+      "image_name": "Mon, 26 Sep 2022 15:07:12 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456%2FMon%2C%2026%20Sep%202022%2015%3A07%3A12%20GMT--led.jpg?alt=media&token=e51116f5-6f9c-482a-8ef0-ee8dcb444e44",
+      "path": "/mineeshop/products/123456/",
+      "_id": {
+        "$oid": "6331c024678a1434e199f64d"
+      }
+    },
+    {
+      "image_name": "Mon, 26 Sep 2022 15:07:14 GMT--mobile.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456%2FMon%2C%2026%20Sep%202022%2015%3A07%3A14%20GMT--mobile.png?alt=media&token=bded5461-88e1-41de-9b5a-1528aea898be",
+      "path": "/mineeshop/products/123456/",
+      "_id": {
+        "$oid": "6331c024678a1434e199f64e"
+      }
+    }
+  ],
+  "product_main_category": "ev category",
+  "product_main_category_slug": "ev category",
+  "product_category": "light",
+  "product_category_slug": "light",
+  "product_subcategory": "bike light",
+  "product_subcategory_slug": "bike light",
+  "product_description": "new light for testing",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664204836086"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664204836086"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331c0be678a1434e199f668"
+  },
+  "product_id": "prod_004",
+  "product_code": "089435",
+  "product_name": "bike light",
+  "product_slug": "bike-light",
+  "product_variant": "v01",
+  "quantity": 20,
+  "original_quantity": 20,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:42:08 GMT--led_product.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F089435%2FThu%2C%2013%20Oct%202022%2009%3A42%3A08%20GMT--led_product.png?alt=media&token=b9adba49-dfcc-4919-851d-46526e188f66",
+      "path": "/mineeshop/products/089435/",
+      "_id": {
+        "$oid": "6347dd745dc6a9851bba1ba9"
+      }
+    },
+    {
+      "image_name": "Thu, 13 Oct 2022 09:42:10 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F089435%2FThu%2C%2013%20Oct%202022%2009%3A42%3A10%20GMT--led.jpg?alt=media&token=971f6c0b-e192-4f03-a4eb-3d828a553efe",
+      "path": "/mineeshop/products/089435/",
+      "_id": {
+        "$oid": "6347dd745dc6a9851bba1baa"
+      }
+    }
+  ],
+  "product_main_category": "agriculture category",
+  "product_main_category_slug": "agriculture-category",
+  "product_category": "brand 2",
+  "product_category_slug": "brand-2",
+  "product_subcategory": "sub brand 2",
+  "product_subcategory_slug": "sub-brand-2",
+  "product_description": "new light for testing ",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664204990662"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665654132777"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331c166678a1434e199f688"
+  },
+  "product_id": "prod_005",
+  "product_code": "3423",
+  "product_name": "new motor",
+  "product_slug": "new-motor",
+  "product_variant": "variant 10",
+  "quantity": 35,
+  "original_quantity": 35,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:40:39 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F3423%2FThu%2C%2013%20Oct%202022%2009%3A40%3A39%20GMT--led.jpg?alt=media&token=96d13d7c-2d69-498f-ab6a-836b98b7eab9",
+      "path": "/mineeshop/products/3423/",
+      "_id": {
+        "$oid": "6347dd185dc6a9851bba1b7c"
+      }
+    }
+  ],
+  "product_main_category": "ev category",
+  "product_main_category_slug": "ev-category",
+  "product_category": "ev brand 2",
+  "product_category_slug": "ev-brand-2",
+  "product_subcategory": "ev sub brand 2",
+  "product_subcategory_slug": "ev-sub-brand-2",
+  "product_description": "new product description",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664205158375"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665654040584"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331c246678a1434e199f69d"
+  },
+  "product_id": "prod_006",
+  "product_code": "098234",
+  "product_name": "bike motor",
+  "product_slug": "bike-motor",
+  "product_variant": "v23",
+  "quantity": 23,
+  "original_quantity": 23,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:39:38 GMT--led_product.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F098234%2FThu%2C%2013%20Oct%202022%2009%3A39%3A38%20GMT--led_product.png?alt=media&token=45d26fca-589e-4249-9eae-951ce7b82afd",
+      "path": "/mineeshop/products/098234/",
+      "_id": {
+        "$oid": "6347dcde5dc6a9851bba1b22"
+      }
+    },
+    {
+      "image_name": "Thu, 13 Oct 2022 09:39:41 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F098234%2FThu%2C%2013%20Oct%202022%2009%3A39%3A41%20GMT--led.jpg?alt=media&token=9d403c8a-1d52-4bab-a93b-078bb93ff752",
+      "path": "/mineeshop/products/098234/",
+      "_id": {
+        "$oid": "6347dcde5dc6a9851bba1b23"
+      }
+    }
+  ],
+  "product_main_category": "agriculture category",
+  "product_main_category_slug": "agriculture-category",
+  "product_category": "brand 1",
+  "product_category_slug": "brand-1",
+  "product_subcategory": "sub brand 1",
+  "product_subcategory_slug": "sub-brand-1",
+  "product_description": "testing description",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664205382229"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665653982438"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6331d7fc678a1434e199f72e"
+  },
+  "product_id": "prod_008",
+  "product_code": "123456",
+  "product_name": "light",
+  "product_slug": "light",
+  "product_variant": "v20",
+  "quantity": 20,
+  "original_quantity": 20,
+  "product_images": [
+    {
+      "image_name": "Thu, 13 Oct 2022 09:37:30 GMT--led.jpg",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456%2FThu%2C%2013%20Oct%202022%2009%3A37%3A30%20GMT--led.jpg?alt=media&token=3364b18c-73f3-4330-bc99-1aca1deb77aa",
+      "path": "/mineeshop/products/123456/",
+      "_id": {
+        "$oid": "6347dc5c5dc6a9851bba1ad9"
+      }
+    },
+    {
+      "image_name": "Thu, 13 Oct 2022 09:37:46 GMT--led_product.png",
+      "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fproducts%2F123456%2FThu%2C%2013%20Oct%202022%2009%3A37%3A46%20GMT--led_product.png?alt=media&token=bc5bc476-d812-44b8-96f4-6df7fb374c9b",
+      "path": "/mineeshop/products/123456/",
+      "_id": {
+        "$oid": "6347dc6c5dc6a9851bba1ae9"
+      }
+    }
+  ],
+  "product_main_category": "ev category",
+  "product_main_category_slug": "ev-category",
+  "product_category": "ev brand 1",
+  "product_category_slug": "ev-brand-1",
+  "product_subcategory": "ev sub brand 2",
+  "product_subcategory_slug": "ev-sub-brand-2",
+  "product_description": "new description",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664210940560"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665653912252"
+    }
+  },
+  "__v": 0
+}]

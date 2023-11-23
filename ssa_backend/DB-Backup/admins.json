@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "62d43582576128397f7d48da"
+  },
+  "name": "mayanksingh",
+  "email": "admin@gmail.com",
+  "password": "$2a$12$I9xS6Kq3a0bEie9QunmJv.UWkgYVmFh7O/mPfX1roFJzYlG0ahmAO",
+  "user_type": "admin",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1658074498281"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1658074498281"
+    }
+  },
+  "__v": 0
+}]

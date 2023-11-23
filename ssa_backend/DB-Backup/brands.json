@@ -1,0 +1,2051 @@
+[{
+  "_id": {
+    "$oid": "633fc04afc3dc4e973d7f420"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "ev brand 11",
+  "category_image": {
+    "image_name": "Wed, 26 Oct 2022 10:28:02 GMT--borgwarner-onboard-battery-charger.jpeg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fev%20brand%2011%2FWed%2C%2026%20Oct%202022%2010%3A28%3A02%20GMT--borgwarner-onboard-battery-charger.jpeg?alt=media&token=a157ad95-4408-4a40-81ab-f863deaffa57",
+    "path": "/mineeshop/allcategories/categories/ev brand 11/"
+  },
+  "category_slug": "ev-brand-11",
+  "subcategory": [
+    {
+      "name": "ev sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:06 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A13%3A06%20GMT--led.jpg?alt=media&token=bbb2edf5-1257-4c87-a91b-a1e3d032f3fa",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 1/"
+      },
+      "slug": "ev-sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6cd"
+      }
+    },
+    {
+      "name": "ev sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:07 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A13%3A07%20GMT--led.jpg?alt=media&token=03fbb4e6-df35-4e37-a177-77d39196a17d",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 2/"
+      },
+      "slug": "ev-sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6ce"
+      }
+    },
+    {
+      "name": "ev sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:08 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A13%3A08%20GMT--led.jpg?alt=media&token=9f59e3cd-60b9-49db-9f0e-ed97d8ab4a5e",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 3/"
+      },
+      "slug": "ev-sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6cf"
+      }
+    },
+    {
+      "name": "ev sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:09 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A13%3A09%20GMT--led.jpg?alt=media&token=f165042d-760b-4c75-be07-c6553214712c",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 5/"
+      },
+      "slug": "ev-sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6d0"
+      }
+    },
+    {
+      "name": "ev sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:10 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A13%3A10%20GMT--led_product.png?alt=media&token=5c4d7a42-a6a3-44e5-a0f8-5d207ccb361d",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 6/"
+      },
+      "slug": "ev-sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6d1"
+      }
+    },
+    {
+      "name": "ev sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:13 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A13%3A13%20GMT--led_product.png?alt=media&token=cb79d54f-3e5b-401d-b6a6-09fd3fb13c39",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 7/"
+      },
+      "slug": "ev-sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6d2"
+      }
+    },
+    {
+      "name": "ev sub brand 8",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:13:15 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FSub%20brand%208%2FThu%2C%2013%20Oct%202022%2007%3A13%3A15%20GMT--led.jpg?alt=media&token=6d864cd6-d59b-4b24-966a-9110f985eed6",
+        "path": "/mineeshop/allcategories/subcategories/Sub brand 8/"
+      },
+      "slug": "ev-sub-brand-8",
+      "parent_main_category": "ev category",
+      "parent_category": "ev brand 11",
+      "_id": {
+        "$oid": "63590bb5f7474d5cc114c6d3"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665122378712"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1666780085150"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347bd07a0e0823b17d8f100"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 3",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:23:32 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%203%2FThu%2C%2013%20Oct%202022%2007%3A23%3A32%20GMT--led.jpg?alt=media&token=4ba7cb43-8645-47f9-bf36-7e4e644338f5",
+    "path": "/mineeshop/allcategories/categories/Brand 3/"
+  },
+  "category_slug": "brand-3",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:33 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A23%3A33%20GMT--led.jpg?alt=media&token=305fa506-699f-45cb-b55f-950fe7cfe1df",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f101"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:35 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A23%3A35%20GMT--led_product.png?alt=media&token=517e7dbc-66b8-4f9a-a48b-46c41c17ba22",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f102"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:37 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A23%3A37%20GMT--led_product.png?alt=media&token=44272ac8-3a36-4ad5-8be9-f086c8573812",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f103"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:40 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A23%3A40%20GMT--led_product.png?alt=media&token=5ba5e9f1-1ff7-47ad-9c65-bde87ab763a9",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f104"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:43 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A23%3A43%20GMT--led_product.png?alt=media&token=6a350c9d-193e-45c1-ac86-4d205ccc059d",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f105"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:45 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A23%3A45%20GMT--led_product.png?alt=media&token=8bebfa33-919f-4b51-9c01-a9993358060f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f106"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:23:48 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A23%3A48%20GMT--led_product.png?alt=media&token=55752de8-07a9-4e7b-ba1f-48456112f312",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347bd07a0e0823b17d8f107"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665645831924"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665645831924"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347be35a0e0823b17d8f23e"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 4",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:28:49 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%204%2FThu%2C%2013%20Oct%202022%2007%3A28%3A49%20GMT--led.jpg?alt=media&token=e49fb4fe-2926-43a5-98db-b84f33c1f1b1",
+    "path": "/mineeshop/allcategories/categories/Brand 4/"
+  },
+  "category_slug": "brand-4",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:28:51 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A28%3A51%20GMT--led_product.png?alt=media&token=4827d3c1-3ab9-4185-bd51-161d54ac5dfa",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b1"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:08 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A30%3A08%20GMT--led_product.png?alt=media&token=25036aa7-9074-4f7c-af62-88fa7527a644",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b2"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:11 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A30%3A11%20GMT--led.jpg?alt=media&token=ed6f2dac-3db7-445a-b71b-aeed310f144c",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b3"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:12 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A30%3A12%20GMT--led.jpg?alt=media&token=5a5da12d-6f2c-4aff-9f40-08798b01df35",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b4"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:14 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A30%3A14%20GMT--led_product.png?alt=media&token=4ebb301c-034d-4e3f-9746-3a83265d4d68",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b5"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:16 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A30%3A16%20GMT--led.jpg?alt=media&token=d6816c79-c93b-415f-91de-ca3f515ab242",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b6"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:30:17 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A30%3A17%20GMT--led.jpg?alt=media&token=69da14e9-f333-4ab5-9a08-bc1d534cec0b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347be8ba0e0823b17d8f2b7"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665646133955"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665646219713"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347bf1ba0e0823b17d8f354"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 5",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:32:30 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%205%2FThu%2C%2013%20Oct%202022%2007%3A32%3A30%20GMT--led.jpg?alt=media&token=5b290a7e-14c0-4ab7-b200-a6b5ba77ad68",
+    "path": "/mineeshop/allcategories/categories/brand 5/"
+  },
+  "category_slug": "brand-5",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:31 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A32%3A31%20GMT--led_product.png?alt=media&token=97d9a357-9a2e-4888-829f-8843679992cb",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f355"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:34 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A32%3A34%20GMT--led.jpg?alt=media&token=a25208bb-7c4b-4a9d-b903-62a9f144e20b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f356"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:35 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A32%3A35%20GMT--led.jpg?alt=media&token=a835c209-3f83-4289-8244-2278daa3034b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f357"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:36 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A32%3A36%20GMT--led.jpg?alt=media&token=32ce3a48-8e51-4767-bfac-7bfa077cdd13",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f358"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:38 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A32%3A38%20GMT--led_product.png?alt=media&token=a6debc3f-876c-4c9b-935b-9b6157ceb1bf",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f359"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:40 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A32%3A40%20GMT--led.jpg?alt=media&token=3602ccd9-d5d8-4750-b862-73055d194167",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f35a"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:32:41 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A32%3A41%20GMT--led.jpg?alt=media&token=279b1e07-e917-470b-904e-882f75b4b48a",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347bf1ba0e0823b17d8f35b"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665646363717"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665646363717"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347c02ea0e0823b17d8f49c"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 6",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:37:06 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%206%2FThu%2C%2013%20Oct%202022%2007%3A37%3A06%20GMT--led.jpg?alt=media&token=3b9bcee3-9884-436b-a118-5936099adb85",
+    "path": "/mineeshop/allcategories/categories/brand 6/"
+  },
+  "category_slug": "brand-6",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:07 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A37%3A07%20GMT--led_product.png?alt=media&token=307c0f55-6a97-498f-aa7e-2600f7fe4712",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f49d"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:09 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A37%3A09%20GMT--led_product.png?alt=media&token=e35cdd5d-306b-4e35-878d-2250ed41d386",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f49e"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:11 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A37%3A11%20GMT--led_product.png?alt=media&token=7737b956-b7ce-459d-a951-cb5b237255e2",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f49f"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:13 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A37%3A13%20GMT--led.jpg?alt=media&token=7f92a599-a498-466f-bc36-ad8834c6182a",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f4a0"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:14 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A37%3A14%20GMT--led_product.png?alt=media&token=60fe49ca-8d65-48c0-8ab5-2d9f3b81cb0c",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f4a1"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:16 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A37%3A16%20GMT--led.jpg?alt=media&token=b34a9607-767c-4216-a23c-24fa2da31d28",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f4a2"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:37:17 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A37%3A17%20GMT--led.jpg?alt=media&token=41c92bd8-9ada-4a21-b9c9-a9c6a1f8855b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347c02ea0e0823b17d8f4a3"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665646638920"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665646638920"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347c0b6a0e0823b17d8f569"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 7",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:39:19 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%207%2FThu%2C%2013%20Oct%202022%2007%3A39%3A19%20GMT--led.jpg?alt=media&token=eecdc157-2d49-4389-ba4b-df7d413b8321",
+    "path": "/mineeshop/allcategories/categories/Brand 7/"
+  },
+  "category_slug": "brand-7",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:21 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A39%3A21%20GMT--led_product.png?alt=media&token=77dd03e7-0289-4ab5-b0da-b11d9a32840d",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56a"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:23 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A39%3A23%20GMT--led_product.png?alt=media&token=5771aec9-8836-48d0-a152-5e75cd51b10f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56b"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:26 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A39%3A26%20GMT--led.jpg?alt=media&token=3e717ef6-53e9-4fcb-8f34-4615faec0ec9",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56c"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:27 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A39%3A27%20GMT--led_product.png?alt=media&token=c8fb0c84-20f5-4157-ae73-2d80cc85a258",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56d"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:30 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A39%3A30%20GMT--led.jpg?alt=media&token=c1b6d0ee-ce68-456b-b391-bffdcf3d16ea",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56e"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:31 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A39%3A31%20GMT--led.jpg?alt=media&token=a9f6577e-86ae-4c50-a184-55938a74f0df",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f56f"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:39:32 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A39%3A32%20GMT--led.jpg?alt=media&token=af1007db-a945-4186-b37e-50fff0a97ec1",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347c0b6a0e0823b17d8f570"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665646774365"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665646774365"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347c166a0e0823b17d8f64b"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 8",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:42:17 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%208%2FThu%2C%2013%20Oct%202022%2007%3A42%3A17%20GMT--led.jpg?alt=media&token=8cc9639b-1c30-468e-aeb2-17fa4273e23c",
+    "path": "/mineeshop/allcategories/categories/Brand 8/"
+  },
+  "category_slug": "brand-8",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:19 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A42%3A19%20GMT--led.jpg?alt=media&token=95518b6d-3825-4859-aef5-39f590b78a45",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c166a0e0823b17d8f64c"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:20 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A42%3A20%20GMT--led_product.png?alt=media&token=68bd5146-5219-4cee-a0d3-d137bf9e16f8",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c166a0e0823b17d8f64d"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:23 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A42%3A23%20GMT--led.jpg?alt=media&token=ec92973f-ae85-416d-b299-d6fd8a92ec44",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c166a0e0823b17d8f64e"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:25 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A42%3A25%20GMT--led.jpg?alt=media&token=0623133c-18b4-432d-a5f4-c3bbb29e4bfb",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c166a0e0823b17d8f64f"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:26 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A42%3A26%20GMT--led.jpg?alt=media&token=577c19aa-52c7-4231-97d4-c3db903b03d5",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c167a0e0823b17d8f650"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:27 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A42%3A27%20GMT--led.jpg?alt=media&token=67626f8b-5a24-439e-941b-4911413f7486",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c167a0e0823b17d8f651"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:42:28 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A42%3A28%20GMT--led.jpg?alt=media&token=d996245b-3e87-421c-8631-f8800ca33092",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "ev category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347c167a0e0823b17d8f652"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665646951022"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665646951022"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347c213a0e0823b17d8f7bf"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:04 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2007%3A50%3A04%20GMT--led.jpg?alt=media&token=a31d741e-f704-4474-b3f4-865c8cf7f271",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9a7"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:05 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2007%3A50%3A05%20GMT--led.jpg?alt=media&token=ac87760c-d8f0-4b2e-9bfd-582130b57836",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9a8"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:06 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2007%3A50%3A06%20GMT--led_product.png?alt=media&token=e1d41d13-f0a6-4c12-85eb-10437ff6104f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9a9"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:08 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2007%3A50%3A08%20GMT--led_product.png?alt=media&token=d5b5caf8-002f-4bff-8f09-39f3a752717d",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9aa"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:10 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2007%3A50%3A10%20GMT--led.jpg?alt=media&token=2ef914f6-0a7d-425e-8630-d5217ad6dcb9",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9ab"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:11 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2007%3A50%3A11%20GMT--led_product.png?alt=media&token=d1c68e17-4a9e-46d8-ac2b-b8b21a26650e",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9ac"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 07:50:13 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2007%3A50%3A13%20GMT--led.jpg?alt=media&token=f8faf051-edf7-4fcb-b653-30295f12fa63",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 1",
+      "_id": {
+        "$oid": "6347c337a0e0823b17d8f9ad"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665647123918"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665647415937"
+    }
+  },
+  "__v": 0,
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 07:50:03 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%201%2FThu%2C%2013%20Oct%202022%2007%3A50%3A03%20GMT--led.jpg?alt=media&token=7d4636d4-9e8c-42ab-9f78-e965a3073e5e",
+    "path": "/mineeshop/allcategories/categories/Brand 1/"
+  },
+  "category_name": "brand 1",
+  "category_slug": "brand-1",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  }
+},{
+  "_id": {
+    "$oid": "6347d3f25dc6a9851bba0f73"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 2",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:01:04 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%202%2FThu%2C%2013%20Oct%202022%2009%3A01%3A04%20GMT--led.jpg?alt=media&token=29215c37-3269-4a52-ab10-acc369f9a404",
+    "path": "/mineeshop/allcategories/categories/Brand 2/"
+  },
+  "category_slug": "brand-2",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:06 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A01%3A06%20GMT--led_product.png?alt=media&token=c65638fd-515b-4336-9385-0d27228e6a88",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f74"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:08 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A01%3A08%20GMT--led_product.png?alt=media&token=f281c24d-ed5b-409f-8859-9bc1676375d3",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f75"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:10 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A01%3A10%20GMT--led.jpg?alt=media&token=10cd2b0a-efbd-487a-ba88-cf6b3c42a13f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f76"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:11 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A01%3A11%20GMT--led.jpg?alt=media&token=cc00b83b-b630-4a55-aac8-54d0417a158d",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f77"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:12 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A01%3A12%20GMT--led_product.png?alt=media&token=e31092fc-6c9f-4033-b593-d8589d7c2795",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f78"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:15 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A01%3A15%20GMT--led.jpg?alt=media&token=f847261a-910e-4674-a947-282573fd8837",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f79"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:01:16 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A01%3A16%20GMT--led.jpg?alt=media&token=e60af9df-fac4-4593-a949-5277afab2196",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 2",
+      "_id": {
+        "$oid": "6347d3f25dc6a9851bba0f7a"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665651699019"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665651699019"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d4865dc6a9851bba1021"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 3",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:03:55 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%203%2FThu%2C%2013%20Oct%202022%2009%3A03%3A55%20GMT--led.jpg?alt=media&token=b432fc2f-d961-4e79-9920-37aa98410278",
+    "path": "/mineeshop/allcategories/categories/Brand 3/"
+  },
+  "category_slug": "brand-3",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:03:56 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A03%3A56%20GMT--led.jpg?alt=media&token=68025e2f-bb0f-4017-868a-ffccc0447f91",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1022"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:03:57 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A03%3A57%20GMT--led.jpg?alt=media&token=060ab606-130d-4e4e-a9c8-bce3da0ae893",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1023"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:03:59 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A03%3A59%20GMT--led.jpg?alt=media&token=de11196e-02b2-438f-8eda-3e537b6563af",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1024"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:04:00 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A04%3A00%20GMT--led.jpg?alt=media&token=85a7c046-7893-4e11-959c-d712db456a4b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1025"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:04:01 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A04%3A01%20GMT--led.jpg?alt=media&token=781a8e43-bd8c-4f0a-8425-052f857a0a68",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1026"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:04:02 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A04%3A02%20GMT--led.jpg?alt=media&token=89e1d878-d73a-4327-a593-7a77929446fe",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1027"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:04:03 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A04%3A03%20GMT--led_product.png?alt=media&token=5d5418fa-fccb-4ab6-a5cf-bcbe5c19363f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 3",
+      "_id": {
+        "$oid": "6347d4865dc6a9851bba1028"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665651846454"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665651846454"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d5045dc6a9851bba10e4"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 4",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:06:01 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%204%2FThu%2C%2013%20Oct%202022%2009%3A06%3A01%20GMT--led.jpg?alt=media&token=03bbca74-7b8c-4463-b0da-36aaabd0c502",
+    "path": "/mineeshop/allcategories/categories/brand 4/"
+  },
+  "category_slug": "brand-4",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:02 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A06%3A02%20GMT--led.jpg?alt=media&token=b00cb500-5fb9-4c57-a652-fa6542631a72",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10e5"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:03 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A06%3A03%20GMT--led.jpg?alt=media&token=b11b3dda-bd10-4eea-856e-600a37c94a95",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10e6"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:04 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A06%3A04%20GMT--led_product.png?alt=media&token=82e67c57-e943-4ec4-910a-ca7a16c022ba",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10e7"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:07 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A06%3A07%20GMT--led.jpg?alt=media&token=5546fcf2-1272-4409-9a1b-0400083a140f",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10e8"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:08 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A06%3A08%20GMT--led.jpg?alt=media&token=8f0fc61a-d6d7-44f6-b832-4fb6f1ae65f7",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10e9"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:09 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A06%3A09%20GMT--led.jpg?alt=media&token=ca9546db-160e-4c6b-afb3-5f58d69c9c04",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10ea"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:06:10 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A06%3A10%20GMT--led.jpg?alt=media&token=0d3cf70a-d481-413a-8b79-6ca4405fa533",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 4",
+      "_id": {
+        "$oid": "6347d5045dc6a9851bba10eb"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665651972117"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665651972117"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d5a45dc6a9851bba110b"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 5",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:08:37 GMT--led_product.png",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%205%2FThu%2C%2013%20Oct%202022%2009%3A08%3A37%20GMT--led_product.png?alt=media&token=258781c3-1161-4a23-9975-9fae85715004",
+    "path": "/mineeshop/allcategories/categories/brand 5/"
+  },
+  "category_slug": "brand-5",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:39 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A08%3A39%20GMT--led_product.png?alt=media&token=e1337d70-bf67-4109-920f-962b67a20cbb",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba110c"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:41 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A08%3A41%20GMT--led.jpg?alt=media&token=af32063f-e01a-436e-8e6f-724009f224da",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba110d"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:42 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A08%3A42%20GMT--led_product.png?alt=media&token=2e3d648a-fc50-427c-b370-4ff5f95c8273",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba110e"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:45 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A08%3A45%20GMT--led_product.png?alt=media&token=716dc7f2-03b2-469a-8128-84a8bbfe2ee1",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba110f"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:47 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A08%3A47%20GMT--led.jpg?alt=media&token=b6e9c0ff-9028-400b-a147-b07ade4076a8",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba1110"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:48 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A08%3A48%20GMT--led_product.png?alt=media&token=a4b931b7-5e3b-4e46-8726-7c2bd3f62de8",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba1111"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:08:50 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A08%3A50%20GMT--led.jpg?alt=media&token=c9481dde-64ef-4cb5-9b3b-ff3a1a10275a",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 5",
+      "_id": {
+        "$oid": "6347d5a45dc6a9851bba1112"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665652132919"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665652132919"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d6b85dc6a9851bba11f8"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 6",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:13:18 GMT--led_product.png",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%206%2FThu%2C%2013%20Oct%202022%2009%3A13%3A18%20GMT--led_product.png?alt=media&token=33556f51-a083-4661-8726-a874534d0322",
+    "path": "/mineeshop/allcategories/categories/brand 6/"
+  },
+  "category_slug": "brand-6",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:20 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A13%3A20%20GMT--led.jpg?alt=media&token=0d4997fb-267d-4993-8922-2937552e8467",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11f9"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:21 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A13%3A21%20GMT--led.jpg?alt=media&token=c72070b3-9570-4f15-9fb6-a40b46097bb7",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11fa"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:22 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A13%3A22%20GMT--led.jpg?alt=media&token=e66c3be7-cd00-4636-9417-bcafbd43525a",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11fb"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:23 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A13%3A23%20GMT--led.jpg?alt=media&token=54a39579-f130-4723-8b30-6475fb28bfed",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11fc"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:24 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A13%3A24%20GMT--led.jpg?alt=media&token=caf873a2-de5e-4435-aefa-ee03768d1b6a",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11fd"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:26 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A13%3A26%20GMT--led.jpg?alt=media&token=2f17ca51-9d10-408d-8857-9e6cce208743",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11fe"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:13:27 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A13%3A27%20GMT--led.jpg?alt=media&token=f8f8399d-1433-46a2-8d9e-10e2336ba22b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 6",
+      "_id": {
+        "$oid": "6347d6b85dc6a9851bba11ff"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665652408920"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665652408920"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d7335dc6a9851bba12fa"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 7",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:15:19 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fbrand%207%2FThu%2C%2013%20Oct%202022%2009%3A15%3A19%20GMT--led.jpg?alt=media&token=80a23fa8-fce8-46ee-a1e5-06019a27410a",
+    "path": "/mineeshop/allcategories/categories/brand 7/"
+  },
+  "category_slug": "brand-7",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:20 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A15%3A20%20GMT--led.jpg?alt=media&token=aa78f28a-acd1-404e-9b23-f842f6f16fe7",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba12fb"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:21 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A15%3A21%20GMT--led.jpg?alt=media&token=d265149c-7fb2-4033-82f4-c7c7367edee0",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba12fc"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:23 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A15%3A23%20GMT--led_product.png?alt=media&token=21465e8d-0865-44ce-ad78-cb4d60376fd0",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba12fd"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:25 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A15%3A25%20GMT--led.jpg?alt=media&token=e7bdaddc-4f1f-4419-a8e2-68de4669bb94",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba12fe"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:26 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A15%3A26%20GMT--led.jpg?alt=media&token=443cb6d7-ae52-4f0d-a602-88159d3552df",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba12ff"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:27 GMT--led_product.png",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A15%3A27%20GMT--led_product.png?alt=media&token=55bc8bf2-abb6-44bd-a385-8a92f505e8f5",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba1300"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:15:29 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A15%3A29%20GMT--led.jpg?alt=media&token=34a02e51-acdf-430c-87e9-c2cad9db7804",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 7",
+      "_id": {
+        "$oid": "6347d7335dc6a9851bba1301"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665652531424"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665652531424"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347d7e05dc6a9851bba1411"
+  },
+  "main_category_name": "agriculture category",
+  "main_category_slug": "agriculture-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "brand 8",
+  "category_image": {
+    "image_name": "Thu, 13 Oct 2022 09:18:14 GMT--led.jpg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2FBrand%208%2FThu%2C%2013%20Oct%202022%2009%3A18%3A14%20GMT--led.jpg?alt=media&token=a5a98893-5a93-4dd9-84f2-d3a8b6ed39d1",
+    "path": "/mineeshop/allcategories/categories/Brand 8/"
+  },
+  "category_slug": "brand-8",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:15 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%201%2FThu%2C%2013%20Oct%202022%2009%3A18%3A15%20GMT--led.jpg?alt=media&token=e2411316-1fa9-4284-94d7-5b928621bf1d",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 1/"
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e05dc6a9851bba1412"
+      }
+    },
+    {
+      "name": "sub brand 2",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:16 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%202%2FThu%2C%2013%20Oct%202022%2009%3A18%3A16%20GMT--led.jpg?alt=media&token=9d0c049e-79f3-4104-a53d-0ebd9ed76203",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 2/"
+      },
+      "slug": "sub-brand-2",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e05dc6a9851bba1413"
+      }
+    },
+    {
+      "name": "sub brand 3",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:18 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%203%2FThu%2C%2013%20Oct%202022%2009%3A18%3A18%20GMT--led.jpg?alt=media&token=bec6aa7e-f780-4e8d-b786-fc1118851280",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 3/"
+      },
+      "slug": "sub-brand-3",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e05dc6a9851bba1414"
+      }
+    },
+    {
+      "name": "sub brand 4",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:19 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%204%2FThu%2C%2013%20Oct%202022%2009%3A18%3A19%20GMT--led.jpg?alt=media&token=4ba256b0-53cf-4b7a-8871-18935f4f1a94",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 4/"
+      },
+      "slug": "sub-brand-4",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e15dc6a9851bba1415"
+      }
+    },
+    {
+      "name": "sub brand 5",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:20 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%205%2FThu%2C%2013%20Oct%202022%2009%3A18%3A20%20GMT--led.jpg?alt=media&token=f74ead43-5453-4079-952a-7913f099c0f8",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 5/"
+      },
+      "slug": "sub-brand-5",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e15dc6a9851bba1416"
+      }
+    },
+    {
+      "name": "sub brand 6",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:21 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%206%2FThu%2C%2013%20Oct%202022%2009%3A18%3A21%20GMT--led.jpg?alt=media&token=234d9986-f505-4ce1-980a-31bcc9098154",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 6/"
+      },
+      "slug": "sub-brand-6",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e15dc6a9851bba1417"
+      }
+    },
+    {
+      "name": "sub brand 7",
+      "image": {
+        "image_name": "Thu, 13 Oct 2022 09:18:22 GMT--led.jpg",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2Fsub%20brand%207%2FThu%2C%2013%20Oct%202022%2009%3A18%3A22%20GMT--led.jpg?alt=media&token=870c5cfd-98a4-4a6b-91f4-c33d7dcceb9b",
+        "path": "/mineeshop/allcategories/subcategories/sub brand 7/"
+      },
+      "slug": "sub-brand-7",
+      "parent_main_category": "agriculture category",
+      "parent_category": "brand 8",
+      "_id": {
+        "$oid": "6347d7e15dc6a9851bba1418"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1665652705021"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665652705021"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63590376f7474d5cc114c620"
+  },
+  "main_category_name": "test",
+  "main_category_slug": "test",
+  "subcategory": [
+    {
+      "name": "new sub test1",
+      "image": {
+        "image_name": "Wed, 26 Oct 2022 09:54:30 GMT--mb.webp",
+        "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fsubcategories%2FNew%20sub%20Test1%2FWed%2C%2026%20Oct%202022%2009%3A54%3A30%20GMT--mb.webp?alt=media&token=e08cd108-e887-434e-9dac-98a9d6879841",
+        "path": "/mineeshop/allcategories/subcategories/New sub Test1/"
+      },
+      "slug": "new-sub-test1",
+      "parent_main_category": "test",
+      "parent_category": "new test ",
+      "_id": {
+        "$oid": "6359099cf7474d5cc114c6ac"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666777974850"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1666779548246"
+    }
+  },
+  "__v": 0,
+  "category_image": {
+    "image_name": "Wed, 26 Oct 2022 10:19:07 GMT--electric-bike-controller-500x500.webp",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fnew%20test%20%2FWed%2C%2026%20Oct%202022%2010%3A19%3A07%20GMT--electric-bike-controller-500x500.webp?alt=media&token=462bfd5d-e401-4733-bed3-4ad3bdf233fb",
+    "path": "/mineeshop/allcategories/categories/new test /"
+  },
+  "category_name": "new test ",
+  "category_slug": "new-test-",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  }
+},{
+  "_id": {
+    "$oid": "635908e5f7474d5cc114c687"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "new ",
+  "category_image": {
+    "image_name": "Wed, 26 Oct 2022 10:19:40 GMT--electric-bike-controller-500x500.webp",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fnew%20%2FWed%2C%2026%20Oct%202022%2010%3A19%3A40%20GMT--electric-bike-controller-500x500.webp?alt=media&token=fcca539a-3909-477a-a112-764f9c726a2e",
+    "path": "/mineeshop/allcategories/categories/new /"
+  },
+  "category_slug": "new-",
+  "subcategory": [
+    {
+      "name": "sub brand 1",
+      "image": {
+        "image_name": "",
+        "image_url": ""
+      },
+      "slug": "sub-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "new ",
+      "_id": {
+        "$oid": "635909bdf7474d5cc114c6bb"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666779365170"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1666779581298"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63590910f7474d5cc114c695"
+  },
+  "main_category_name": "ev category",
+  "main_category_slug": "ev-category",
+  "main_category_image": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "category_name": "new 2",
+  "category_image": {
+    "image_name": "Wed, 26 Oct 2022 10:28:42 GMT--borgwarner-onboard-battery-charger.jpeg",
+    "image_url": "https://firebasestorage.googleapis.com/v0/b/shop-daba0.appspot.com/o/mineeshop%2Fallcategories%2Fcategories%2Fnew%202%2FWed%2C%2026%20Oct%202022%2010%3A28%3A42%20GMT--borgwarner-onboard-battery-charger.jpeg?alt=media&token=d138adc0-f13c-4eab-b402-69efa953bd08",
+    "path": "/mineeshop/allcategories/categories/new 2/"
+  },
+  "category_slug": "new-2",
+  "subcategory": [
+    {
+      "name": "sub new brand 1",
+      "image": {
+        "image_name": "",
+        "image_url": ""
+      },
+      "slug": "sub-new-brand-1",
+      "parent_main_category": "ev category",
+      "parent_category": "new 2",
+      "_id": {
+        "$oid": "63590bdcf7474d5cc114c6e2"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1666779408315"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1666780124768"
+    }
+  },
+  "__v": 0
+}]

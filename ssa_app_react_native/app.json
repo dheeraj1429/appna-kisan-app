@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Apna Kisan",
+    "slug": "ssa_app",
+    "description": "B2B seller app",
+    "version": "3.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "supremesalesagency"
+    },
+    "android": {
+      "package": "com.blackhatcode.in.ssa_app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#FFFFFF"
+    }
+  }
+}

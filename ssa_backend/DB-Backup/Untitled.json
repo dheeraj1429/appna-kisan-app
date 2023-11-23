@@ -1,0 +1,93 @@
+[{
+  "_id": {
+    "$oid": "6339bf2b2f10e6c2b8211d35"
+  },
+  "user_id": "ff5d9c5f-1fbd-429b-bd26-a0e9ba99e43d",
+  "username": "mayank singh",
+  "email": "singh@gmail.com",
+  "phone_number": {
+    "$numberLong": "9999092190"
+  },
+  "orders": 0,
+  "joining_date": {
+    "$date": {
+      "$numberLong": "1664728875000"
+    }
+  },
+  "pincode": 110094,
+  "state": "delhi",
+  "country": "india",
+  "address": "main market cp",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664728875651"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664733152106"
+    }
+  },
+  "__v": 0,
+  "gst_number": "14af"
+},{
+  "_id": {
+    "$oid": "6339bf812f10e6c2b8211d48"
+  },
+  "user_id": "5a82b4c3-c250-4fc8-b1a6-5be24750af94",
+  "username": "test user",
+  "email": "testuser@gmail.com",
+  "phone_number": 999122190,
+  "orders": 0,
+  "joining_date": {
+    "$date": {
+      "$numberLong": "1664728961000"
+    }
+  },
+  "pincode": 110090,
+  "state": "delhi",
+  "country": "india",
+  "address": "main market cp 2",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664728961717"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664733133608"
+    }
+  },
+  "__v": 0,
+  "gst_number": "123gst"
+},{
+  "_id": {
+    "$oid": "6339c08d93c5603888d7400b"
+  },
+  "user_id": "4fd08e9f-e78b-49b9-8173-b9fc20810449",
+  "username": "kartik",
+  "email": "t@gmail.com",
+  "phone_number": 122190,
+  "orders": 0,
+  "joining_date": {
+    "$date": {
+      "$numberLong": "1664729229000"
+    }
+  },
+  "gst_number": "1221nasdgi",
+  "pincode": 110090,
+  "state": "delhi",
+  "country": "india",
+  "address": "main market cp",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664729229072"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1665122763087"
+    }
+  },
+  "__v": 0
+}]

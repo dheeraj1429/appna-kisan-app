@@ -1,0 +1,297 @@
+[{
+  "_id": {
+    "$oid": "62f6ff941270f275bf1544bb"
+  },
+  "firstname": "mayank",
+  "lastname": "singh",
+  "profile": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "password": "$2a$12$k.jMHwC3JMVfD3noShtUl.x.s/bhVgwUQ.kvzEBHfbpUTCvP9iaV6",
+  "user_type": "shopkeeper",
+  "verified": false,
+  "shop_id": "1b5c539e-9aee-4458-a1e4-f2faac2ef13a",
+  "shop_name": "radha rani jewellers",
+  "shop_location": "delhi",
+  "shop_address": [
+    {
+      "pincode": 110006,
+      "state": "Delhi",
+      "city": "Delhi",
+      "street": "13",
+      "landmark": "near bengali clinic",
+      "_id": {
+        "$oid": "62f6ff941270f275bf1544bc"
+      }
+    }
+  ],
+  "shop_type": "jewellers",
+  "account_details": {
+    "account_no": "123456789098765",
+    "account_holder_name": "blackhatcode",
+    "ifsc_code": "PUNB00129",
+    "branch_name": "sonia vihar"
+  },
+  "delivery_method": [
+    {
+      "name": "pickup",
+      "_id": {
+        "$oid": "62f6ff941270f275bf1544bd"
+      }
+    }
+  ],
+  "gst_number": "9821984gw81c",
+  "shop_email": "mayank@blackhatcode.in",
+  "shop_contact": {
+    "$numberLong": "8700885827"
+  },
+  "shop_image": [
+    {
+      "image_name": "",
+      "image_url": "",
+      "_id": {
+        "$oid": "62f6ff941270f275bf1544be"
+      }
+    }
+  ],
+  "aadhar_card_no": {
+    "$numberLong": "91271469721498000"
+  },
+  "shop_status": "pending",
+  "total_products": 0,
+  "products_limit": 25,
+  "shop_plan": "free",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660354452089"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660354452089"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f7016abc3a1ea80cee0f4f"
+  },
+  "firstname": "black",
+  "lastname": "hat",
+  "profile": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "password": "$2a$12$ED8SLmIzgXdgVVGzJ.GB4uByq0df.QFo/KrUvNPjtpl20AWzvrJMe",
+  "user_type": "shopkeeper",
+  "verified": false,
+  "shop_id": "f362bf2f-6e3c-4c86-9fb3-56ba929017bb",
+  "shop_name": "grocery store",
+  "shop_location": "delhi,sonia",
+  "shop_address": [
+    {
+      "pincode": 110006,
+      "state": "Delhi",
+      "city": "Delhi",
+      "street": "13",
+      "landmark": "near bengali clinic",
+      "_id": {
+        "$oid": "62f7016abc3a1ea80cee0f50"
+      }
+    }
+  ],
+  "shop_type": "grocery",
+  "account_details": {
+    "account_no": "123456789098765",
+    "account_holder_name": "blackhatcode",
+    "ifsc_code": "PUNB00129",
+    "branch_name": "sonia vihar"
+  },
+  "delivery_method": [
+    {
+      "name": "pickup",
+      "_id": {
+        "$oid": "62f7016abc3a1ea80cee0f51"
+      }
+    }
+  ],
+  "gst_number": "9823134gw81c",
+  "shop_email": "blackhat@blackhatcode.in",
+  "shop_contact": {
+    "$numberLong": "8468872233"
+  },
+  "shop_image": [
+    {
+      "image_name": "",
+      "image_url": "",
+      "_id": {
+        "$oid": "62f7016abc3a1ea80cee0f52"
+      }
+    }
+  ],
+  "aadhar_card_no": {
+    "$numberLong": "33009721498241"
+  },
+  "shop_status": "pending",
+  "total_products": 0,
+  "products_limit": 75,
+  "shop_plan": "pro",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660354922316"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660354922316"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f878f6321090598ed5b89c"
+  },
+  "firstname": "sanjeev",
+  "lastname": "hat",
+  "profile": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "password": "$2a$12$vh99KHdmZySwkaJ9rRHtVu.aiuUMs05shbewF22lzVEcd5Jhte3KS",
+  "user_type": "shopkeeper",
+  "verified": false,
+  "shop_id": "2d23cbc1-d6de-4162-9086-699e62ad213f",
+  "shop_name": "hardware store",
+  "shop_location": "delhi,sonia",
+  "shop_address": [
+    {
+      "pincode": 110006,
+      "state": "Delhi",
+      "city": "Delhi",
+      "street": "13",
+      "landmark": "near bengali clinic",
+      "_id": {
+        "$oid": "62f878f6321090598ed5b89d"
+      }
+    }
+  ],
+  "shop_type": "hardware",
+  "account_details": {
+    "account_no": "123456789098765",
+    "account_holder_name": "blackhatcode",
+    "ifsc_code": "PUNB00129",
+    "branch_name": "sonia vihar"
+  },
+  "delivery_method": [
+    {
+      "name": "Delivery",
+      "_id": {
+        "$oid": "62f878f6321090598ed5b89e"
+      }
+    }
+  ],
+  "gst_number": "98w123134gw81c",
+  "shop_email": "sanjeev@blackhatcode.in",
+  "shop_contact": 1234567890,
+  "shop_image": [
+    {
+      "image_name": "",
+      "image_url": "",
+      "_id": {
+        "$oid": "62f878f6321090598ed5b89f"
+      }
+    }
+  ],
+  "aadhar_card_no": {
+    "$numberLong": "310029721498241"
+  },
+  "shop_status": "rejected",
+  "total_products": 0,
+  "products_limit": 75,
+  "shop_plan": "pro",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660451062972"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660451062972"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f881b79b3ed9bed63de6f3"
+  },
+  "firstname": "bakery",
+  "lastname": "wala",
+  "profile": {
+    "image_name": "",
+    "image_url": ""
+  },
+  "password": "$2a$12$k90REPMsPQdbC9V1TgjQwOTAHj9E5AWvEb4Pe4T1N68EMDqrDm8aC",
+  "user_type": "shopkeeper",
+  "verified": false,
+  "shop_id": "110f4d86-7b2a-4e5f-acdf-aa9f0baee2f0",
+  "shop_name": "bakery store",
+  "shop_location": "delhi,karol bhagh",
+  "shop_address": [
+    {
+      "pincode": 110006,
+      "state": "Delhi",
+      "city": "Delhi",
+      "street": "13",
+      "landmark": "near bengali clinic",
+      "_id": {
+        "$oid": "62f881b79b3ed9bed63de6f4"
+      }
+    }
+  ],
+  "shop_type": "bakery",
+  "account_details": {
+    "account_no": "123456789098765",
+    "account_holder_name": "blackhatcode",
+    "ifsc_code": "PUNB00129",
+    "branch_name": "sonia vihar"
+  },
+  "delivery_method": [
+    {
+      "name": "pickup",
+      "_id": {
+        "$oid": "62f881b79b3ed9bed63de6f5"
+      }
+    }
+  ],
+  "gst_number": "98w123134gw81c",
+  "shop_email": "bakerywala@gmail.com",
+  "shop_contact": 1244567890,
+  "shop_image": [
+    {
+      "image_name": "",
+      "image_url": "",
+      "_id": {
+        "$oid": "62f881b79b3ed9bed63de6f6"
+      }
+    }
+  ],
+  "aadhar_card_no": {
+    "$numberLong": "31002321498241"
+  },
+  "shop_status": "approved",
+  "total_products": 0,
+  "products_limit": 1200,
+  "shop_plan": "premium",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1660453303595"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1660453303595"
+    }
+  },
+  "__v": 0
+}]
