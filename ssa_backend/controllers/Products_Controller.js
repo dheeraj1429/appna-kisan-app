@@ -2,6 +2,7 @@ const Products_Schema = require("../modals/Products")
 const Brands_Schema = require("../modals/Brands")
 const product_status = require("../utils/configs/product_status")
 const Utils =require("../utils/Utils")
+const { default: mongoose } = require("mongoose")
 
 // create new product 
 
@@ -74,11 +75,45 @@ const getproductById = async(req,res)=>{
         if(!productId){
             return res.status(404).send({status:false,message:'product not found !!'})
         }
-        const findProductById = await Products_Schema.findById(productId);
-        if(!findProductById){
+        // const findProductById = await Products_Schema.findById(productId);
+        // console.log('-> ',findProductById)
+
+        const findProductById = await Products_Schema.aggregate([
+            {$match: {_id: mongoose.Types.ObjectId(productId)}},
+            {$project: {
+                "_id": 1,
+                "product_id": 1,
+                "product_code": 1,
+                "product_name": 1,
+                "product_slug": 1,
+                "product_variant": 1,
+                "new_arrival": 1,
+                "color": 1,
+                "size": 1,
+                "cartoon_total_products": 1,
+                "quantity": 1,
+                "original_quantity": 1,
+                "product_images": 1,
+                "product_main_category": 1,
+                "product_main_category_slug": 1,
+                "product_category": 1,
+                "product_category_slug": 1,
+                "product_subcategory": 1,
+                "product_subcategory_slug": 1,
+                "product_description": 1,
+                "createdAt": 1,
+                "updatedAt": 1,
+                "product_price": { $convert: {input: '$product_price', to: 'string' }},
+                "b2b_user_product_price": { $convert: {input: '$b2b_user_product_price', to: 'string' }},
+                "b2c_user_product_price": { $convert: {input: '$b2c_user_product_price', to: 'string' }},
+            }}
+        ])
+
+        const data = findProductById?.[0]
+        if(!data){
             return res.status(404).send({status:false,message:'product not found !!'})
         }
-        res.status(200).send(findProductById)
+        res.status(200).send(data)
 
 
     }
@@ -93,6 +128,7 @@ const editProduct = async(req,res)=>{
     const productId = req.params.product_id;
     console.log("productId=>" , productId);
     console.log(req.body)
+
     try{
         if(!productId){
             return res.status(404).send("Not Found !!")

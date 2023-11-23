@@ -19,6 +19,18 @@ const Products_Schema = new mongoose.Schema(
         product_variant:{
             type:String
         },
+        product_price: {
+            type: mongoose.Types.Decimal128,
+            required: true
+        },
+        b2b_user_product_price: {
+            type: mongoose.Types.Decimal128,
+            required: true
+        },
+        b2c_user_product_price: {
+            type: mongoose.Types.Decimal128,
+            required: true
+        },
         // product_gst:{
         //     type:Number
         // },

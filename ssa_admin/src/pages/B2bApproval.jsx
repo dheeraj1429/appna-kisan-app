@@ -3,13 +3,12 @@ import { useParams } from 'react-router-dom'
 import { getSingleB2bAccountDetails } from 'src/api/b2bApproval'
 import LoadingSpinner from 'src/components/Spinner'
 import classes from './B2bApproval.module.css'
-import Button from '@mui/material/Button';
-import { Stack } from '@mui/material'
+import { FormControlLabel, Stack } from '@mui/material'
+import Switch from '@mui/material/Switch';
 
 function B2bApproval() {
     const [isLoading, setIsLoading] = useState(false)
     const params = useParams()
-    
 
     const getUserAccountInfo = async function() {
         try {
@@ -22,7 +21,10 @@ function B2bApproval() {
     }
 
     const approveHandler = function() {
-        console.log(params)
+        const paramId = params?.id;
+        if(paramId) {
+            console.log('call the api')
+        }
     }
 
     useEffect(() => {
@@ -39,7 +41,7 @@ function B2bApproval() {
                 <p className={classes['para']}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut in ipsam asperiores, est iusto deserunt amet voluptatibus ipsum incidunt explicabo?</p>
                 <div>
                     <Stack margin={1} width={100}>
-                        <Button onClick={approveHandler} variant="contained" size='small'>Approve</Button>
+                        <FormControlLabel onChange={approveHandler} control={<Switch defaultChecked />} label="Approval" />
                     </Stack>
                 </div>
             </div>
