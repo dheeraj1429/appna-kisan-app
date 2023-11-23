@@ -343,7 +343,7 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-    const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState('');
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const ref = useRef(null);

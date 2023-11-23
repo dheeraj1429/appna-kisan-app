@@ -18,7 +18,8 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import PaymentForVendors from './pages/PaymentForVendors';
 import Banners from './pages/Banners';
 import Enquiry from './pages/Enquiry';
-
+import B2bApprovalList from './pages/B2bApprovalList';
+import B2bApproval from './pages/B2bApproval';
 
 // ----------------------------------------------------------------------
 
@@ -82,6 +83,8 @@ export default function Router() {
      <Route element={<ProtectedRoute/>} >
  
      <Route exact path="/"  element={ <Navigate to='/dashboard/orders' />    }  />
+     <Route exact path='/dashboard/b2b-approval-list' element={<DashboardLayout Component={<B2bApprovalList />} />} />
+     <Route exact path='/dashboard/b2b-approval/:id' element={<DashboardLayout Component={<B2bApproval />} />} />
      {/* <Route exact path="/dashboard/app" element={ <DashboardLayout Component={<DashboardApp/>} /> } /> */}
     
      <Route path="/dashboard/users" element={ <DashboardLayout Component={<User/>} />} />

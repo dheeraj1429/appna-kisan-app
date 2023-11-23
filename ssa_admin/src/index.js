@@ -15,7 +15,7 @@ import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
 //=========== PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT==============
-console.log = function() {}
+// console.log = function() {}
 //========= PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT============
 
 

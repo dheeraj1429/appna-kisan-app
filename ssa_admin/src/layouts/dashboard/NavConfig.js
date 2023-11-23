@@ -1,5 +1,6 @@
 // component
 import Iconify from '../../components/Iconify';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +48,12 @@ const navConfig = [
     path: '/dashboard/enquiries',
     icon: getIcon('mdi:message-bookmark'),
   },
-
+  {
+    title: "B2B account approval",
+    path: '/dashboard/b2b-approval-list',
+    icon: <BookmarkAddedIcon />
+  }
+  
   
   // {
   //   title: 'blog',

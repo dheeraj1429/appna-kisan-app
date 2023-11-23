@@ -114,7 +114,7 @@ function EditProduct({productId,handleClose}) {
     // handle form submit 
     const handleSubmit = async(e)=>{
       e.preventDefault()
-      setLoading(true);
+      // setLoading(true);
       if(!fileUpload  && productData?.product_images < 1 ){
         alert('Add Atleast 1 Product Image !!');
         setLoading(false)
@@ -128,12 +128,15 @@ function EditProduct({productId,handleClose}) {
           productsImageToFirebase[i]= await uploadFileToFirebase(`/ssastore/products/${productData?.product_code}/`,fileUpload[i]);
 
         }
-       }
+      }
        console.log("productsImageToFirebase after=>",productsImageToFirebase);
 
        let data ={
         product_code:productData?.product_code,
         product_name:productData?.product_name,
+        product_price: productData?.product_price,
+        b2b_user_product_price: productData?.b2b_user_product_price,
+        b2c_user_product_price: productData?.b2c_user_product_price,
         product_slug:splitString(productData?.product_name?.toLowerCase()),
         product_variant:productData?.product_variant,
         quantity:productData?.quantity,
@@ -152,7 +155,6 @@ function EditProduct({productId,handleClose}) {
         cartoon_total_products:productData?.cartoon_total_products,
         product_images:[...productData?.product_images,...productsImageToFirebase]
        }
-       console.log("form Data ==>",data)
      await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/edit/product/${productId}`,{...data},{withCredential:true})
       .then(res=>{
           console.log(res)
@@ -314,6 +316,24 @@ const handleCloseSubCateConfirmModal=(i)=>{
                     <label htmlFor=""> Product Code  </label>
                     <TextField required fullWidth className='product_form_input' id="outlined-basic" name="product_code" value={productData?.product_code} onChange={handleChange} placeholder=" Product Code " variant="outlined" />
                     </div>
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="product_price" value={productData?.price} onChange={handleChange} placeholder=" Product Price " variant="outlined" />
+                    </div>
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> B2B User Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="b2b_user_product_price" value={productData?.price} onChange={handleChange} placeholder=" B2B user product Price " variant="outlined" />
+                    </div>
+
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> B2C User Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="b2c_user_product_price" value={productData?.price} onChange={handleChange} placeholder=" B2C user product Price " variant="outlined" />
+                    </div>
+
+
 
                     <div className='add_product_label_input'>
                     <label htmlFor=""> Product Name  </label>
