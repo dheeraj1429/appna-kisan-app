@@ -5,8 +5,9 @@ const cookieparser = require("cookie-parser")
 const morgan = require("morgan")
 const cors = require("cors")
 const mongoose = require("mongoose")
-const port  = process.env.PORT || 5000;
-const BASE_URL = ["http://localhost:3000",'https://ssa-admin.blackhatcode.in']    // http://ssa-admin.ssgoldindia.com/login    http://localhost:3000 https://ssa-admin.blackhatcode.in
+const port = process.env.PORT || 5000;
+const BASE_URL = ["http://localhost:3000", 'https://ssa-admin.blackhatcode.in']    // http://ssa-admin.ssgoldindia.com/login    http://localhost:3000 https://ssa-admin.blackhatcode.in
+const errorHandler = require('./middlewares/errorHandler');
 
 // Admin Dashboard routes
 const Admin_Routes = require("./routes/admin_routes");
@@ -22,37 +23,39 @@ const Banners_Routes = require("./routes/banners_routes");
 const App_All_Routes = require("./routes/app_routes/app_all_routes");
 
 app.use(cors({
-    origin:BASE_URL,
-    credentials:true
+    origin: BASE_URL,
+    credentials: true
 }))
 
 app.use(cookieparser())
 app.use(express.json())
 app.use(morgan("dev"))
 // app.use(express.urlencoded({extended: false}));
-app.use("/api",Admin_Routes)
-app.use("/api",Vendor_Routes)
-app.use("/api",Brands_Routes)
-app.use("/api",Order_Routes)
-app.use("/api",Products_Routes)
-app.use("/api",User_Routes)
-app.use("/api",Enquiry_Routes)
-app.use("/api",Banners_Routes)
-app.use("/api",App_All_Routes);
+app.use("/api", Admin_Routes)
+app.use("/api", Vendor_Routes)
+app.use("/api", Brands_Routes)
+app.use("/api", Order_Routes)
+app.use("/api", Products_Routes)
+app.use("/api", User_Routes)
+app.use("/api", Enquiry_Routes)
+app.use("/api", Banners_Routes)
+app.use("/api", App_All_Routes);
 // app.use("/api",UploadImage_Routes);
 
 
-app.use("/",(req,res)=>{
+app.use("/", (req, res) => {
     console.log("Working ")
     res.send("WORKING")
 })
 
-app.listen(port,()=>{
-    console.log("Server is Listen on ",port)
+app.use(errorHandler)
+
+app.listen(port, () => {
+    console.log("Server is Listen on ", port)
     mongoose.connect(process.env.MONGODB_URI)
-    .then(()=>{
-        console.log("Mongodb connected !!")
-    })
-    .catch((err)=>{console.log(err,"Not connected to Mongodb !!")})
+        .then(() => {
+            console.log("Mongodb connected !!")
+        })
+        .catch((err) => { console.log(err, "Not connected to Mongodb !!") })
 
 })

@@ -20,6 +20,7 @@ router.get("/app/get/auth/user/profile/picture/:user_id",App_All_Controllers.get
 router.post("/app/create/user",App_All_Controllers.createUser);
 router.post("/app/cart/checkout/for/products",App_All_Controllers.cartCheckout);
 router.post("/app/send/enquiry/for/order",App_All_Controllers.sendMessageEnquiry);
+router.post('/app/create/user/b2b', App_All_Controllers.createB2BAccount);
 router.patch("/app/cancel/order/by/id/:order_id",App_All_Controllers.cancelOrderById);
 router.patch("/app/edit/user/profile/:user_id",App_All_Controllers.editUserByID);
 router.patch("/app/edit/user/profile/picture/by/id/:user_id",App_All_Controllers.editUserProfilePicture);
