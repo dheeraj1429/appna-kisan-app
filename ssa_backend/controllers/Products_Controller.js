@@ -37,8 +37,10 @@ const createProducts = async(req,res)=>{
             size:req.body?.size?.toLowerCase(),
             product_tag:req.body?.product_tag?.trim(),
             product_description:req.body.product_description?.toLowerCase(),
-            product_variant:req.body.product_variant?.toLowerCase()
-            
+            product_variant:req.body.product_variant?.toLowerCase(),
+            product_price: req.body?.product_price,
+            b2b_user_product_price: req.body?.b2b_user_product_price,
+            b2c_user_product_price: req.body?.b2c_user_product_price,
         })
         const result = await create.save();
         // res.status(200).send(result)

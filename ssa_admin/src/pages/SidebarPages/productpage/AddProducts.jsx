@@ -125,8 +125,10 @@ function AddProducts({handleClose}) {
           product_description:'',
           color:'',
           size:'',
-          cartoon_total_products:''
-
+          cartoon_total_products:'',
+          product_price: '',
+          b2b_user_product_price: '',
+          b2c_user_product_price: '',
         });
           setFileUpload([])
       })
@@ -203,6 +205,21 @@ const handleCloseSnackbar = (event, reason) => {
                     </div>
                    
                     
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="product_price" value={productData?.product_price} onChange={handleChange} placeholder=" Product Price " variant="outlined" />
+                    </div>
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> B2B User Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="b2b_user_product_price" value={productData?.b2b_user_product_price} onChange={handleChange} placeholder=" B2B user product Price " variant="outlined" />
+                    </div>
+
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> B2C User Product Price  </label>
+                    <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="b2c_user_product_price" value={productData?.b2c_user_product_price} onChange={handleChange} placeholder=" B2C user product Price " variant="outlined" />
+                    </div>
 
                  
 
