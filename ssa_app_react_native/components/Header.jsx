@@ -71,7 +71,7 @@ function Header() {
             size={24}
             color={config.primaryColor}
           />
-          <FontAwesome name="whatsapp" onPress={()=>Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={24} color={config.primaryColor} />
+          {/* <FontAwesome name="whatsapp" onPress={()=>Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={24} color={config.primaryColor} /> */}
 {/* <FontAwesome onPress={openHelpCenter}  style={styles.headerIcon2} name="language" size={24}  color={config.primaryColor} /> */}
         </View>
       </View>

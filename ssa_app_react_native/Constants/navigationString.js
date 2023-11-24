@@ -6,7 +6,7 @@ export default {
     CART:'CART',
     ACCOUNT:'Account',
     LOGIN:'Login',
-    REGISTER:'Register',
+    REGISTER: 'Register',
     TAB_ROUTE:'Tab_Route',
     SUB_CATEGORY:'Sub_Category',
     PRODUCT_INFO:'ProductInfo',

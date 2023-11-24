@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/stack';
 import TabRoute from "./TabRoute"
 import Login from "../screens/Login/Login";
+import Home from "../screens/Home/Home";
 import navigationString from "../Constants/navigationString";
 import Register from "../screens/Register/Register";
 import ProductInfo from "../screens/ProductInfo/ProductInfo";
@@ -73,7 +74,6 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
-
       
     </Stack.Navigator> 
     :
