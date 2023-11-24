@@ -15,6 +15,11 @@ const B2B_User_Schema = new mongoose.Schema(
     owner_name: {
       type: String,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     mobile: {
       type: String,
       required: true,

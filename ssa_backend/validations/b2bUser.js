@@ -3,6 +3,11 @@ const yup = require('yup');
 const b2bUserCreateSchema = yup.object({
   company_name: yup.string().min(3).max(164).required().label('Company Name'),
   owner_name: yup.string().max(64).optional().label('Owner Name'),
+  email: yup
+    .string()
+    .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, 'Please enter valid email')
+    .required()
+    .label('E-mail'),
   mobile: yup
     .string()
     .required()
