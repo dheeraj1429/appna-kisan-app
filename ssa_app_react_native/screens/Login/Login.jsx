@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,50 +10,59 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
   BackHandler
 } from "react-native";
 import { config } from "../../config";
-import {Modal, Portal,Provider } from 'react-native-paper';
+import { Modal, Portal, Provider } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from "expo-status-bar";
 import navigationString from "../../Constants/navigationString";
 import { setItemToLocalStorage } from "../../Utils/localstorage";
 import axios from "axios";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 
-function Login({navigation}) {
-  const [ phoneNumber , setPhoneNumber ] = useState('')
+function Login({ navigation }) {
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
-  const [ loading , setLoading ] = useState(false);
-  
-  console.log('phoneNumber',phoneNumber);
+  const [loading, setLoading] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('PhoneNumber');
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
+  };
+  console.log('phoneNumber', phoneNumber);
 
   const goBack = () => {
     // navigation.goBack();
     BackHandler.exitApp()
   };
-  const handleSignup=async()=>{
-    if(phoneNumber.length >= 10){
-      
-     await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`,{withCredentials:true})
-      .then(res=>{
-        console.log(res?.data)
-        if(res?.data?.user_exists){
+  const handleSignupPhone = async () => {
+    if (phoneNumber.length >= 10) {
+
+      await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
+        .then(res => {
+          console.log(res?.data)
+          if (res?.data?.user_exists) {
+            setLoading(false);
+            navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${phoneNumber}` });
+          } else {
+            setLoading(false);
+            setModalVisible(true)
+          }
+        })
+        .catch(err => {
+          console.log(err);
           setLoading(false);
-          navigation.navigate(navigationString.OTP_SCREEN,{user_exists:true,phoneNumber:`+91 ${phoneNumber}`});
-        }else{
-          setLoading(false);
-          setModalVisible(true)
-        }
-      })
-      .catch(err=>{
-        console.log(err);
-        setLoading(false);
-      })
-      
+        })
+
       // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
     }
-    else{
+    else {
       ToastAndroid.showWithGravityAndOffset(
         "Enter a Valid Phone number!!",
         ToastAndroid.LONG,
@@ -65,52 +74,112 @@ function Login({navigation}) {
     }
   }
 
-  const goToRegister=()=>{
+  const handleSignupEmail = async () => {
+    if (email.length >= 5 && password.length >= 4) {
+
+      await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
+        .then(res => {
+          console.log(res?.data)
+          if (res?.data?.user_exists) {
+            setLoading(false);
+            navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${phoneNumber}` });
+          } else {
+            setLoading(false);
+            setModalVisible(true)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+        })
+
+      // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
+    }
+    else {
+      ToastAndroid.showWithGravityAndOffset(
+        "Enter a Valid Email & Password!!",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+
+    }
+  }
+  const goToRegister = () => {
     navigation.navigate(navigationString.REGISTER)
   }
   return (
     <Provider>
-    <Portal>
-    <View style={{flex:1,backgroundColor:'#fff'}} >
-      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:10,paddingTop:50,paddingBottom:10}} >
-<MaterialIcons  onPress={goBack} name="close" size={24} color={config.primaryColor} />
-<Text style={styles.headingText} >Continue with Phone</Text>
-<MaterialIcons  name="keyboard-arrow-left" size={27} color='white' />
-</View>
-    {
-      loading ?
-      <View style={{flex:1,justifyContent:'center',alignItems:'center'}} >
-      <ActivityIndicator size='large' color={config.primaryColor} />
-     </View>
-      :
-      <View style={styles.loginContainer}>
-    
+      <Portal>
+        <View style={{ flex: 1, backgroundColor: '#fff' }} >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
+            <MaterialIcons onPress={goBack} name="" size={24} color={config.primaryColor} />
+            <Text style={styles.headingText} >Sign in to Your Account</Text>
+            <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
+          </View>
 
-      <Text style={styles.loginHeading}>Sign in to Your Account</Text>
-      <View style={styles.phoneFieldContainer}>
-        <TextInput
-           maxLength={10}
-          keyboardType="numeric"
-          style={styles.phoneField}
-          placeholder="Phone Number"
-          value={phoneNumber}
-          onChangeText={(value)=>setPhoneNumber(value.replace(/[^0-9]/g,''))}
-        />
-        <View style={styles.indiaIcon}>
-          <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
-        </View>
-      </View>
-      <TouchableOpacity onPress={handleSignup} activeOpacity={0.8} style={styles.signUpBtn}>
-        <Text style={styles.signInText}>Sign in</Text>
-      </TouchableOpacity>
-      {/* <Text style={styles.codeText} >Code has been send to +91 ******4800</Text> */}
-      {/* <TextInput
+          {loading ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+              <ActivityIndicator size='large' color={config.primaryColor} />
+            </View>
+            :
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={[styles.buttonContainer, { flexDirection: "row", justifyContent: "space-evenly" }]}>
+
+                <TouchableOpacity onPress={() => handleOptionClick('PhoneNumber')}
+                  style={[styles.btnConrainer, {
+                    paddingVertical: "2%",
+                    paddingHorizontal: "15%",
+                    borderRadius: 16,
+                    backgroundColor: selectedOption === 'PhoneNumber' ? config.primaryColor : 'transparent',
+                  }]}>
+                  <Text style={[{ color: selectedOption === 'PhoneNumber' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
+                    Number
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleOptionClick('Email')}
+                  style={{
+                    paddingVertical: "2%",
+                    paddingHorizontal: "15%",
+                    borderRadius: 16,
+                    backgroundColor: selectedOption === 'Email' ? config.primaryColor : 'transparent',
+                  }}>
+                  <Text style={[{ color: selectedOption === 'Email' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
+                    Email
+                  </Text>
+                </TouchableOpacity>
+
+              </View>
+
+              {selectedOption === 'PhoneNumber' && (
+                <View style={styles.loginContainer}>
+
+
+                  <View style={styles.phoneFieldContainer}>
+                    <TextInput
+                      maxLength={10}
+                      keyboardType="numeric"
+                      style={styles.phoneField}
+                      placeholder="Phone Number"
+                      value={phoneNumber}
+                      onChangeText={(value) => setPhoneNumber(value.replace(/[^0-9]/g, ''))}
+                    />
+                    <View style={styles.indiaIcon}>
+                      <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity onPress={handleSignupPhone} activeOpacity={0.8} style={styles.signUpBtn}>
+                    <Text style={styles.signInText}>Sign in</Text>
+                  </TouchableOpacity>
+                  {/* <Text style={styles.codeText} >Code has been send to +91 ******4800</Text> */}
+                  {/* <TextInput
         maxLength={6}
           keyboardType="numeric"
           style={styles.otpFieldInput}
           placeholder="0"
         /> */}
-      {/* <View style={styles.otpContainer}>
+                  {/* <View style={styles.otpContainer}>
         <TextInput
         maxLength={1}
           keyboardType="numeric"
@@ -148,7 +217,7 @@ function Login({navigation}) {
           placeholder="0"
         />
       </View> */}
-      {/* <View style={styles.otpResend}>
+                  {/* <View style={styles.otpResend}>
         <Text style={{ color: "gray" }}>Can't received? </Text>
         <Text style={{ color: config.primaryColor, fontWeight: "600" }}>
         Resend OTP
@@ -157,34 +226,87 @@ function Login({navigation}) {
       <TouchableOpacity activeOpacity={0.8} style={styles.signUpBtn}>
         <Text style={styles.signInText}>Verify OTP </Text>
       </TouchableOpacity> */}
-      <Text style={styles.orText}>or</Text>
-      <View style={styles.dontHaveAccountBox}>
-        <Text style={{ color: "gray" }}>Don't have an account? </Text>
-        <Text onPress={goToRegister} style={{ color: config.primaryColor, fontWeight: "600" }}>
-          Sign up{" "}
-        </Text>
-      </View>
-    </View>
-    }
-    </View>
-     <Modal visible={modalVisible} onDismiss={()=>setModalVisible(false)} contentContainerStyle={styles.containerStyle}>
-     <View>
-     <Text style={{fontSize:16,fontWeight:'700',color:'#222',textAlign:'center'}} > User Not Exists </Text>
-       <View  >
-       <View style={{paddingTop:8,paddingBottom:13}} >
-       <Text style={{textAlign:'center',color:'gray'}} > Phone number you entered</Text>
-       <Text style={{textAlign:'center',color:'gray'}}  >is not registered !!</Text>
-       </View>
-      <TouchableOpacity activeOpacity={0.5} onPress={()=>setModalVisible(false)} >
-        <View style={{paddingTop:6,borderTopColor:'#f2f2f2',borderTopWidth:1}} >
-          <Text style={{color:config.primaryColor,textAlign:'center',fontSize:14,fontWeight:'700'}} >OK</Text>
+                  <Text style={styles.orText}>or</Text>
+                  <View style={styles.dontHaveAccountBox}>
+                    <Text style={{ color: "gray" }}>Don't have an account? </Text>
+                    <Text onPress={goToRegister} style={{ color: config.primaryColor, fontWeight: "600" }}>
+                      Sign up{" "}
+                    </Text>
+                  </View>
+                </View>
+
+              )}
+              {selectedOption === 'Email' && (
+                   <View style={styles.registerContainer}  >
+                   <View style={styles.commonFieldMainBox} >
+                    
+ 
+                     
+ 
+                     <View style={styles.commonFieldContainer}>
+                       <TextInput
+                         style={styles.commonField}
+                         onChangeText={(value) => setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ''))}
+                         keyboardType='email-address' // This sets the keyboard to the email address format
+                         maxLength={50} // Adjust the maximum length as needed
+                         placeholder='Email'
+                       />
+                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
+                     </View>
+ 
+ 
+                     <View style={styles.commonFieldContainer}>
+                       <TextInput
+                         style={styles.commonField}
+                         onChangeText={(value) => setPassword(value.replace(/[^a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/g, ''))}
+                         secureTextEntry={true} // This hides the entered text for a password field
+                         maxLength={20} // Adjust the maximum length as needed
+                         placeholder='Password'
+                       />
+                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
+                     </View>
+ 
+ 
+ 
+                   </View>
+                  
+                   <TouchableOpacity onPress={handleSignupEmail} activeOpacity={0.8} style={styles.signUpBtn}>
+                    <Text style={styles.signInText}>Sign in</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.orText}>or</Text>
+                  <View style={styles.dontHaveAccountBox}>
+                    <Text style={{ color: "gray" }}>Don't have an account? </Text>
+                    <Text onPress={goToRegister} style={{ color: config.primaryColor, fontWeight: "600" }}>
+                      Sign up{" "}
+                    </Text>
+                  </View>
+ 
+                 </View>
+
+              )}
+
+            </ScrollView>
+          }
+
         </View>
-        </TouchableOpacity>
-       </View>
-     </View>
-    </Modal>
-         </Portal>
-         </Provider>
+        <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.containerStyle}>
+          <View>
+            <Text style={{ fontSize: 16, fontWeight: '700', color: '#222', textAlign: 'center' }} > User Not Exists </Text>
+            <View  >
+              <View style={{ paddingTop: 8, paddingBottom: 13 }} >
+                <Text style={{ textAlign: 'center', color: 'gray' }} > Phone number you entered</Text>
+                <Text style={{ textAlign: 'center', color: 'gray' }}  >is not registered !!</Text>
+              </View>
+              <TouchableOpacity activeOpacity={0.5} onPress={() => setModalVisible(false)} >
+                <View style={{ paddingTop: 6, borderTopColor: '#f2f2f2', borderTopWidth: 1 }} >
+                  <Text style={{ color: config.primaryColor, textAlign: 'center', fontSize: 14, fontWeight: '700' }} >OK</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </Portal>
+    </Provider>
   );
 }
 
@@ -197,23 +319,54 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
     paddingHorizontal: 30,
+    marginTop:"45%",
   },
-  headingText:{
-    color:config.primaryColor,
-    fontSize:17,
-    letterSpacing:1,
-    fontWeight:'500',
-  },
-  containerStyle:{
+  registerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
-  paddingTop: 15,
-  paddingBottom:12,
-  marginHorizontal:80,
-  borderRadius:10,
-zIndex:2
-},
+    paddingHorizontal: 30,
+    marginTop:"30%",
+  },
+  commonFieldMainBox: {
+    marginTop: 12,
+    width: '100%'
+  },
+  commonIcon: {
+    position: 'absolute',
+    bottom: 12,
+    left: 15,
+    color: '#555'
+  },
+  commonField: {
+    width: '100%',
+    marginTop: 15,
+    paddingHorizontal: 45,
+    paddingVertical: 9,
+    fontSize: 14,
+    backgroundColor: '#f5f5f6',
+    letterSpacing: 2,
+    borderRadius: 16,
+    borderWidth: 0.5,
+    borderColor: 'lightgray'
+  },
+  headingText: {
+    color: config.primaryColor,
+    fontSize: 17,
+    letterSpacing: 1,
+    fontWeight: '500',
+  },
+  containerStyle: {
+    backgroundColor: 'white',
+    paddingTop: 15,
+    paddingBottom: 12,
+    marginHorizontal: 80,
+    borderRadius: 10,
+    zIndex: 2
+  },
   loginHeading: {
-    marginTop:10,
+    marginTop: 10,
     fontSize: 18,
     fontWeight: "500",
   },
@@ -228,6 +381,10 @@ zIndex:2
   },
   nineOneText: {
     fontSize: 15,
+  },
+  commonFieldContainer: {
+    position: 'relative',
+    width: '100%'
   },
   phoneField: {
     width: "100%",
@@ -269,9 +426,9 @@ zIndex:2
     flexDirection: "row",
     // marginTop:10,
   },
-  codeText:{
-    marginTop:15,
-    fontSize:12
+  codeText: {
+    marginTop: 15,
+    fontSize: 12
   },
   otpContainer: {
     width: "100%",
@@ -290,8 +447,8 @@ zIndex:2
     paddingVertical: 10,
     textAlign: "center",
   },
-  otpFieldInput:{
-    width:100,
+  otpFieldInput: {
+    width: 100,
     borderRadius: 20,
     borderWidth: 0.5,
     borderColor: "lightgray",
@@ -300,9 +457,9 @@ zIndex:2
     paddingVertical: 10,
     textAlign: "center",
   },
-  otpResend:{
-    flexDirection:'row',
-    marginTop:16
+  otpResend: {
+    flexDirection: 'row',
+    marginTop: 16
   },
   modalView: {
     margin: 20,
