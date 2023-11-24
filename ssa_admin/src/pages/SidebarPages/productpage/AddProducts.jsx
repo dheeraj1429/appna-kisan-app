@@ -129,6 +129,7 @@ function AddProducts({handleClose}) {
           product_price: '',
           b2b_user_product_price: '',
           b2c_user_product_price: '',
+          product_reward_points: ''
         });
           setFileUpload([])
       })
@@ -219,6 +220,11 @@ const handleCloseSnackbar = (event, reason) => {
                     <div className='add_product_label_input'>
                     <label htmlFor=""> B2C User Product Price  </label>
                     <TextField inputProps={{min: 0, step: .0001}} type={'number'} required fullWidth className='product_form_input' id="outlined-basic" name="b2c_user_product_price" value={productData?.b2c_user_product_price} onChange={handleChange} placeholder=" B2C user product Price " variant="outlined" />
+                    </div>
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> Product Rewards Points  </label>
+                    <TextField inputProps={{min: 0, step: 1}} fullWidth className='product_form_input' type='number' id="outlined-basic" name="product_reward_points" value={productData?.product_reward_points} onChange={handleChange} placeholder=" Product Reward Points " variant="outlined" />
                     </div>
 
                  

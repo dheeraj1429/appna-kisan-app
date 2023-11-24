@@ -108,6 +108,7 @@ const getproductById = async(req,res)=>{
                 "product_price": { $convert: {input: '$product_price', to: 'string' }},
                 "b2b_user_product_price": { $convert: {input: '$b2b_user_product_price', to: 'string' }},
                 "b2c_user_product_price": { $convert: {input: '$b2c_user_product_price', to: 'string' }},
+                "product_reward_points": 1
             }}
         ])
 
