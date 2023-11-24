@@ -870,6 +870,7 @@ const createB2BAccount = catchAsync(async (req, res, next) => {
 /**
  * @author  Sam
  * @route   /api/app/create/user/b2c
+ * @method  POST
  * @access  Public
  * @desc    Create a B2C user.
  */
@@ -913,6 +914,7 @@ const createB2CAccount = catchAsync(async (req, res, next) => {
 /**
  * @author  Sam
  * @route   /app/login/user/b2b/b2c
+ * @method  POST
  * @access  Public
  * @desc    Login B2B and B2C user by returning appropriate tokens.
  */
