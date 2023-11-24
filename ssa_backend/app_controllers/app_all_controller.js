@@ -14,6 +14,7 @@ const httpStatus = require('../utils/configs/httpStatus');
 const B2BUser = require('../modals/B2BUser');
 const B2CUser = require('../modals/B2CUser');
 const TokenService = require('../utils/TokenService');
+const CaptureError = require('../utils/CaptureError');
 
 // all brands screen api
 const showAllBrands = async (req, res) => {
@@ -909,6 +910,80 @@ const createB2CAccount = catchAsync(async (req, res, next) => {
   });
 });
 
+/**
+ * @author  Sam
+ * @route   /app/login/user/b2b/b2c
+ * @access  Public
+ * @desc    Login B2B and B2C user by returning appropriate tokens.
+ */
+const loginB2bAndB2cUser = catchAsync(async (req, res, next) => {
+  const { email, mobile, password, userType } = req.body;
+
+  if (!email && !mobile) {
+    const message = 'Please provide either email or phone!';
+    throw new CaptureError(message, httpStatus.BAD_REQUEST);
+  }
+
+  if (!password)
+    throw new CaptureError('Please provide password', httpStatus.BAD_REQUEST);
+
+  if (userType !== 'B2B' && userType !== 'B2C') {
+    const message = 'Please provide correct user type';
+    throw new CaptureError(message, httpStatus.BAD_REQUEST);
+  }
+
+  let user = null;
+
+  if (userType === 'B2B') {
+    user = await B2BUser.findOne({ $or: [{ email }, { mobile }] });
+  } else if (userType === 'B2C') {
+    user = await B2CUser.findOne({ $or: [{ email }, { mobile }] });
+  }
+
+  if (!user)
+    throw new CaptureError('Email or Mobile not found', httpStatus.NOT_FOUND);
+
+  if (!(await user.isCorrectPassword(password))) {
+    const message = 'You entered wrong password!';
+    throw new CaptureError(message, httpStatus.BAD_REQUEST);
+  }
+
+  let payload = null;
+  let accessToken = null;
+  const secret = process.env.JWT_TOKEN_SECRET;
+
+  if (userType === 'B2B') {
+    payload = {
+      _id: user._id,
+      userType: 'B2B',
+      isApproved: user.is_approved,
+    };
+    accessToken = TokenService.signToken(payload, secret);
+
+    res.header('x-b2b-access-token', accessToken);
+  } else if (userType === 'B2C') {
+    payload = {
+      _id: user._id,
+      name: user.name,
+      userType: 'B2C',
+    };
+    accessToken = TokenService.signToken(payload, secret);
+
+    res.header('x-b2c-access-token', accessToken);
+  }
+
+  return res.status(httpStatus.OK).json({
+    success: true,
+    statusCode: httpStatus.OK,
+    user: {
+      _id: user._id,
+      email: user.email,
+      mobile: user.mobile,
+    },
+    accessToken,
+  });
+});
+
 exports.showAllBrands = showAllBrands;
 exports.brandsForHomeScreen = brandsForHomeScreen;
 exports.getAllBrands = getAllBrands;
@@ -932,3 +1007,4 @@ exports.editUserProfilePicture = editUserProfilePicture;
 exports.getUserProfilePicture = getUserProfilePicture;
 exports.createB2BAccount = createB2BAccount;
 exports.createB2CAccount = createB2CAccount;
+exports.loginB2bAndB2cUser = loginB2bAndB2cUser;
