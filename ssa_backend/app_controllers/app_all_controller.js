@@ -8,10 +8,12 @@ const Utils = require("../utils/Utils");
 const { v4: uuidv4 } = require('uuid');
 const generateOrderId = require('order-id')('key');
 const { verifyB2BAccountData } = require('../validations/b2bUser');
+const { verifyB2CAccountData } = require('../validations/b2cUser');
 const CaptureError = require('../utils/CaptureError');
 const catchAsync = require('../middlewares/catchAsync');
 const httpStatus = require('../utils/configs/httpStatus');
 const B2BUser = require("../modals/B2BUser");
+const B2CUser = require("../modals/B2CUser");
 
 // all brands screen api
 const showAllBrands = async (req, res) => {
@@ -720,6 +722,39 @@ const createB2BAccount = catchAsync(async (req, res, next) => {
     })
 });
 
+/**
+ * @author  Sam
+ * @route   /api/app/create/user/b2c
+ * @access  Public
+ * @desc    Create a B2C user.
+ */
+const createB2CAccount = catchAsync(async (req, res, next) => {
+    // Verify the incoming data.
+    const { data: userData, error } = await verifyB2CAccountData(req.body);
+
+    if (error)
+        return res.status(httpStatus.BAD_REQUEST).json({
+            success: false,
+            statusCode: httpStatus.BAD_REQUEST,
+            message: error.message,
+            error,
+        });
+
+    const newB2CUser = new B2CUser(userData);
+    await newB2CUser.save();
+
+    const savedUser = newB2CUser.toObject();
+    delete savedUser.password;
+
+    // TODO: Sign or set appropriate cookie/token to send back to the client.
+
+    return res.status(httpStatus.CREATED).json({
+        success: true,
+        statusCode: httpStatus.CREATED,
+        user: savedUser
+    })
+});
+
 exports.showAllBrands = showAllBrands;
 exports.brandsForHomeScreen = brandsForHomeScreen;
 exports.getAllBrands = getAllBrands;
@@ -742,3 +777,4 @@ exports.filterForProducts = filterForProducts;
 exports.editUserProfilePicture = editUserProfilePicture;
 exports.getUserProfilePicture = getUserProfilePicture;
 exports.createB2BAccount = createB2BAccount;
+exports.createB2CAccount = createB2CAccount;
