@@ -13,6 +13,7 @@ const catchAsync = require('../middlewares/catchAsync');
 const httpStatus = require('../utils/configs/httpStatus');
 const B2BUser = require('../modals/B2BUser');
 const B2CUser = require('../modals/B2CUser');
+const TokenService = require('../utils/TokenService');
 
 // all brands screen api
 const showAllBrands = async (req, res) => {
@@ -846,13 +847,22 @@ const createB2BAccount = catchAsync(async (req, res, next) => {
   const savedUser = newB2BUser.toObject();
   delete savedUser.password;
 
-  // TODO: Sign or set appropriate cookie/token to send back to the client.
+  const tokenPayload = {
+    _id: savedUser._id,
+    userType: 'B2B',
+    isApproved: savedUser.is_approved,
+  };
+
+  const tokenSecret = process.env.JWT_TOKEN_SECRET;
+  const accessToken = TokenService.signToken(tokenPayload, tokenSecret);
+
+  res.header('x-b2b-access-token', accessToken);
 
   return res.status(httpStatus.CREATED).json({
     success: true,
     statusCode: httpStatus.CREATED,
     user: savedUser,
-    // user: userData,
+    accessToken,
   });
 });
 
@@ -880,12 +890,22 @@ const createB2CAccount = catchAsync(async (req, res, next) => {
   const savedUser = newB2CUser.toObject();
   delete savedUser.password;
 
-  // TODO: Sign or set appropriate cookie/token to send back to the client.
+  const tokenPayload = {
+    _id: savedUser._id,
+    name: savedUser.name,
+    userType: 'B2C',
+  };
+
+  const tokenSecret = process.env.JWT_TOKEN_SECRET;
+  const accessToken = TokenService.signToken(tokenPayload, tokenSecret);
+
+  res.header('x-b2c-access-token', accessToken);
 
   return res.status(httpStatus.CREATED).json({
     success: true,
     statusCode: httpStatus.CREATED,
     user: savedUser,
+    accessToken,
   });
 });
 
