@@ -64,6 +64,10 @@ const Users_Schema = new mongoose.Schema(
     state: { type: String },
     country: { type: String },
     address: { type: String },
+    reward_points: {
+      type: Number,
+      default: 0,
+    },
 
     // address: [
     //     {

@@ -68,6 +68,10 @@ const B2B_User_Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    reward_points: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

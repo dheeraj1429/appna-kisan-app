@@ -398,6 +398,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
         email: user.email,
         phone: user.mobile,
         avatar: user.avatar?.image_url ?? null,
+        reward_points: user.reward_points ?? 0,
       };
 
       break;
@@ -410,6 +411,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
         email: user.email,
         phone: user.mobile,
         avatar: user.avatar?.image_url ?? null,
+        reward_points: user.reward_points ?? 0,
       };
 
       break;
@@ -423,6 +425,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
         email: user.email,
         phone: user.phone_number,
         avatar: user.profile?.image_url ?? null,
+        reward_points: user.reward_points ?? 0,
       };
 
       break;
