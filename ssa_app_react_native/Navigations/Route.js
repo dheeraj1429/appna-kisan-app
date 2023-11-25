@@ -20,8 +20,11 @@ import Otp from "../screens/Otp/Otp";
 import { UseContextState } from "../global/GlobalContext";
 import SendEnquiry from "../screens/SendEnquiry/SendEnquiry";
 import EditProfile from "../screens/EditProfile/EditProfile";
+import UpdateProfile from "../screens/Account/UpdateProfile";
+import RewardsScreen from "../screens/Rewards/RewardsScreen";
 import NewArrivals from "../screens/NewArrivals/NewArrivals";
 import ViewOrder from "../screens/Orders/ViewOrder";
+import Account from "../screens/Account/Account";
 
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
@@ -78,7 +81,7 @@ function Route() {
     </Stack.Navigator> 
     :
     <Stack.Navigator
-    initialRouteName={navigationString.LOGIN}
+    initialRouteName={navigationString.ACCOUNT}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -86,7 +89,7 @@ function Route() {
         tabBarHideOnKeyboard:true
       }}
     >
-<Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
+<Stack.Screen name={navigationString.ACCOUNT}   component={Account}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
@@ -95,6 +98,14 @@ function Route() {
           CardStyleInterpolators.forHorizontalIOS,
       }} />
       <Stack.Screen name={navigationString.OTP_SCREEN} component={Otp}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+       <Stack.Screen name={navigationString.UPDATE_PROFILE}   component={UpdateProfile}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+       <Stack.Screen name={navigationString.REWARDS_SCREEN}   component={RewardsScreen}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />

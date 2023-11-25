@@ -33,6 +33,7 @@ function EditProfile({ route,navigation }) {
     const {authState,fetchAuthuser} = UseContextState();
     const [modalVisible, setModalVisible] = useState(false);
 
+
     // console.log(authState,"authState")
     const [ editUserDetails , setEditUserDetails ] = useState({
         customer_id:authState?.user?.user_id,
