@@ -22,6 +22,7 @@ router.post("/app/cart/checkout/for/products",App_All_Controllers.cartCheckout);
 router.post("/app/send/enquiry/for/order",App_All_Controllers.sendMessageEnquiry);
 router.post('/app/create/user/b2b', App_All_Controllers.createB2BAccount);
 router.post('/app/create/user/b2c', App_All_Controllers.createB2CAccount);
+router.post('/app/login/user/b2b/b2c', App_All_Controllers.loginB2bAndB2cUser);
 router.patch("/app/cancel/order/by/id/:order_id",App_All_Controllers.cancelOrderById);
 router.patch("/app/edit/user/profile/:user_id",App_All_Controllers.editUserByID);
 router.patch("/app/edit/user/profile/picture/by/id/:user_id",App_All_Controllers.editUserProfilePicture);
