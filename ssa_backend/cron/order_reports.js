@@ -52,7 +52,7 @@ const sendPendingOrdersReportToEmail = async () => {
     ]);
 
     const orders = ordersRes?.[0].orders ?? [];
-    const totalOrdersPending = ordersRes?.[0].count?.[0].count ?? 0;
+    const totalOrdersPending = ordersRes?.[0]?.count?.[0]?.count ?? 0;
 
     handlebar.registerHelper('getProductImage', function (images) {
       if (Array.isArray(images) && images.length > 0) {
