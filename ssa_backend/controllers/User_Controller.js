@@ -4,6 +4,11 @@ const Utils = require('../utils/Utils');
 const { v4: uuidv4 } = require('uuid');
 const httpStatus = require('../utils/configs/httpStatus');
 const CaptureError = require('../utils/CaptureError');
+const { verifyB2BAUpdateData } = require('../validations/b2bUser');
+const B2BUser = require('../modals/B2BUser');
+const { verifyB2CAUpdateData } = require('../validations/b2cUser');
+const B2CUser = require('../modals/B2CUser');
+const { verifyUserUpdateData } = require('../validations/user');
 
 // creating new user
 const createUser = async (req, res) => {
@@ -417,7 +422,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
         name: user.username,
         email: user.email,
         phone: user.phone_number,
-        avatar: user.avatar?.image_url ?? null,
+        avatar: user.profile?.image_url ?? null,
       };
 
       break;
@@ -439,6 +444,102 @@ const getUserInfo = catchAsync(async (req, res, next) => {
   });
 });
 
+/**
+ * @author  Sam
+ * @route   /user/update/user/info
+ * @method  PATCH
+ * @access  Protected
+ * @desc    Update the user information from the appropriate collection.
+ */
+const updateUserInfo = catchAsync(async (req, res, next) => {
+  const userType = req.userType;
+  const user = req.user;
+  const userData = req.body;
+
+  let updateRes = null;
+  const u = await B2BUser.findById();
+
+  switch (userType) {
+    case 'b2b': {
+      const { data: updateUserData, error } = await verifyB2BAUpdateData(
+        userData
+      );
+      if (error)
+        return res.status(httpStatus.BAD_REQUEST).json({
+          success: false,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: error.message,
+          error,
+        });
+
+      for (const key in updateUserData) {
+        user[key] = updateUserData[key];
+      }
+
+      await user.save();
+
+      break;
+    }
+
+    case 'b2c': {
+      const { data: updateUserData, error } = await verifyB2CAUpdateData(
+        userData
+      );
+
+      if (error)
+        return res.status(httpStatus.BAD_REQUEST).json({
+          success: false,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: error.message,
+          error,
+        });
+
+      for (const key in updateUserData) {
+        user[key] = updateUserData[key];
+      }
+
+      await user.save();
+
+      break;
+    }
+
+    case 'basic': {
+      const { data: updateUserData, error } = await verifyUserUpdateData(
+        userData
+      );
+
+      if (error)
+        return res.status(httpStatus.BAD_REQUEST).json({
+          success: false,
+          statusCode: httpStatus.BAD_REQUEST,
+          message: error.message,
+          error,
+        });
+
+      for (const key in updateUserData) {
+        user[key] = updateUserData[key];
+      }
+
+      await user.save();
+
+      break;
+    }
+
+    default: {
+      throw new CaptureError(
+        'Something went wrong',
+        httpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  return res.json({
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User information updated successfully!',
+  });
+});
+
 exports.getAllUser = getAllUser;
 exports.getUserById = getUserById;
 exports.createUser = createUser;
@@ -450,3 +551,4 @@ exports.filterForUsers = filterForUsers;
 exports.deleteUsers = deleteUsers;
 exports.getUser = getUser;
 exports.getUserInfo = getUserInfo;
+exports.updateUserInfo = updateUserInfo;

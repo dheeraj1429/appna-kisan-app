@@ -20,6 +20,11 @@ const B2B_User_Schema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    profile: {
+      image_name: { type: String, default: null },
+      image_url: { type: String, default: null },
+      path: { type: String, default: null },
+    },
     mobile: {
       type: String,
       required: true,

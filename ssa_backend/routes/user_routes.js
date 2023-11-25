@@ -12,6 +12,7 @@ router.post('/user/create/newuser', User_Controllers.createUser);
 router.post('/user/login', User_Controllers.loginUser);
 router.post('/user/logout', User_Controllers.logoutUser);
 router.patch('/user/edit/:user_id', User_Controllers.editUserByID);
+router.patch('/user/update/info', auth(), User_Controllers.updateUserInfo);
 router.delete('/delete/users', User_Controllers.deleteUsers);
 router.get('/search/in/user', User_Controllers.searchInUsers);
 router.get('/filter/users', User_Controllers.filterForUsers);
