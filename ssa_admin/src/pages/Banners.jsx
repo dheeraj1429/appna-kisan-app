@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState,useRef } from 'react';
-
 import { Toolbar, Tooltip,Menu, MenuItem,TextField,InputLabel,Select,FormControl, IconButton, Typography,Button,ListItemIcon, ListItemText, OutlinedInput, InputAdornment } from '@mui/material';
 
 import PropTypes from 'prop-types';
@@ -60,6 +59,11 @@ const rows = [
   createData('Marshmallow', 318, 0, "verified", 2.0,),
   createData('Nougat', 360, 19.0, "not verified", 37.0,),
   createData('Oreo', 437, 18.0, "not verified", 4.0,),
+];
+
+const bannerType = [
+  { value: '', label: 'Select' },
+  { value: 'rewards', label: 'Rewards banner' },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -317,6 +321,7 @@ export default function Banners() {
   const [ data, setData ] = useState([])
   const [ categoryForLinkBanner, setCategoryForLinkBanner ] = useState([])
   const [ selectedBannerCategory, setSelectedBannerCategory ] = useState()
+  const [ bannerTypeInfo, setBannerTypeInfo ] = useState('')
   const [ updateCategoryBtn, setUpdateCategoryBtn ] = useState()
   const [ countVendor, setCountVendor ] = useState(0)
   const [snackbarOpen,setSnackbarOpen ] = useState(false)
@@ -343,7 +348,6 @@ export default function Banners() {
       setCategoryForLinkBanner(res?.data?.category);
       setCountVendor(res?.data?.allbanners?.length)
       setLoading(false)
-      
     })
     .catch(err=>{
       console.log(err)
@@ -543,7 +547,6 @@ const handleFileUpload =async(bannerId,e)=>{
     }
     setData(updateBannerCate)
     setUpdateCategoryBtn((prev)=>({index:index,status:true}))
-
   }
   // ===== HANDLE CHANGE BANNER BANNER CATEGORY ========
 
@@ -552,7 +555,8 @@ const handleFileUpload =async(bannerId,e)=>{
     setLoading(true)
     const linkCategoryData ={
       selected_category:category,
-      category_chain:{}
+      category_chain:{},
+      bannerType: bannerTypeInfo
     }
     for (let i = 0; i < categoryForLinkBanner?.length; i++) {
       if(categoryForLinkBanner[i]?.sub_category == category){
@@ -693,21 +697,25 @@ await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/categ
                       }
                       >
                     {/* <MenuItem value='choose_sub_category'>Choose Category </MenuItem> */}
-                    {categoryForLinkBanner?.map((value,index)=>(
+                    {categoryForLinkBanner?.map((value)=>(
                       <MenuItem key={value?.sub_category} style={{textTransform:'capitalize'}} value={value?.sub_category}>{value?.sub_category}</MenuItem>
-
                     ))}
+                    </TextField>
+                    <TextField name="bannerType" value={row?.bannerType} onChange={(e) => {
+                      setBannerTypeInfo(e.target.value);
+                      setUpdateCategoryBtn(()=>({index:index,status:true}))
+                    }} select label="Select" sx={{marginLeft:2, width: 200}}>
+                      {bannerType.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
                     </TextField>
                     <Button disabled={updateCategoryBtn?.index == index ? false: true} sx={{marginLeft:2}}  onClick={()=>handleUpdateBannerCategory(row?._id,selectedBannerCategory?.select_category)}
                      variant="contained" startIcon={<Iconify icon="material-symbols:check-circle-outline-rounded" />} > Update</Button>
                     </div>
                       </TableCell>
-
-           
-
-                    
                       {/* <TableCell align="right">{row.total_products}</TableCell> */}
-                  
                       <TableCell align="center">
                         {/* <EditOutlinedIcon fontSize='small' /> */}
                          {/* <VisibilityOutlinedIcon fontSize='small' /> */}
