@@ -139,6 +139,7 @@ function EditProduct({productId,handleClose}) {
         b2c_user_product_price: productData?.b2c_user_product_price,
         product_slug:splitString(productData?.product_name?.toLowerCase()),
         product_reward_points: productData?.product_reward_points,
+        product_collected_points: productData?.product_collected_points,
         product_variant:productData?.product_variant,
         quantity:productData?.quantity,
         original_quantity:productData?.quantity,
@@ -343,6 +344,12 @@ const handleCloseSubCateConfirmModal=(i)=>{
                     <label htmlFor=""> Product Rewards Points  </label>
                     <TextField inputProps={{min: 0, step: 1}} fullWidth className='product_form_input' type='number' id="outlined-basic" name="product_reward_points" value={productData?.product_reward_points} onChange={handleChange} placeholder=" Product Reward Points " variant="outlined" />
                     </div>
+
+                    <div className='add_product_label_input'>
+                    <label htmlFor=""> Product Collected Points </label>
+                    <TextField inputProps={{min: 0, step: 1}} fullWidth className='product_form_input' type='number' id="outlined-basic" name="product_collected_points" value={productData?.product_collected_points} onChange={handleChange} placeholder=" Product Collected Points " variant="outlined" />
+                    </div>
+
 
                     {/* <div className='add_product_label_input'>
                     <label htmlFor=""> Variant  </label>
