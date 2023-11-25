@@ -81,7 +81,7 @@ function Route() {
     </Stack.Navigator> 
     :
     <Stack.Navigator
-    initialRouteName={navigationString.ACCOUNT}
+    initialRouteName={navigationString.LOGIN}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -89,7 +89,7 @@ function Route() {
         tabBarHideOnKeyboard:true
       }}
     >
-<Stack.Screen name={navigationString.ACCOUNT}   component={Account}  options={{
+<Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
