@@ -41,6 +41,7 @@ const createProducts = async(req,res)=>{
             product_price: req.body?.product_price,
             b2b_user_product_price: req.body?.b2b_user_product_price,
             b2c_user_product_price: req.body?.b2c_user_product_price,
+            product_collected_points: req.body?.product_collected_points,
         })
         const result = await create.save();
         // res.status(200).send(result)
@@ -108,7 +109,8 @@ const getproductById = async(req,res)=>{
                 "product_price": { $convert: {input: '$product_price', to: 'string' }},
                 "b2b_user_product_price": { $convert: {input: '$b2b_user_product_price', to: 'string' }},
                 "b2c_user_product_price": { $convert: {input: '$b2c_user_product_price', to: 'string' }},
-                "product_reward_points": 1
+                "product_reward_points": 1,
+                "product_collected_points": 1
             }}
         ])
 

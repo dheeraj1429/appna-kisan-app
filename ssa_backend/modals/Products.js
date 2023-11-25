@@ -116,7 +116,8 @@ const Products_Schema = new mongoose.Schema(
         product_description:{
             type:String,
         },
-        product_reward_points: {type: Number}
+        product_reward_points: {type: Number},
+        product_collected_points: {type: Number}
         // product_status:{
         //     type:String,
         //     required:true,

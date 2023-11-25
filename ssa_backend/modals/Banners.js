@@ -8,8 +8,8 @@ const Banners_Schema = new mongoose.Schema(
         category_chain:{main_category:{type:String},
             category:{type:String},
             sub_category:{type:String}
-        }
-
+        },
+        bannerType: { type: String }
     },{timestamps:true}
 )
 

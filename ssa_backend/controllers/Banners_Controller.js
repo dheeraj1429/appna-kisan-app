@@ -54,7 +54,6 @@ const addNewBanner = async(req,res)=>{
 // change banner
 const changeBanner = async(req,res)=>{
     const bannerId = req.params.banner_id;
-    console.log(req.body,"bannerId",bannerId);
     try{
         if(!bannerId){
             return res.status(404).send({status:false,message:'not found banner !!'})
