@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
 const BASE_URL = ['http://localhost:3000', 'https://ssa-admin.blackhatcode.in']; // http://ssa-admin.ssgoldindia.com/login    http://localhost:3000 https://ssa-admin.blackhatcode.in
 const errorHandler = require('./middlewares/errorHandler');
+const cronJobs = require('./cron');
 
 // Admin Dashboard routes
 const Admin_Routes = require('./routes/admin_routes');
@@ -52,6 +53,8 @@ app.use('/', (req, res) => {
 });
 
 app.use(errorHandler);
+
+cronJobs();
 
 app.listen(port, () => {
   console.log('Server is Listen on ', port);

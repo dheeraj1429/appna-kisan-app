@@ -142,7 +142,7 @@ function Home({ navigation }) {
 
       </ScrollView>
       <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end",marginRight:"2%" }}>
-        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={24} color={config.primaryColor} />
+        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={30} color={config.primaryColor} />
       </View>
     </View>
   );
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     //width:"100%",
     borderWidth: 1,
     backgroundColor: 'white',
-    paddingHorizontal: "2%",
+    paddingHorizontal: "3%",
     paddingVertical: 10,
     borderRadius: 40,
     marginLeft: 14,

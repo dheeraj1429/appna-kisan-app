@@ -74,8 +74,8 @@ function Login({ navigation }) {
     }
   }
 
-  const handleSignupEmail = async () => {
-    if (email.length >= 5 && password.length >= 4) {
+  const handleSignup = async () => {
+    if ((email.length >= 5 && password.length >= 4 )|| password.length > 4) {
 
       await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
         .then(res => {
@@ -97,7 +97,7 @@ function Login({ navigation }) {
     }
     else {
       ToastAndroid.showWithGravityAndOffset(
-        "Enter a Valid Email & Password!!",
+        "Enter a Valid Credentials",
         ToastAndroid.LONG,
         ToastAndroid.CENTER,
         25,
@@ -125,34 +125,8 @@ function Login({ navigation }) {
             </View>
             :
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={[styles.buttonContainer, { flexDirection: "row", justifyContent: "space-evenly" }]}>
+ 
 
-                <TouchableOpacity onPress={() => handleOptionClick('PhoneNumber')}
-                  style={[styles.btnConrainer, {
-                    paddingVertical: "2%",
-                    paddingHorizontal: "15%",
-                    borderRadius: 16,
-                    backgroundColor: selectedOption === 'PhoneNumber' ? config.primaryColor : 'transparent',
-                  }]}>
-                  <Text style={[{ color: selectedOption === 'PhoneNumber' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
-                    Number
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleOptionClick('Email')}
-                  style={{
-                    paddingVertical: "2%",
-                    paddingHorizontal: "15%",
-                    borderRadius: 16,
-                    backgroundColor: selectedOption === 'Email' ? config.primaryColor : 'transparent',
-                  }}>
-                  <Text style={[{ color: selectedOption === 'Email' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
-                    Email
-                  </Text>
-                </TouchableOpacity>
-
-              </View>
-
-              {selectedOption === 'PhoneNumber' && (
                 <View style={styles.loginContainer}>
 
 
@@ -169,74 +143,12 @@ function Login({ navigation }) {
                       <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
                     </View>
                   </View>
-                  <TouchableOpacity onPress={handleSignupPhone} activeOpacity={0.8} style={styles.signUpBtn}>
-                    <Text style={styles.signInText}>Sign in</Text>
-                  </TouchableOpacity>
-                  {/* <Text style={styles.codeText} >Code has been send to +91 ******4800</Text> */}
-                  {/* <TextInput
-        maxLength={6}
-          keyboardType="numeric"
-          style={styles.otpFieldInput}
-          placeholder="0"
-        /> */}
-                  {/* <View style={styles.otpContainer}>
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-        <TextInput
-        maxLength={1}
-          keyboardType="numeric"
-          style={styles.otpField}
-          placeholder="0"
-        />
-      </View> */}
-                  {/* <View style={styles.otpResend}>
-        <Text style={{ color: "gray" }}>Can't received? </Text>
-        <Text style={{ color: config.primaryColor, fontWeight: "600" }}>
-        Resend OTP
-        </Text>
-      </View>
-      <TouchableOpacity activeOpacity={0.8} style={styles.signUpBtn}>
-        <Text style={styles.signInText}>Verify OTP </Text>
-      </TouchableOpacity> */}
-                  <Text style={styles.orText}>or</Text>
-                  <View style={styles.dontHaveAccountBox}>
-                    <Text style={{ color: "gray" }}>Don't have an account? </Text>
-                    <Text onPress={goToRegister} style={{ color: config.primaryColor, fontWeight: "600" }}>
-                      Sign up{" "}
-                    </Text>
-                  </View>
+                
+                 
+                 
                 </View>
+                <Text style={styles.orText}>or</Text>
 
-              )}
-              {selectedOption === 'Email' && (
                    <View style={styles.registerContainer}  >
                    <View style={styles.commonFieldMainBox} >
                     
@@ -270,7 +182,7 @@ function Login({ navigation }) {
  
                    </View>
                   
-                   <TouchableOpacity onPress={handleSignupEmail} activeOpacity={0.8} style={styles.signUpBtn}>
+                   <TouchableOpacity onPress={handleSignup} activeOpacity={0.8} style={styles.signUpBtn}>
                     <Text style={styles.signInText}>Sign in</Text>
                   </TouchableOpacity>
                   <Text style={styles.orText}>or</Text>
@@ -283,7 +195,6 @@ function Login({ navigation }) {
  
                  </View>
 
-              )}
 
             </ScrollView>
           }
@@ -319,7 +230,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
     paddingHorizontal: 30,
-    marginTop:"45%",
+    marginTop:"30%",
+
   },
   registerContainer: {
     flex: 1,
@@ -327,7 +239,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     paddingHorizontal: 30,
-    marginTop:"30%",
   },
   commonFieldMainBox: {
     marginTop: 12,
@@ -421,6 +332,8 @@ const styles = StyleSheet.create({
   orText: {
     marginVertical: 20,
     color: "gray",
+    textAlign:"center",
+    justifyContent:"center"
   },
   dontHaveAccountBox: {
     flexDirection: "row",

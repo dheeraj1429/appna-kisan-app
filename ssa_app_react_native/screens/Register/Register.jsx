@@ -277,7 +277,7 @@ function Register({ navigation }) {
                         value={name}
                         onChangeText={(value) => setOwnerName(value.replace(/[^a-zA-Z ]/g, ''))}
                         maxLength={20}
-                        style={styles.commonField} placeholder='Owner Name' />
+                        style={styles.commonField} placeholder='Company Name' />
                       <MaterialCommunityIcons style={styles.commonIcon} name="account-circle" size={20} />
                     </View>
 
@@ -452,7 +452,7 @@ function Register({ navigation }) {
                     </View>
 
                   </View>
-                  <View style={{ height: 300 }}>
+                  <View style={{ height: 150 }}>
 
                   </View>
 

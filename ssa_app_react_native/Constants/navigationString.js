@@ -17,5 +17,8 @@ export default {
     OTP_SCREEN:'OTP_Screen',
     SEND_ENQUIRY:'Send_Enquiry',
     EDIT_PROFILE:'Edit_Profile',
+    UPDATE_PROFILE:'UpdateProfile',
+    REWARDS_SCREEN:'RewardsScreen',
     NEW_ARRIVALS:'New_Arrivals',
+    REDEEM_PROD: 'RedeemProd',
 }
