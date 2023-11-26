@@ -612,11 +612,9 @@ await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/categ
         <EnhancedTableToolbar numSelected={selected.length} countVendor={countVendor} addNewBanner={addNewBanner} />
         <TableContainer  >
           <Table
-          
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
-            
           >
             <EnhancedTableHead
               numSelected={selected.length}
