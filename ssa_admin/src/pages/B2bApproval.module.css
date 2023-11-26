@@ -1,0 +1,27 @@
+.heading {
+    font-size: 30px;
+    color: #3a3a3a;
+}
+.para {
+    color: #434343;
+    font-size: 15px;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    padding: .4rem 0;
+}
+
+.box p {
+    font-size: 14px;
+    color: #434343;
+}
+
+.box .wd_container {
+    width: 150px;
+}
