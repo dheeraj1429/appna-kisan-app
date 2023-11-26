@@ -21,6 +21,7 @@ const Enquiry_Routes = require('./routes/enquiry_routes');
 const Banners_Routes = require('./routes/banners_routes');
 const B2BUser_Routes = require('./routes/b2b_user_routes');
 const Reward_Order_Routes = require('./routes/reward_order_routes');
+const Review_Routes = require('./routes/review_routes');
 
 // App Routes
 const App_All_Routes = require('./routes/app_routes/app_all_routes');
@@ -47,6 +48,7 @@ app.use('/api', Banners_Routes);
 app.use('/api', App_All_Routes);
 app.use('/api', B2BUser_Routes);
 app.use('/api', Reward_Order_Routes);
+app.use('/api', Review_Routes);
 // app.use("/api",UploadImage_Routes);
 
 app.use('/', (req, res) => {

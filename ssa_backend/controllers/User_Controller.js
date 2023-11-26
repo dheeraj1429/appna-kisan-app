@@ -459,9 +459,6 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
   const user = req.user;
   const userData = req.body;
 
-  let updateRes = null;
-  const u = await B2BUser.findById();
-
   switch (userType) {
     case 'b2b': {
       const { data: updateUserData, error } = await verifyB2BAUpdateData(
