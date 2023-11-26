@@ -26,7 +26,7 @@ import Toast from 'react-native-toast-message';
 
 function Otp({route,navigation}) {
     // const {user_name,user_exists} = route.params;
-    const {phoneNumber,user_name,user_exists} = route.params;
+    const {phoneNumber,name,user_exists,email,password} = route.params;
     const [ loading , setLoading ] = useState(false);
     const [ verifyOtpLoading , setVerifyOtpLoading ] = useState(false);
     const [ autoverifyingLoading , setAutoverifyingLoading ] = useState(false);
@@ -216,11 +216,12 @@ function Otp({route,navigation}) {
   // REGISTER USER FUCNC
   const registerUser=async()=>{
     let data = {
-      username:user_name,
-      phone_number:phoneNumber,
+      name:name,
+      mobile:phoneNumber,
+      email:email,
+      password:password
   }
- await axios.post(`${config.BACKEND_URI}/api/app/create/user`,data,{withCredentials:true})
- .then(res=>{
+  await axios.get(`${config.BASE_URL}/app/create/user/b2c`, { withCredentials: true }) .then(res=>{
   console.log(res?.data);
   if(res?.data?.status){
       setItemToLocalStorage('user',res?.data?.user);

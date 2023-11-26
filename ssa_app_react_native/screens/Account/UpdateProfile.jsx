@@ -28,6 +28,7 @@ import { useCallback } from "react";
 import { UseContextState } from "../../global/GlobalContext";
 import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 function UpdateProfile({ route, navigation }) {
@@ -51,27 +52,50 @@ function UpdateProfile({ route, navigation }) {
     transport_detail: ''
   })
 
-  useFocusEffect(
-    useCallback(() => {
-      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id}`, { withCredentials: true })
-        .then(res => {
-          // console.log("RESPONSE=>",res?.data?.user);
-          setEditUserDetails((prev) => ({
-            ...prev,
-            email: res?.data?.user?.email,
-            gst_number: res?.data?.user?.gst_number,
-            address: res?.data?.user?.address,
-            state: res?.data?.user?.state,
-            pincode: `${res?.data?.user?.pincode}`,
-            transport_detail: `${res?.data?.user?.transport_detail}`,
-          }))
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }, [])
-  )
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id}`, { withCredentials: true })
+  //       .then(res => {
+  //         // console.log("RESPONSE=>",res?.data?.user);
+  //         setEditUserDetails((prev) => ({
+  //           ...prev,
+  //           email: res?.data?.user?.email,
+  //           gst_number: res?.data?.user?.gst_number,
+  //           address: res?.data?.user?.address,
+  //           state: res?.data?.user?.state,
+  //           pincode: `${res?.data?.user?.pincode}`,
+  //           transport_detail: `${res?.data?.user?.transport_detail}`,
+  //         }))
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       })
+  //   }, [])
+  // )
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Make an API request
+        const response = await axios.get(BASE_URL,"https://example.com/api/data");
+
+        // Update state with the fetched data
+        setData(response.data);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Error fetching data. Please try again.");
+
+        setLoading(false);
+      }
+    };
+
+    // Call the fetch data function
+    fetchData();
+  }, []); // The empty dependency array ensures the effect runs only once (on mount)
 
 
   const goBack = () => {

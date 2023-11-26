@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity } from "react-native"
 import { config } from '../../config';
 import { Checkbox, Modal, Portal, Provider } from 'react-native-paper';
@@ -33,6 +33,13 @@ function Register({ navigation }) {
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
   };
+
+
+  // useEffect(() => {
+  //   // const xyz = axios.get("")
+
+  //   axios.get('https://api.publicapis.org/entries').then(res => console.log(res))
+  // }, [])
 
   const handleCreateBtnB2B = async () => {
     if (!name.length > 0) {
@@ -137,83 +144,153 @@ function Register({ navigation }) {
     // }
   }
 
+  // const handleCreateBtnB2C = async () => {
+  //   console.log("function called");
+  //   if (!name.length > 0) {
+  //     showToast("Please enter your name!!");
+  //     return;
+  //   }
+  
+  //   if (phoneNumber.length !== 10) {
+  //     showToast("Enter a valid phone number!!");
+  //     return;
+  //   }
+  
+  //   if (email.length < 5) {
+  //     showToast("Please enter a valid email address!!");
+  //     return;
+  //   }
+  
+  //   if (password.length < 4) {
+  //     showToast("Please enter a valid password!!");
+  //     return;
+  //   }
+  
+  //   if (
+  //     phoneNumber.length >= 10 &&
+  //     name.length > 0 &&
+  //     email.length > 0 &&
+  //     password.length > 0 &&
+  //     checked
+  //   ) {
+  //     setLoading(true);
+  //     try {
+  //       console.log("before api");
+  //       const res = await axios.post(
+  //         `${config.BASE_URL}/app/create/user/b2c`,
+  //         { withCredentials: true }
+  //       );
+  
+  //       console.log(res?.data);
+  
+  //       if (!res?.data?.user_exists) {
+  //         setLoading(false);
+  //         console.log("try if");
+  //         navigation.navigate(navigationString.OTP_SCREEN, {
+  //           user_exists: false,
+  //           name: name,
+  //           mobile: `+91 ${phoneNumber}`,
+  //           email: email,
+  //           password: password,
+  //         });
+  //       } else {
+  //         setLoading(false);
+  //         setModalVisible(true);
+  //         console.log("try else");
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //       setLoading(false);
+  //       console.log("catch");
+  //     }
+  
+  //     console.log("Name:", name);
+  //     console.log("Phone Number:", phoneNumber);
+  //     console.log("Email:", email);
+  //     console.log("Password:", password);
+  //     console.log("Address:", address);
+  
+  //     // setLoading(false);
+  //   } else {
+  //     showToast("Enter a valid phone number!!");
+  //   }
+  // };
+  
   const handleCreateBtnB2C = async () => {
-    if (!name.length > 0) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Please enter your name!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
+    if (!isFieldValid(name, "Name")) return;
+    if (!isFieldValid(phoneNumber, "Phone Number", 10)) return;
+    if (!isFieldValid(email, "Email", 5, "email")) return;
+    if (!isFieldValid(password, "Password", 4)) return;
+  
+    setLoading(true);
+  console.log(config.BASE_URL);
+    try {
+      const response = await axios.post(
+        `${config.BASE_URL}/app/create/user/b2c`,
+        {
+          name: name,
+          email: email,
+          mobile: phoneNumber,
+          password: password,
+        },
+        { withCredentials: true }
       );
-      return;
-    }
-    if (phoneNumber.length != 10) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Enter a Valid Phone number!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
-      return;
-    }
-    if (email.length < 5) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Please enter valid email address!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
-      return;
-    }
-    if (password.length < 4) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Please enter valid paasword!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
-      return;
-    }
-    if (phoneNumber.length >= 10 && name.length > 0 && email.length > 0 && password.length > 0 && checked) {
-      setLoading(true)
-      // await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
-      //   .then(res => {
-      //     console.log(res?.data)
-      //     if (!res?.data?.user_exists) {
-      //       setLoading(false);
-      //       navigation.navigate(navigationString.OTP_SCREEN, { user_exists: false, user_name: name, phoneNumber: `+91 ${phoneNumber}` });
-      //     } else {
-      //       setLoading(false);
-      //       setModalVisible(true);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     setLoading(false);
-      //   })
-      console.log("Name:", name);
-      console.log("Phone Number:", phoneNumber);
-      console.log("Email:", email);
-      console.log("Password:", password);
-      console.log("address:", address);
+  
+      console.log(response.data);
+  
+      if (response.status === 200) {
+        setLoading(false);
+        console.log(response.data.data);
+        console.log("API call successful");
+        // Handle successful API response here
+      } else if (response.status === 422) {
       setLoading(false);
+      console.log("Validation error");
+      // Handle validation error, possibly by displaying error messages
+      console.log(response.data); // Assuming the server provides validation error details
+    }  else {
+        setLoading(false);
+        console.log("API call failed");
+        // Handle API failure if needed
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error in API call:", error.response);
+      // Handle API error if needed
     }
-    // else{
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     "Enter a Valid Phone number!!",
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.CENTER,
-    //     25,
-    //     50
-    //   );
-
-    // }
-  }
-
+  };
+  
+  const isFieldValid = (value, fieldName, minLength, fieldType) => {
+    if (!value || value.length < minLength) {
+      showToast(`Please enter a valid ${fieldName}!`);
+      return false;
+    }
+  
+    if (fieldType === "email" && !isValidEmail(value)) {
+      showToast("Please enter a valid email address!");
+      return false;
+    }
+  
+    return true;
+  };
+  
+  const isValidEmail = (email) => {
+    // Add your email validation logic here
+    // For a simple example, we'll just check for the presence of '@'
+    return email.includes("@");
+  };
+  
+  const showToast = (message) => {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER,
+      25,
+      50
+    );
+  };
+  
+  
   const goToLogin = () => {
     navigation.navigate(navigationString.LOGIN)
   }
@@ -468,7 +545,10 @@ function Register({ navigation }) {
                   </View>
 
                   <TouchableOpacity
-                    onPress={handleCreateBtnB2C}
+                    onPress={() => {
+                      handleCreateBtnB2C();
+                      console.log("button Clicked");
+                    }}
                     activeOpacity={0.8} style={styles.signUpBtn} >
                     <Text style={styles.signInText} >
                       Create and Verify
