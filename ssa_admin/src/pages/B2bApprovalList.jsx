@@ -16,36 +16,37 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 function B2bApprovalList() {
   const [page, setPage] = useState(0)
+  const [userLists, setUserList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [totalPages, setTotalPages] = useState(0)
   const navigation = useNavigate()
 
   const getAccountsHandler = async function() {
     try {
       setIsLoading(true)
-      const response = await getAllB2bApprovalAccounts()
-      console.log(response)
+      const response = await getAllB2bApprovalAccounts({ page })
       if(response) {
         setIsLoading(false)
+        const { data, totalPages } = response.data
+        const rows = data.map(item => ({
+          _id: item._id,
+          owner_name: item.owner_name,
+          mobile: item?.mobile,
+          company_name: item?.company_name,
+          email: item?.email,
+          is_approved: item?.is_approved
+        }))
+        setTotalPages(totalPages)
+        setUserList(rows)
       }
     }catch(err) {
       setIsLoading(false)
       console.log('some error occurred')
     }
   }
+
 
   useEffect(() => {
     getAccountsHandler()
@@ -58,30 +59,30 @@ function B2bApprovalList() {
       <Table sx={{ minWidth: 650 }} size="medium" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat</TableCell>
-            <TableCell align="right">Carbs</TableCell>
-            <TableCell align="right">Protein</TableCell>
+            <TableCell>Owner name</TableCell>
+            <TableCell align="right">Mobile</TableCell>
+            <TableCell align="right">Company name</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">Approved</TableCell>
             <TableCell align="right">Options</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {userLists.map((row) => (
             <TableRow
-              key={row.name}
+              key={row?._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope='row'>
-                {row.name}
+                {row?.owner_name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row?.mobile}</TableCell>
+              <TableCell align="right">{row?.company_name}</TableCell>
+              <TableCell align="right">{row?.email}</TableCell>
+              <TableCell align="right">{row?.is_approved ? 'Yes' : 'No'}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Edit" placement='top'>
-                    <IconButton onClick={() => navigation(`/dashboard/b2b-approval/1`)}>
+                    <IconButton onClick={() => navigation(`/dashboard/b2b-approval/${row?._id}`)}>
                       <EditIcon fontSize='small' />
                     </IconButton>
                 </Tooltip>
@@ -94,7 +95,7 @@ function B2bApprovalList() {
     <Stack display={'flex'} alignItems={'end'} justifyContent={'end'}>
       <Stack direction="row" spacing={1} marginTop={1}>
         <Button onClick={() => setPage(prev => prev - 1)} disabled={!page ? true : false} startIcon={<NavigateBeforeIcon />} color='primary' variant='contained' size='small'>Prev</Button>
-        <Button onClick={() => setPage(prev => prev + 1)} endIcon={<NavigateNextIcon />} color='primary' variant="contained" size='small'>Next</Button>
+        <Button disabled={totalPages && totalPages > page ? false : true} onClick={() => setPage(prev => prev + 1)} endIcon={<NavigateNextIcon />} color='primary' variant="contained" size='small'>Next</Button>
       </Stack>
     </Stack>
     </div>

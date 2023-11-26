@@ -20,4 +20,5 @@ export default {
     UPDATE_PROFILE:'UpdateProfile',
     REWARDS_SCREEN:'RewardsScreen',
     NEW_ARRIVALS:'New_Arrivals',
+    REDEEM_PROD: 'RedeemProd',
 }
