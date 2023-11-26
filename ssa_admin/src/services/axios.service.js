@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://catfact.ninja'
+    baseURL: process.env.REACT_APP_BACKEND_URL
 })
 
 axios.interceptors.request.use(function (config) {
