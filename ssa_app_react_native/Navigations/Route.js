@@ -24,6 +24,7 @@ import UpdateProfile from "../screens/Account/UpdateProfile";
 import RewardsScreen from "../screens/Rewards/RewardsScreen";
 import NewArrivals from "../screens/NewArrivals/NewArrivals";
 import ViewOrder from "../screens/Orders/ViewOrder";
+import RedeemProd from "../screens/Rewards/RedeemProd";
 import Account from "../screens/Account/Account";
 
 // const Stack = createNativeStackNavigator()
@@ -89,7 +90,12 @@ function Route() {
         tabBarHideOnKeyboard:true
       }}
     >
+<<<<<<< HEAD
 <Stack.Screen name={navigationString.ACCOUNT}   component={Account}  options={{
+=======
+    
+<Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
+>>>>>>> 11ae63a2cd251aa9dfcfe5260192efcd968072ad
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
@@ -106,6 +112,11 @@ function Route() {
           CardStyleInterpolators.forHorizontalIOS,
       }} />
        <Stack.Screen name={navigationString.REWARDS_SCREEN}   component={RewardsScreen}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+      
+      <Stack.Screen name={navigationString.REDEEM_PROD}   component={RedeemProd}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />

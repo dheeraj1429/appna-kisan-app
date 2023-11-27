@@ -28,7 +28,7 @@ import { useCallback } from "react";
 import { UseContextState } from "../../global/GlobalContext";
 import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function UpdateProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false)
@@ -51,27 +51,50 @@ function UpdateProfile({ route, navigation }) {
     transport_detail: ''
   })
 
-  useFocusEffect(
-    useCallback(() => {
-      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id}`, { withCredentials: true })
-        .then(res => {
-          // console.log("RESPONSE=>",res?.data?.user);
-          setEditUserDetails((prev) => ({
-            ...prev,
-            email: res?.data?.user?.email,
-            gst_number: res?.data?.user?.gst_number,
-            address: res?.data?.user?.address,
-            state: res?.data?.user?.state,
-            pincode: `${res?.data?.user?.pincode}`,
-            transport_detail: `${res?.data?.user?.transport_detail}`,
-          }))
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }, [])
-  )
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id}`, { withCredentials: true })
+  //       .then(res => {
+  //         // console.log("RESPONSE=>",res?.data?.user);
+  //         setEditUserDetails((prev) => ({
+  //           ...prev,
+  //           email: res?.data?.user?.email,
+  //           gst_number: res?.data?.user?.gst_number,
+  //           address: res?.data?.user?.address,
+  //           state: res?.data?.user?.state,
+  //           pincode: `${res?.data?.user?.pincode}`,
+  //           transport_detail: `${res?.data?.user?.transport_detail}`,
+  //         }))
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       })
+  //   }, [])
+  // )
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Make an API request
+        const response = await axios.get(BASE_URL,"https://example.com/api/data");
+
+        // Update state with the fetched data
+        setData(response.data);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Error fetching data. Please try again.");
+
+        setLoading(false);
+      }
+    };
+
+    // Call the fetch data function
+    fetchData();
+  }, []); // The empty dependency array ensures the effect runs only once (on mount)
 
 
   const goBack = () => {
@@ -242,26 +265,51 @@ function UpdateProfile({ route, navigation }) {
               borderRadius: 270
             }}>
 
-              <ImageBackground source={require('../../assets/personimage.jpeg')} resizeMode="cover" style={{
-                width: "100%",
-                height: "100%",
-                borderColor: "white",
-                borderWidth: 2,
-                borderRadius: 270,
-                overflow: "hidden" // Ensure the content is clipped to the rounded border
-              }}>
+              <ImageBackground
+                source={require('../../assets/personimage.jpeg')}
+                resizeMode="cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderColor: "white",
+                  borderWidth: 2,
+                  borderRadius: 270,
+                  overflow: "hidden" // Ensure the content is clipped to the rounded border
+                }}
+              >
                 <TouchableOpacity
-                onPress={() => {
-                  Alert.alert(
-                    'Button Pressed',
-                    'You pressed the TouchableOpacity!',
-                    [
-                      { text: 'OK', onPress: () => console.log('OK Pressed') }
-                    ],
-                    { cancelable: false }
-                  );
-                }}>
-                  <MaterialCommunityIcons style={{ position: "absolute", top: 28, left: "75%", transform: [{ translateX: -10 }], zIndex: 1 }} name="camera" size={28} color={"white"} />
+                  onPress={() => {
+                    Alert.alert(
+                      'Button Pressed',
+                      'You pressed the Camera!',
+                      [
+                        { text: 'OK', onPress: () => console.log('OK Pressed') }
+                      ],
+                      { cancelable: false }
+                    );
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    // style={{
+                    //   position: "absolute",
+                    //   top: "50%",
+                    //   left: "50%",
+                    //   //transform: [{ translateX: -14, translateY: -14 }], // Adjust based on icon size
+                    //   //zIndex: 1,
+                    //   opacity: 0.5 // Set the opacity to 0.5
+                    // }}
+                    style={{
+                      position: "absolute",
+                      top: 90,
+                      left: "50%",
+                      transform: [{ translateX: -10 }],
+                      zIndex: 1,
+                      opacity: 0.6
+                    }}
+                    name="camera"
+                    size={28}
+                    color={"white"}
+                  />
                 </TouchableOpacity>
               </ImageBackground>
 
@@ -273,10 +321,10 @@ function UpdateProfile({ route, navigation }) {
               <MaterialCommunityIcons style={styles.commonIcon} name="account" size={20} />
             </View>
 
-            <View style={styles.commonFieldContainer} >
+            {/* <View style={styles.commonFieldContainer} >
               <TextInput onChangeText={value => handleChange(value, 'email')} value={editUserDetails?.email} textContentType='emailAddress' style={{ ...styles.commonField, paddingRight: 16, textTransform: 'lowercase' }} placeholder='Email Address ' />
               <MaterialIcons style={styles.commonIcon} name="email" size={20} />
-            </View>
+            </View> */}
             <View style={styles.commonFieldContainer}>
               <TextInput
                 style={styles.commonField}
