@@ -90,7 +90,6 @@ function Route() {
         tabBarHideOnKeyboard:true
       }}
     >
-    
 <Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,

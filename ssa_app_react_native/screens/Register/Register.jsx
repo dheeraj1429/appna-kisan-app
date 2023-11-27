@@ -53,6 +53,16 @@ function Register({ navigation }) {
       );
       return;
     }
+    if (!ownerName.length > 0) {
+      ToastAndroid.showWithGravityAndOffset(
+        "Please enter Company name!!",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+      return;
+    }
     if (!gstNum.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter GST number!!",
@@ -103,8 +113,48 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && address.length > 0 && email.length > 0 && password.length > 0 && checked) {
+    if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
       setLoading(true)
+      try {
+        const response = await axios.post(
+          `${config.BASE_URL}/app/create/user/b2b`,
+          {
+            name: name,
+            email: email,
+            owner_name: ownerName,
+            mobile: phoneNumber,
+            password: password,
+            address: address,
+            pan:panNum,
+            aaadhaar:aadharNum,
+            gstNo: gstNum,
+          },
+          { withCredentials: true }
+        );
+    
+        console.log(response.data);
+    
+        if (response.status === 200) {
+          setLoading(false);
+          console.log(response.data.data);
+          console.log("API call successful");
+          // Handle successful API response here
+        } else if (response.status === 422) {
+        setLoading(false);
+        console.log("Validation error");
+        // Handle validation error, possibly by displaying error messages
+        console.log(response.data); // Assuming the server provides validation error details
+      }  else {
+          setLoading(false);
+          console.log("API call failed");
+          // Handle API failure if needed
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error in API call:", error.response);
+        Alert.alert(error.message);
+        // Handle API error if needed
+      }
       // await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
       //   .then(res => {
       //     console.log(res?.data)
@@ -188,16 +238,6 @@ function Register({ navigation }) {
       setLoading(false);
 
     }
-    // else{
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     "Enter a Valid Phone number!!",
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.CENTER,
-    //     25,
-    //     50
-    //   );
-
-    // }
   }
 
   // const handleCreateBtnB2C = async () => {
@@ -319,7 +359,11 @@ function Register({ navigation }) {
     } catch (error) {
       setLoading(false);
       console.error("Error in API call:", error.response);
+<<<<<<< HEAD
       Alert.alert(error.response);
+=======
+      Alert.alert(error.message);
+>>>>>>> 56c7fe80c01401541d3fbe2befc1c591209dda1b
       // Handle API error if needed
     }
   };
@@ -500,9 +544,14 @@ function Register({ navigation }) {
                       <TextInput keyboardType='default'
                       value={address}
                         style={styles.commonField}
+                        value={address}
                         placeholder='Address'
                         onChangeText={(value) => setAddress(value)}
+<<<<<<< HEAD
                       />
+=======
+                        />
+>>>>>>> 56c7fe80c01401541d3fbe2befc1c591209dda1b
                       <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
                     </View>
 
