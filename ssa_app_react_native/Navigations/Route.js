@@ -116,6 +116,8 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
+      <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
+
     </Stack.Navigator>
     }
 

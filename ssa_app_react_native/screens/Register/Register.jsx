@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native"
 import { config } from '../../config';
 import { Checkbox, Modal, Portal, Provider } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,8 +9,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import navigationString from '../../Constants/navigationString';
 import axios from 'axios';
-
-
+import { UseContextState } from '../../global/GlobalContext';
+import { clearLocalStorage, setItemToLocalStorage } from '../../Utils/localstorage';
 function Register({ navigation }) {
   const [checked, setChecked] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -25,6 +25,7 @@ function Register({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('B2B');
+  const {authState,fetchAuthuser} = UseContextState();
 
   const goBack = () => {
     navigation.goBack();
@@ -72,7 +73,7 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (address.length != 4) {
+    if (address.length < 4) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter address!!",
         ToastAndroid.LONG,
@@ -119,7 +120,62 @@ function Register({ navigation }) {
       //     console.log(err);
       //     setLoading(false);
       //   })
-
+      try {
+        const response = await axios.post(
+          `${config.BASE_URL}/app/create/user/b2b`,
+          {
+            name: name,
+            ownerName: ownerName,
+            email: email,
+            mobile: phoneNumber,
+            password: password,
+            address: address,
+            pan: {
+              number: panNum,
+              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+            },
+            aadhaar: {
+              number: aadharNum,
+              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+            },
+            gstNo: {
+              number: gstNum, // Replace with the GST number you want to send
+              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+            },
+          },
+          { withCredentials: true }
+        );
+        console.log("response",response);
+  
+        //console.log("response.data",response.data);
+    
+        if (response.status === 200) {
+          setLoading(false);
+          console.log("response.data",response.data);
+          console.log("API call successful");
+          //navigation.navigate(navigationString.LOGIN);
+          //setItemToLocalStorage('user',response?.data?.user);
+          //setUserId('')
+          fetchAuthuser();
+          //showToast()
+          navigation.navigate(navigationString.LOGIN);
+          // Handle successful API response here
+        } else if (response.status === 422) {
+        setLoading(false);
+        console.log("Validation error");
+        // Handle validation error, possibly by displaying error messages
+        console.log(response.data); // Assuming the server provides validation error details
+      }  else {
+          setLoading(false);
+          console.log("API call failed");
+          // Handle API failure if needed
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error in API call:", error.response);
+        Alert.alert(error.response);
+        // Handle API error if needed
+      }
       console.log("Name:", name);
       console.log("Owner Name:", ownerName);
       console.log("Phone Number:", phoneNumber);
@@ -235,13 +291,20 @@ function Register({ navigation }) {
         },
         { withCredentials: true }
       );
-  
-      console.log(response.data);
+      console.log("response",response);
+
+      console.log("response.data",response.data);
   
       if (response.status === 200) {
         setLoading(false);
-        console.log(response.data.data);
+        console.log("response.data.data",response.data.data);
         console.log("API call successful");
+        //navigation.navigate(navigationString.LOGIN);
+        //setItemToLocalStorage('user',response?.data?.user);
+        //setUserId('')
+        fetchAuthuser();
+        //showToast()
+        navigation.navigate(navigationString.LOGIN);
         // Handle successful API response here
       } else if (response.status === 422) {
       setLoading(false);
@@ -256,6 +319,7 @@ function Register({ navigation }) {
     } catch (error) {
       setLoading(false);
       console.error("Error in API call:", error.response);
+      Alert.alert(error.response);
       // Handle API error if needed
     }
   };
@@ -351,8 +415,8 @@ function Register({ navigation }) {
                     </View>
                     <View style={styles.commonFieldContainer} >
                       <TextInput
-                        value={name}
-                        onChangeText={(value) => setOwnerName(value.replace(/[^a-zA-Z ]/g, ''))}
+                        value={ownerName}
+                        onChangeText={(value) => setOwnerName(value)}
                         maxLength={20}
                         style={styles.commonField} placeholder='Company Name' />
                       <MaterialCommunityIcons style={styles.commonIcon} name="account-circle" size={20} />
@@ -434,9 +498,10 @@ function Register({ navigation }) {
 
                     <View style={styles.commonFieldContainer} >
                       <TextInput keyboardType='default'
+                      value={address}
                         style={styles.commonField}
                         placeholder='Address'
-                        onChangeText={(value) => setAddress(value.replace(/[^a-zA-Z0-9 ,.-]/g, ''))}
+                        onChangeText={(value) => setAddress(value)}
                       />
                       <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
                     </View>

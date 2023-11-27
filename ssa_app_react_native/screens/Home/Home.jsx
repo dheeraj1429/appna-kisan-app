@@ -142,7 +142,7 @@ function Home({ navigation }) {
 
       </ScrollView>
       <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end",marginRight:"2%" }}>
-        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={30} color={config.primaryColor} />
+        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={50} color={config.primaryColor} />
       </View>
     </View>
   );

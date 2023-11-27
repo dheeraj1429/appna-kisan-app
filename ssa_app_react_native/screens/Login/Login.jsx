@@ -35,7 +35,7 @@ function Login({ navigation }) {
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
   };
-  console.log('phoneNumber', phoneNumber);
+  //console.log('phoneNumber', phoneNumber);
 
   const goBack = () => {
     // navigation.goBack();
@@ -44,27 +44,53 @@ function Login({ navigation }) {
   const handleSignupPhone = async () => {
     if (phoneNumber.length >= 10) {
 
-      await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
-        .then(res => {
-          console.log(res?.data)
-          if (res?.data?.user_exists) {
-            setLoading(false);
-            navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${phoneNumber}` });
-          } else {
-            setLoading(false);
-            setModalVisible(true)
-          }
-        })
-        .catch(err => {
-          console.log(err);
+      try {
+        const response = await axios.post(
+          `${config.BASE_URL}/app/login/user/b2b/b2c`,
+          {
+            email: email,
+            mobile: phoneNumber,
+            password: password,
+          },
+          { withCredentials: true }
+        );
+        console.log("response",response);
+  
+        //console.log("response.data",response.data);
+    
+        if (response.status === 200) {
           setLoading(false);
-        })
+          console.log("response.data",response.data);
+          console.log("API call successful");
+          //navigation.navigate(navigationString.LOGIN);
+          //setItemToLocalStorage('user',response?.data?.user);
+          //setUserId('')
+          fetchAuthuser();
+          //showToast()
+          navigation.navigate(navigationString.HOME);
+          // Handle successful API response here
+        } else if (response.status === 422) {
+        setLoading(false);
+        console.log("Validation error");
+        // Handle validation error, possibly by displaying error messages
+        console.log(response.data); // Assuming the server provides validation error details
+      }  else {
+          setLoading(false);
+          console.log("API call failed");
+          // Handle API failure if needed
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error in API call:", error.response);
+        Alert.alert(error.response);
+        // Handle API error if needed
+      }
 
       // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
     }
     else {
       ToastAndroid.showWithGravityAndOffset(
-        "Enter a Valid Phone number!!",
+        "Enter a Valid Credentials!!",
         ToastAndroid.LONG,
         ToastAndroid.CENTER,
         25,
@@ -75,27 +101,41 @@ function Login({ navigation }) {
   }
 
   const handleSignup = async () => {
-    if ((email.length >= 5 && password.length >= 4 )|| password.length > 4) {
+      if ((email && password.length >= 4) || phoneNumber ) 
+      {
 
-      await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
-        .then(res => {
-          console.log(res?.data)
-          if (res?.data?.user_exists) {
-            setLoading(false);
-            navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${phoneNumber}` });
-          } else {
-            setLoading(false);
-            setModalVisible(true)
-          }
-        })
-        .catch(err => {
-          console.log(err);
+      try {
+        const response = await axios.post(
+          `${config.BASE_URL}/app/login/user/b2b/b2c`,
+          {
+            email: email || undefined, // Use email if provided, otherwise undefined
+            mobile: phoneNumber || undefined, // Use phoneNumber if provided, otherwise undefined
+            password: password || undefined,
+          },
+          { withCredentials: true }
+        );
+        console.log("response", response);
+  
+        if (response.status === 200) {
           setLoading(false);
-        })
-
-      // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
-    }
-    else {
+          console.log("response.data", response.data);
+          console.log("API call successful");
+          //fetchAuthuser();
+          navigation.navigate(navigationString.TAB_ROUTE);
+        } else if (response.status === 422) {
+          setLoading(false);
+          console.log("Validation error");
+          console.log(response.data);
+        } else {
+          setLoading(false);
+          console.log("API call failed");
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error in API call:", error.response);
+        Alert.alert(error.response);
+      }
+    } else {
       ToastAndroid.showWithGravityAndOffset(
         "Enter a Valid Credentials",
         ToastAndroid.LONG,
@@ -103,9 +143,9 @@ function Login({ navigation }) {
         25,
         50
       );
-
     }
-  }
+  };
+  
   const goToRegister = () => {
     navigation.navigate(navigationString.REGISTER)
   }
