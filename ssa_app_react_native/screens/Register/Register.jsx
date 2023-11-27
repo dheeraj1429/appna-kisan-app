@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native"
 import { config } from '../../config';
 import { Checkbox, Modal, Portal, Provider } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -52,6 +52,16 @@ function Register({ navigation }) {
       );
       return;
     }
+    if (!ownerName.length > 0) {
+      ToastAndroid.showWithGravityAndOffset(
+        "Please enter Company name!!",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+      return;
+    }
     if (!gstNum.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter GST number!!",
@@ -72,7 +82,7 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (address.length != 4) {
+    if (address.length < 4) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter address!!",
         ToastAndroid.LONG,
@@ -102,8 +112,48 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && address.length > 0 && email.length > 0 && password.length > 0 && checked) {
+    if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
       setLoading(true)
+      try {
+        const response = await axios.post(
+          `${config.BASE_URL}/app/create/user/b2b`,
+          {
+            name: name,
+            email: email,
+            owner_name: ownerName,
+            mobile: phoneNumber,
+            password: password,
+            address: address,
+            pan:panNum,
+            aaadhaar:aadharNum,
+            gstNo: gstNum,
+          },
+          { withCredentials: true }
+        );
+    
+        console.log(response.data);
+    
+        if (response.status === 200) {
+          setLoading(false);
+          console.log(response.data.data);
+          console.log("API call successful");
+          // Handle successful API response here
+        } else if (response.status === 422) {
+        setLoading(false);
+        console.log("Validation error");
+        // Handle validation error, possibly by displaying error messages
+        console.log(response.data); // Assuming the server provides validation error details
+      }  else {
+          setLoading(false);
+          console.log("API call failed");
+          // Handle API failure if needed
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error in API call:", error.response);
+        Alert.alert(error.message);
+        // Handle API error if needed
+      }
       // await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
       //   .then(res => {
       //     console.log(res?.data)
@@ -132,16 +182,6 @@ function Register({ navigation }) {
       setLoading(false);
 
     }
-    // else{
-    //   ToastAndroid.showWithGravityAndOffset(
-    //     "Enter a Valid Phone number!!",
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.CENTER,
-    //     25,
-    //     50
-    //   );
-
-    // }
   }
 
   // const handleCreateBtnB2C = async () => {
@@ -256,6 +296,7 @@ function Register({ navigation }) {
     } catch (error) {
       setLoading(false);
       console.error("Error in API call:", error.response);
+      Alert.alert(error.message);
       // Handle API error if needed
     }
   };
@@ -351,8 +392,8 @@ function Register({ navigation }) {
                     </View>
                     <View style={styles.commonFieldContainer} >
                       <TextInput
-                        value={name}
-                        onChangeText={(value) => setOwnerName(value.replace(/[^a-zA-Z ]/g, ''))}
+                        value={ownerName}
+                        onChangeText={(value) => setOwnerName(value)}
                         maxLength={20}
                         style={styles.commonField} placeholder='Company Name' />
                       <MaterialCommunityIcons style={styles.commonIcon} name="account-circle" size={20} />
@@ -435,9 +476,10 @@ function Register({ navigation }) {
                     <View style={styles.commonFieldContainer} >
                       <TextInput keyboardType='default'
                         style={styles.commonField}
+                        value={address}
                         placeholder='Address'
-                        onChangeText={(value) => setAddress(value.replace(/[^a-zA-Z0-9 ,.-]/g, ''))}
-                      />
+                        onChangeText={(value) => setAddress(value)}
+                        />
                       <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
                     </View>
 
