@@ -80,7 +80,7 @@ function Route({navigation}) {
 
   return (
       <Tabs.Navigator
-        initialRouteName="Home"
+        initialRouteName="Account"
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,

@@ -21,16 +21,20 @@ import navigationString from "../../Constants/navigationString";
 import { setItemToLocalStorage } from "../../Utils/localstorage";
 import axios from "axios";
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import { UseContextState } from "../../global/GlobalContext";
 
 function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState('PhoneNumber');
+  const {authState,fetchAuthuser} = UseContextState();
+  const [details, setDetails] = useState([]);
 
   const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
+  const { setUserData } = UseContextState();
 
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
@@ -106,22 +110,32 @@ function Login({ navigation }) {
 
       try {
         const response = await axios.post(
-          `${config.BASE_URL}/app/login/user/b2b/b2c`,
+          // `${config.BASE_URL}login/user/b2b/b2c`,
+          `https://whale-app-88bu8.ondigitalocean.app/api/app/login/user/b2b/b2c`,
           {
             email: email || undefined, // Use email if provided, otherwise undefined
             mobile: phoneNumber || undefined, // Use phoneNumber if provided, otherwise undefined
             password: password || undefined,
+            userType: "B2C"
           },
           { withCredentials: true }
         );
-        console.log("response", response);
+        console.log("response in login", response);
   
         if (response.status === 200) {
           setLoading(false);
           console.log("response.data", response.data);
-          console.log("API call successful");
+          // console.log("API call successful");
           //fetchAuthuser();
+          //const userData = response.data;
+          //fetchAuthuser(userData);
+
+          // setDetails(response.data);
+          // console.log("response.data.accessToken", response.data.accessToken);
+          // console.log("response.data.user.id", response.data.user._id);
           navigation.navigate(navigationString.TAB_ROUTE);
+          // navigation.navigate(navigationString.TAB_ROUTE, { details });
+
         } else if (response.status === 422) {
           setLoading(false);
           console.log("Validation error");
@@ -133,7 +147,7 @@ function Login({ navigation }) {
       } catch (error) {
         setLoading(false);
         console.error("Error in API call:", error.response);
-        Alert.alert(error.response);
+        //Alert.alert(error.response);
       }
     } else {
       ToastAndroid.showWithGravityAndOffset(

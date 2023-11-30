@@ -29,12 +29,44 @@ import { UseContextState } from "../../global/GlobalContext";
 import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';
 
 function UpdateProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false)
   const { authState, fetchAuthuser } = UseContextState();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState('');
+  const [apiResponse, setApiResponse] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImagePicker = async () => {
+    try {
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.cancelled) {
+        setSelectedImage(result.uri);
+        setIsImagePickerOpen(false); // Close the image picker after selecting an image
+      }
+    } catch (error) {
+      console.error("Error picking image:", error);
+    }
+  };
+
+
 
   // console.log(authState,"authState")
   const [editUserDetails, setEditUserDetails] = useState({
@@ -72,29 +104,59 @@ function UpdateProfile({ route, navigation }) {
   //   }, [])
   // )
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoading(true);
 
-        // Make an API request
-        const response = await axios.get(BASE_URL,"https://example.com/api/data");
+  //       // Make an API request
+  //       const response = await axios.get(BASE_URL, "https://example.com/api/data");
 
-        // Update state with the fetched data
-        setData(response.data);
+  //       // Update state with the fetched data
+  //       setData(response.data);
 
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Error fetching data. Please try again.");
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       setError("Error fetching data. Please try again.");
 
-        setLoading(false);
-      }
-    };
+  //       setLoading(false);
+  //     }
+  //   };
 
-    // Call the fetch data function
-    fetchData();
-  }, []); // The empty dependency array ensures the effect runs only once (on mount)
+  //   // Call the fetch data function
+  //   fetchData();
+  // }, []); // The empty dependency array ensures the effect runs only once (on mount)
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       setLoading(true);
+
+  //       // Make an API request to get user details
+  //       const response = await axios.get(`https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info/${authState?.user?.user_id}`, { withCredentials: true });
+
+  //       // Update the user details in the state
+  //       setEditUserDetails((prev) => ({
+  //         ...prev,
+  //         email: response?.data?.user?.email,
+  //         gst_number: response?.data?.user?.gst_number,
+  //         address: response?.data?.user?.address,
+  //         state: response?.data?.user?.state,
+  //         pincode: `${response?.data?.user?.pincode}`,
+  //         transport_detail: `${response?.data?.user?.transport_detail}`,
+  //       }));
+
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   // Call the fetchUserData function
+  //   fetchUserData();
+  // }, [authState?.user?.user_id]);
 
 
   const goBack = () => {
@@ -234,6 +296,81 @@ function UpdateProfile({ route, navigation }) {
     )
   }, [editUserDetails?.state])
 
+  // const userInfo = async () => {
+  //   try {
+  //     const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY4NDg2YWI4YzYyYjFjNDc5YzllMmUiLCJuYW1lIjoiVmluYXkiLCJ1c2VyVHlwZSI6IkIyQyIsImlhdCI6MTcwMTMzMzA5OH0.DyM6Cv_VHo2gfh8bDAw5ZtowWv7M2YSRBItLd5qoGCI',
+  //       },
+  //       body: JSON.stringify({
+  //         mobile: "8462971629",
+  //         password: "Vinay@1234",
+  //         userType: "B2C"
+  //     }),
+  //     });
+
+  //     console.log('Response status:', response.status);
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+
+  //       if (data && data.success) {
+  //         return data;
+  //       } else {
+  //         console.log('API returned an error:', data ? data.error : 'No data received');
+  //       }
+  //     } else {
+  //       console.log('UserInfo HTTP request failed with status:', response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching Details:', error.message);
+  //   }
+  // };
+  const userInfo = async () => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY4NDg2YWI4YzYyYjFjNDc5YzllMmUiLCJuYW1lIjoiVmluYXkiLCJ1c2VyVHlwZSI6IkIyQyIsImlhdCI6MTcwMTMzMzA5OH0.DyM6Cv_VHo2gfh8bDAw5ZtowWv7M2YSRBItLd5qoGCI',
+        },
+      });
+
+      console.log('Response in update profile:', response);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data && data.success) {
+          return data;
+        } else {
+          console.log('API returned an error:', data ? data.error : 'No data received');
+        }
+      } else {
+        console.log('UserInfo HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching Details:', error.message);
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const response = await userInfo();
+        setApiResponse(response);
+        console.log("UserInfo", response);
+        return response; // Add this line if you want to return the response
+      } catch (error) {
+        Alert.alert('Error fetching UserInfo:', error);
+      }
+    };
+
+    fetchList();
+  }, []);
 
 
   return (
@@ -246,11 +383,11 @@ function UpdateProfile({ route, navigation }) {
             <Text style={styles.headingText} >Edit Profile</Text>
             <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
           </View>
-
+          {/* 
           {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
             <ActivityIndicator color={config.primaryColor} size='large' />
           </View>
-          }
+          } */}
 
           <View style={styles.commonFieldMainBox} >
             <View style={{
@@ -265,7 +402,7 @@ function UpdateProfile({ route, navigation }) {
               borderRadius: 270
             }}>
 
-              <ImageBackground
+              {/* <ImageBackground
                 source={require('../../assets/personimage.jpeg')}
                 resizeMode="cover"
                 style={{
@@ -311,7 +448,39 @@ function UpdateProfile({ route, navigation }) {
                     color={"white"}
                   />
                 </TouchableOpacity>
+              </ImageBackground> */}
+
+              <ImageBackground
+                source={selectedImage ? { uri: selectedImage } : require('../../assets/personimage.jpeg')}
+                resizeMode="cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderColor: "white",
+                  borderWidth: 2,
+                  borderRadius: 270,
+                  overflow: "hidden"
+                }}
+              >
+                {!isImagePickerOpen && (
+                  <TouchableOpacity onPress={() => handleImagePicker()}>
+                    <MaterialCommunityIcons
+                      style={{
+                        position: "absolute",
+                        top: 90,
+                        left: "50%",
+                        transform: [{ translateX: -10 }],
+                        zIndex: 1,
+                        opacity: 0.6
+                      }}
+                      name="camera"
+                      size={28}
+                      color={"white"}
+                    />
+                  </TouchableOpacity>
+                )}
               </ImageBackground>
+
 
             </View>
 
@@ -337,9 +506,18 @@ function UpdateProfile({ route, navigation }) {
             </View>
 
             {/* address ,state, pincode */}
-            <TouchableOpacity onPress={() => handleEditUser(authState?.user?._id)} activeOpacity={0.8} style={styles.checkoutBtn}>
+            <TouchableOpacity onPress={() => {
+              Alert.alert('Profile updated', ``);
+            }} activeOpacity={0.8} style={styles.checkoutBtn}>
               <Text style={styles.checkouttext}>Update Profile </Text>
             </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => {
+      Alert.alert('Profile updated', ``);
+    }}>
+      <View style={styles.orderButton}>
+        <Text style={styles.orderButtonText}>Redeem Product</Text>
+      </View>
+    </TouchableOpacity> */}
 
           </View>
 

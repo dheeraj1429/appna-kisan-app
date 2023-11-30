@@ -5,5 +5,6 @@ export const config = {
     EMAILJS_SERVICE_ID:'service_r3e5wpa',
     EMAILJS_TEMPLATE_ID:'template_ral5vl8',
     EMAILJS_PUBLIC_KEY:'B1z1ueDowk1uytEMB',
-    BASE_URL: "https://whale-app-88bu8.ondigitalocean.app"
+    BASE_URL: "https://whale-app-88bu8.ondigitalocean.app/api/"
+    //BASE_URL: "https://whale-app-88bu8.ondigitalocean.app"
 }

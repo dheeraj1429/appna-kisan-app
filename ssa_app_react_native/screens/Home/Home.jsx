@@ -12,6 +12,8 @@ import Toast from 'react-native-toast-message';
 import { FlatList } from "react-native-gesture-handler";
 import customer_review from "../../Constants/customer_review";
 import { FontAwesome } from '@expo/vector-icons';
+import { UseContextState } from "../../global/GlobalContext.jsx";
+// import { useRoute } from '@react-navigation/native';
 
 
 export const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -20,6 +22,23 @@ function Home({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [render, setRender] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [apiResponse, setApiResponse] = useState([]);
+  const { fetchAuthuser, authState } = UseContextState();
+
+  const userData = authState.user;
+
+  console.log(userData,"userdat from home page");
+  useEffect(() => {
+    // Call fetchAuthuser to update the user data in the global context
+    fetchAuthuser();
+  }, [fetchAuthuser]);
+
+  // Get the route object
+  // const route = useRoute();
+
+  // Retrieve the apiResponse data from route parameters
+  // const details = route.params?.details;
+  // console.log("details from navigation", details);
 
   const showToast = () => {
     Toast.show({
@@ -28,6 +47,52 @@ function Home({ navigation }) {
       // text2: 'This is some something 👋'
     });
   }
+
+  const reviewlist = async () => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/reviews?page=1', {
+        method: 'GET',
+        // headers: {
+        //   'x-user-type': 'b2c',
+        //   'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYwZGMxZWIxZjg4ODMzMzk5NjU1ZDIiLCJuYW1lIjoiU21hcnR5IiwidXNlclR5cGUiOiJCMkMiLCJpYXQiOjE3MDA5MjM0OTB9.8CqOVeMoVH6wmxq0LjCS1jRBPhQ5MQ8j9WLs-P6mfNA', // Include if required
+        //   // Add any other necessary headers
+        // },
+      });
+
+      console.log('Response:', response);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        if (data.success) {
+          console.log('data:', data);
+
+          return data;
+        } else {
+          console.log('API returned an error:', data.error);
+        }
+      } else {
+        console.log('review list HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Error fetching review List:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchList1 = async () => {
+      try {
+        const response = await reviewlist();
+        setApiResponse(response.reviews); // Assuming response is an array
+        console.log('api response review', apiResponse);
+      } catch (error) {
+        console.log('Error fetching review list:', error);
+      }
+    };
+
+
+    fetchList1();
+
+  }, []);
 
 
   useEffect(() => {
@@ -141,8 +206,8 @@ function Home({ navigation }) {
         {/*============ CUSTOMER REVIEW======== */}
 
       </ScrollView>
-      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end",marginRight:"2%" }}>
-        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={50} color={config.primaryColor} />
+      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end",marginRight:"2%" ,marginBottom:"15%"}}>
+        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={25} color={config.primaryColor} />
       </View>
     </View>
   );

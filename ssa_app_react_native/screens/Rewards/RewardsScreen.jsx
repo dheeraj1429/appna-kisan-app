@@ -38,35 +38,166 @@ function RewardsScreen({ route, navigation }) {
   const { authState, fetchAuthuser } = UseContextState();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState('');
+  const [apiData, setApiData] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [apiResponse, setApiResponse] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const rewardOrderHistory = async () => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
+      // const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
+        method: 'GET',
+      });
+
+      console.log('Response:', response);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        if (data.success) {
+          return data.products;
+        } else {
+          console.log('API returned an error:', data.error);
+        }
+      } else {
+        console.log('Reward order list HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Error fetching Reward Order List:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchList1 = async () => {
+      try {
+        const response = await rewardOrderHistory();
+        setApiResponse(response); // Assuming response is an array
+        console.log('api response', response);
+      } catch (error) {
+        console.log('Error fetching Reward Order list:', error);
+      }
+    };
+
+    fetchList1();
+
+  }, []);
 
   // console.log(authState,"authState")
 
-  const banners = [
-    { image: require('../../assets/banner-green.png'), text: 'Banner 1' },
-    { image: require('../../assets/banner-green.png'), text: 'Banner 2' },
-    { image: require('../../assets/banner-green.png'), text: 'Banner 3' },
-    { image: require('../../assets/banner-green.png'), text: 'Banner 4' },
-    { image: require('../../assets/banner-green.png'), text: 'Banner 5' },
+  // const banners = [
+  //   { image: require('../../assets/banner-green.png'), text: 'Banner 1' },
+  //   { image: require('../../assets/banner-green.png'), text: 'Banner 2' },
+  //   { image: require('../../assets/banner-green.png'), text: 'Banner 3' },
+  //   { image: require('../../assets/banner-green.png'), text: 'Banner 4' },
+  //   { image: require('../../assets/banner-green.png'), text: 'Banner 5' },
 
-  ];
+  // ];
 
-  const scrollViewRef = useRef();
-  const loopedBanners = [...banners, ...banners, ...banners];
+  // const scrollViewRef = useRef();
+  // const loopedBanners = [...banners, ...banners, ...banners];
+
+  // useEffect(() => {
+  //   // Define a function to fetch data from the API
+  //   console.log("useEffect");
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`${config.BASE_URL}/get/rewards/banners`);
+  //       console.log("response", response);
+    
+  //       // Log the response body
+  //       const responseBody = await response.text();
+  //       //console.log("response body", responseBody);
+  //       console.log("response.data", response.data);
+
+  //       if (response.ok) {
+  //         // Handle the response text as needed
+  //         //console.log("data", responseBody);
+  //         // If you need to parse the response as JSON, you can do it here
+  //         //const data = JSON.parse(responseBody);
+  //         //setApiData(data);
+  //       } else {
+  //         console.error('Error fetching data from the API');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+    
+    
+
+  //   // Call the fetchData function when the component mounts
+  //   fetchData();
+  // }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
+  const bannerlist = async () => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/get/rewards/banners', {
+        method: 'GET',
+      });
+
+      //console.log('Response:', response);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        if (data.success) {
+          return data.banners;
+        } else {
+          //console.log('API returned an error:', data.error);
+          Alert.alert('API returned an error:', data.error);
+        }
+      } else {
+        Alert.alert('Banner HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      Alert.alert('Error fetching banner:', error.message);
+    }
+  };
 
   useEffect(() => {
-    const bannerWidth = Dimensions.get('window').width;
-    let currentIndex = 0;
+    const fetchList = async () => {
+      try {
+        const response = await bannerlist();
+        setBanners(response);
+        startAutoSlide();
 
-    const interval = setInterval(() => {
-      if (scrollViewRef.current) {
-        currentIndex = (currentIndex + 1) % loopedBanners.length;
-        const offsetX = currentIndex * bannerWidth;
-        scrollViewRef.current.scrollTo({ x: offsetX, animated: true });
+        console.log("banners",banners);
+      } catch (error) {
+        Alert.alert('Error fetching banner list:', error);
       }
-    }, 2000); // Adjust the interval as needed (in milliseconds)
+    };
 
-    return () => clearInterval(interval);
+    fetchList();
   }, []);
+
+  const startAutoSlide = () => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    }, 2000); // Change the interval as needed (in milliseconds)
+
+    // Save the interval ID to clear it when the component unmounts
+    return intervalId;
+  };
+
+  useEffect(() => {
+    const intervalId = startAutoSlide();
+
+    return () => {
+      clearInterval(intervalId); // Clear the interval when the component is unmounted
+    };
+  }, []);
+  // useEffect(() => {
+  //   const bannerWidth = Dimensions.get('window').width;
+  //   let currentIndex = 0;
+
+  //   const interval = setInterval(() => {
+  //     if (scrollViewRef.current) {
+  //       currentIndex = (currentIndex + 1) % loopedBanners.length;
+  //       const offsetX = currentIndex * bannerWidth;
+  //       scrollViewRef.current.scrollTo({ x: offsetX, animated: true });
+  //     }
+  //   }, 2000); // Adjust the interval as needed (in milliseconds)
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const goBack = () => {
     navigation.goBack();
@@ -122,7 +253,7 @@ function RewardsScreen({ route, navigation }) {
   return (
     <Provider>
       <Portal>
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}>
+        {/* <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}> */}
           <View style={styles.screenContainer}>
             <StatusBar backgroundColor="#fff" />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
@@ -182,7 +313,29 @@ function RewardsScreen({ route, navigation }) {
               </View>
             </TouchableOpacity>
             <Text></Text>
+            <View>
             <ScrollView
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={(event) => {
+              const newIndex = Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width);
+              setCurrentIndex(newIndex);
+            }}
+            style={{ flexDirection: 'row' }}
+          >
+            {banners.map((banner, index) => (
+              <View key={banner._id} style={styles.bannerContainer}>
+                <Image
+                  style={{ width: '100%', height: 200 }}
+                  source={{ uri: banner.image_url }}
+                  resizeMode="cover"
+                />
+              </View>
+            ))}
+          </ScrollView>
+          </View>
+            {/* <ScrollView
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
@@ -195,7 +348,7 @@ function RewardsScreen({ route, navigation }) {
                   </ImageBackground>
                 </View>
               ))}
-            </ScrollView>
+            </ScrollView> */}
             {/* 
           <View style={styles.brandContainer} >
             <View style={styles.brandHeadingBox} >
@@ -225,7 +378,7 @@ function RewardsScreen({ route, navigation }) {
 
           </View>
 
-        </ScrollView>
+        {/* </ScrollView> */}
       </Portal>
     </Provider>
 
@@ -239,6 +392,11 @@ const styles = StyleSheet.create({
   screenContainer: {
     backgroundColor: "white",
     flex: 1,
+  },
+  bannerContainer: {
+    width: Dimensions.get('window').width,
+    height: 200,
+    marginBottom: 20,
   },
   headingText: {
     color: config.primaryColor,

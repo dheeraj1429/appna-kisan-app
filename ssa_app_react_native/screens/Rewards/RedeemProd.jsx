@@ -36,7 +36,53 @@ import ProductCard from "../../components/ProductCard";
 
 function RedeemProd({ route, navigation }) {
   const [loading, setLoading] = useState(false);
+  const [apiResponse, setApiResponse] = useState([]);
+  const [productData, setProductData] = useState(null);
+  const [apiResponse1, setApiResponse1] = useState([]);
+
+
   // console.log(authState,"authState")
+
+  const prodList = async () => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products', {
+        method: 'GET',
+      });
+
+     // console.log('Response:', response);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        if (data.success) {
+          return data.products;
+        } else {
+          Alert.alert('API returned an error:', data.error);
+        }
+      } else {
+        Alert.alert('Prod list HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      Alert.alert('Error fetching Prod List:', error.message);
+    }
+  };
+
+
+
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const response = await prodList();
+        setApiResponse(response); // Assuming response is an array
+        console.log('api response', response);
+      } catch (error) {
+        Alert.alert('Error fetching prod list:', error);
+      }
+    };
+
+
+    fetchList();
+
+  }, []);
 
   const productsData = [
     { id: '1', name: 'Product 1', points: 50, image: require('../../assets/tractor.png') },
@@ -45,59 +91,97 @@ function RedeemProd({ route, navigation }) {
     // Add more products as needed
   ];
 
-  const handleOrderPress = (product) => {
-    Alert.alert('Order Pressed', `You ordered ${product.name}`);
+  const addToCartApi = async (product_id) => {
+    try {
+      const response = await fetch(`https://whale-app-88bu8.ondigitalocean.app/cart/checkout/for/rewards/products`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYwZGMxZWIxZjg4ODMzMzk5NjU1ZDIiLCJuYW1lIjoiU21hcnR5IiwidXNlclR5cGUiOiJCMkMiLCJpYXQiOjE3MDA5MjM0OTB9.8CqOVeMoVH6wmxq0LjCS1jRBPhQ5MQ8j9WLs-P6mfNA', // Include if required
+        },
+        body: JSON.stringify({ 
+          product_id : product_id,
+         }),
+      });
+  console.log("response of add to cart",response);
+      if (response.ok) {
+        const data = await response.json();
+        // Extract relevant information for the alert
+        const alertMessage = data.success ? 'Product added to cart successfully' : data.error;
+        // Display alert with extracted information
+        Alert.alert('Add to Cart', alertMessage);
+      } else {
+        console.error('Failed to add product to cart:', response.status);
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error.message);
+    }
   };
+  
+  
 
   const goBack = () => {
     navigation.goBack();
   };
   // console.log("checkout-> ",editUserDetails)
 
-  const ProductCard = ({ product, onOrderPress }) => (
+  const handleOrderPress = (product) => {
+    // Implement your logic for handling order press
+    const product_id = product.product_id;
+    Alert.alert('Product added to cart:', product);
+
+    // Call the API function
+    //addToCartApi(product_id);
+  };
+
+  const ProductCard = ({ product }) => (
     <View style={styles.cardContainer}>
-      <Image source={product.image} style={styles.productImage} />
-      <Text style={styles.productName}>{product.name}</Text>
-      <Text style={styles.productPoints}>{`Points: ${product.points}`}</Text>
-      <TouchableOpacity onPress={() => onOrderPress(product)}>
-        <View style={styles.orderButton}>
-          <Text style={styles.orderButtonText}>Redeem Product</Text>
-        </View>
-      </TouchableOpacity>
+      <Image source={{ uri: product.product_images[0].image_url }} style={styles.productImage} />
+      <Text style={styles.productName}>{product.product_name}</Text>
+      <Text style={styles.productPoints}>{`Points: ${product.product_reward_points}`}</Text>
+      <TouchableOpacity onPress={() => {
+      // Implement your logic for handling order press directly inside the onPress
+      const productId = product.product_id;
+
+      // Call the API function
+      // addToCartApi(productId);
+
+      // Show alert directly inside onPress
+      Alert.alert('Product added to cart:', `Product: ${product.product_name}`);
+    }}>
+      <View style={styles.orderButton}>
+        <Text style={styles.orderButtonText}>Redeem Product</Text>
+      </View>
+    </TouchableOpacity>
     </View>
   );
 
   return (
     <Provider>
       <Portal>
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:"white"}}>
-        <View style={styles.screenContainer}>
-          <StatusBar backgroundColor="#fff" />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
-            <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
-            <Text style={styles.headingText} >Products</Text>
-            <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}>
+          <View style={styles.screenContainer}>
+            <StatusBar backgroundColor="#fff" />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
+              <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
+              <Text style={styles.headingText} >Products</Text>
+              <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
+
+            </View>
+
+            {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
+              <ActivityIndicator color={config.primaryColor} size='large' />
+            </View>
+            }
+
 
           </View>
-
-          {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-            <ActivityIndicator color={config.primaryColor} size='large' />
-          </View>
-          }
-    
-
-        </View>
-        <View>
-            <FlatList
-              data={productsData}
-              renderItem={({ item }) => (
-                <ProductCard
-                  product={item}
-                  onOrderPress={() => handleOrderPress(item)}
-                />
-              )}
-              keyExtractor={(item) => item.id}
+          <View>
+            <FlatList data={apiResponse}
+              renderItem={({ item }) => <ProductCard product={item} />}
+              keyExtractor={(item) => item._id}
             />
+
           </View>
         </ScrollView>
       </Portal>
@@ -175,9 +259,9 @@ const styles = StyleSheet.create({
     borderColor: '#e1e1e1',
     padding: 16,
     //marginBottom: 16,
-    marginVertical:"5%",
+    marginVertical: "5%",
     alignItems: 'center',
-    marginHorizontal:"5%"
+    marginHorizontal: "5%"
   },
   productImage: {
     width: 150,

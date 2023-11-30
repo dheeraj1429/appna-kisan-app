@@ -26,7 +26,7 @@ export default function App() {
   }, []);
 
   //=========== PLEASE REMOVE THIS AT THE TIME OF DEVELOPMENT ===============
-  // console.log=()=>{}
+  console.log=()=>{}
   //=========== PLEASE REMOVE THIS AT THE TIME OF DEVELOPMENT ===============
 
   return (<WithSplashScreen isAppReady={isAppReady} >

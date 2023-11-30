@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, SafeAreaView, Linking, Image, StyleSheet
 import { Surface, Avatar, Modal, Portal, Provider } from "react-native-paper";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -19,7 +19,6 @@ import storage from '@react-native-firebase/storage';
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 
-
 function Account({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [contactUsModalVisible, setContactUsModalVisible] = useState(false);
@@ -28,134 +27,80 @@ function Account({ navigation }) {
   const [render, setRender] = useState(false);
   const [getUserProfile, setGetUserProfile] = useState()
   const { logoutAuthUser, authState } = UseContextState();
-  console.log("authStateauthStateauthStateauthState", authState?.user)
+  console.log("authStateauthStateauthStateauthState", authState?.userData)
+  const [userDetails, setUserDetails] = useState(null);
 
   // const clickToLogout =async ()=>{
   //   await logoutAuthUser()
   // }
-  console.log("getUserProfile", getUserProfile)
 
   // get user profile picture
-  useFocusEffect(
-    useCallback(() => {
-      axios.get(`${config.BACKEND_URI}/api/app/get/auth/user/profile/picture/${authState?.user?._id}`, { withCredentials: true })
-        .then(res => {
-          console.log(res?.data);
-          if (res?.data?.profile) {
-            setGetUserProfile(res?.data?.profile)
-          }
-          if (!res?.data?.profile) {
-            setGetUserProfile(null)
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-
-    }, [render])
-  )
 
 
-  // useEffect(()=>{
-  //   axios.get(`${config.BACKEND_URI}/api/get/auth/user/profile/picture/${authState?.user?._id}`,{withCredentials:true})
-  //   .then(res=>{
-  //     console.log(res?.data);
-  //     setGetUserProfile(res?.data)
-  //   })
-  //   .catch(err=>{
-  //     console.log(err);
-  //   })
-  // },[render])
+  const chartDetails = async ({ token }) => {
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
+        method: 'GET',
+      });
+      console.log(response, "response");
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data, "data");
+
+        if (data.success) {
+          // Save the data to state or local storage
+          setUserDetails(data.user);
+
+          // Alternatively, if you want to save it to local storage
+          // AsyncStorage.setItem('userInfo', JSON.stringify(data.user));
+        } else {
+          console.log('API returned an error:', data.error);
+        }
+      } else {
+        console.log('User info HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Error fetching user info:', error.message);
+    }
+  };
+  useEffect(() => {
+    axios.get(`${config.BACKEND_URI}/api/get/auth/user/profile/picture/${authState?.user?._id}`, { withCredentials: true })
+      .then(res => {
+        console.log(res?.data);
+        setGetUserProfile(res?.data)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [render])
 
   // UPLOAD IMAGE TO FIREBASE THEN DUMP INTO DB
-  const uploadProfile = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  useEffect(() => {
+    const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYwZDI2ZDAxOTc2ZTNiMjE0ZDAwYTQiLCJ1c2VyVHlwZSI6IkIyQiIsImlzQXBwcm92ZWQiOnRydWUsImlhdCI6MTcwMDkyMzk4NH0.1lh8395Se9GbTVlXMa8yoYwdMJqedYq8wLVqUsOGmds";
 
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
-      } else {
-        console.log('Camera permission denied');
-        return
+    const fetchData = async () => {
+      try {
+        const apiResponse = await chartDetails({ token });
+
+        // Handle the API response here
+        if (apiResponse) {
+          const { data } = apiResponse;
+          // console.log(data);
+
+          // You can update the state or perform other actions here
+          // For example, set the data in your component state:
+          setUserDetails(data);
+          console.log(data, "data value page");
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
       }
-    } catch (err) {
-      console.log(err);
-    }
-    let _image = await launchImageLibrary({
-      mediaTypes: 'image',
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!_image?.assets) return
-    // console.log("JSON.stringify(_image)",JSON.stringify(_image));
-    // console.log("JSON.stringify(_image)22222",_image?.assets[0].uri);
-    let profileUploadToFirebase;
-    if (!_image.cancelled) {
-      setProfilePicture(_image);
-      // profileUploadToFirebase = await uploadFileToFirebase(`/ssastore/users/${authState?.user?._id}/`,_image?.assets[0]);
-      // console.log("FILE UPLOADED FUNCTION-----------",everyFile)
-      const currentDate = new Date().toUTCString()
-      const path = `/ssastore/users/${authState?.user?._id}/`
-      const everyFile = _image?.assets[0]
-      const fileRef = storage().ref(`${path}${currentDate}--${everyFile?.fileName}`)
-      const uploadUri = Platform.OS === 'ios' ? everyFile.uri.replace('file://', '') : everyFile.uri;
-      const task = fileRef.putFile(uploadUri);
-      task.on('state_changed', taskSnapshot => {
-        // console.log(`${taskSnapshot.bytesTransferred} transferred 
-        // out of ${taskSnapshot.totalBytes}`);
-      });
-      let downloadURL;
-      task.then(() => {
-        console.log('Image uploaded to the bucket!');
-      }).then(async () => {
-        await fileRef.getDownloadURL()
-          .then(async resultUrl => {
-            // console.log("downloaddownloaddownloaddownload",resultUrl)
-            downloadURL = resultUrl
-            profileUploadToFirebase = { image_name: currentDate + "--" + everyFile?.fileName, image_url: downloadURL, path: path }
-            console.log("-------------------------------------------------------------------9", profileUploadToFirebase)
-            setLoading(true)
-            axios.patch(`${config.BACKEND_URI}/api/app/edit/user/profile/picture/by/id/${authState?.user?._id}`, { ...profileUploadToFirebase }, { withCredentials: true })
-              .then(res => {
-                console.log("RESPONSE=============================", res?.data?.previousProfile);
-                setLoading(false)
-                setRender(prev => !prev)
-                // setRefreshing(false)
+    };
 
-                // Create a reference to the file to delete
-                let desertRef = storage().ref(`${res?.data?.previousProfile?.path}${res?.data?.previousProfile?.image_name}`);
+   // fetchData();
+  }, []);
 
-                // Delete the file
-                desertRef.delete().then(function () {
-                  // File deleted successfully
-                  console.log("image deleted")
-                }).catch(function (error) {
-                  // Uh-oh, an error occurred!
-                  console.log(" Uh-oh, an error occurred!", error)
-                });
-
-
-
-
-              })
-              .catch(err => {
-                console.log(err);
-                // setRefreshing(false)
-              })
-
-
-          })
-      })
-
-
-
-
-    }
-    // console.log("profileUploadToFirebase=>>>>>>",profileUploadToFirebase)
-
+  const uploadProfile = async () => {
   }
 
   // console.log("profilePicture=====",profilePicture)
@@ -183,7 +128,9 @@ function Account({ navigation }) {
             <View style={styles.avatarContainer}>
               <View style={styles.avatarWithUser}>
                 {/* <Avatar.Image style={{backgroundColor:'#fff'}} size={60} source={imageImport.UserDefaultImage} /> */}
-                <TouchableOpacity onPress={uploadProfile} activeOpacity={0.6} >
+                <TouchableOpacity
+                  onPress={uploadProfile}
+                  activeOpacity={0.6} >
 
                   {profilePicture?.assets ?
                     <Image
@@ -207,10 +154,16 @@ function Account({ navigation }) {
 
                 </TouchableOpacity>
                 <View style={styles.userTextBox} >
-                  <View style={{flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
+                  <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
 
-                  <Text style={styles.userText}>Hello {authState?.user?.username?.slice(0, 14)}</Text>
-                  <MaterialIcons name="verified" size={25} color={config.primaryColor} />
+                    {authState?.user?.isVerified ? (
+                      <>
+                        <Text style={styles.userText}>Hello {authState?.user?.username?.slice(0, 14)}</Text>
+                        <MaterialIcons name="verified" size={25} color={config.primaryColor} />
+                      </>
+                    ) : (
+                      <Text style={styles.userText}>Hello Vinay</Text>
+                    )}
 
                   </View>
                   <Text style={styles.phoneNumber}>{authState?.user?.phone_number}</Text>
@@ -290,7 +243,6 @@ function Account({ navigation }) {
               <Text style={styles.chatnowAndCallusText} >Chat Now</Text>
             </TouchableOpacity>
           </View>
-
         </Modal>
         {/*========== CONTACT MODAL =========== */}
         {/*========== LOGOUT MODAL =========== */}

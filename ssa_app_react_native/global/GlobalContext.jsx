@@ -20,13 +20,16 @@ const Global = React.createContext(initialState);
 export const UseContextState = ()=>useContext(Global);
 
 function GlobalContext({children}) {
+  const setUser = (userData) => {
+    dispatch({ type: 'LOG_IN', payload: userData });
+  };
     const [authState , dispatch ] = useReducer(AuthReducer,initialState)
 
     console.log("AuthState ",authState)
     // getting authenticated user
     const fetchAuthuser =async()=>{
         try{
-             const user =  await getItemFromLocalStorage('user');
+             const user =  await getItemFromLocalStorage('userData');
              if(user != null){
                 dispatch({type:'LOG_IN',payload:user})
                 console.log("LOG IN SUCCESS")

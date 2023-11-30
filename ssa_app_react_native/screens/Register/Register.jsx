@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native"
+import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity, Alert, Image } from "react-native"
 import { config } from '../../config';
 import { Checkbox, Modal, Portal, Provider } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import navigationString from '../../Constants/navigationString';
@@ -25,7 +26,8 @@ function Register({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('B2B');
-  const {authState,fetchAuthuser} = UseContextState();
+  const { authState, fetchAuthuser } = UseContextState();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const goBack = () => {
     navigation.goBack();
@@ -125,26 +127,26 @@ function Register({ navigation }) {
             mobile: phoneNumber,
             password: password,
             address: address,
-            pan:panNum,
-            aaadhaar:aadharNum,
+            pan: panNum,
+            aaadhaar: aadharNum,
             gstNo: gstNum,
           },
           { withCredentials: true }
         );
-    
+
         console.log(response.data);
-    
+
         if (response.status === 200) {
           setLoading(false);
           console.log(response.data.data);
           console.log("API call successful");
           // Handle successful API response here
         } else if (response.status === 422) {
-        setLoading(false);
-        console.log("Validation error");
-        // Handle validation error, possibly by displaying error messages
-        console.log(response.data); // Assuming the server provides validation error details
-      }  else {
+          setLoading(false);
+          console.log("Validation error");
+          // Handle validation error, possibly by displaying error messages
+          console.log(response.data); // Assuming the server provides validation error details
+        } else {
           setLoading(false);
           console.log("API call failed");
           // Handle API failure if needed
@@ -182,26 +184,26 @@ function Register({ navigation }) {
             address: address,
             pan: {
               number: panNum,
-              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
             },
             aadhaar: {
               number: aadharNum,
-              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
             },
             gstNo: {
               number: gstNum, // Replace with the GST number you want to send
-              //images: [{ image_url: "some_image_url", image_name: "some_name", path: "some_path" }],
+              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
             },
           },
           { withCredentials: true }
         );
-        console.log("response",response);
-  
+        console.log("response", response);
+
         //console.log("response.data",response.data);
-    
+
         if (response.status === 200) {
           setLoading(false);
-          console.log("response.data",response.data);
+          console.log("response.data", response.data);
           console.log("API call successful");
           //navigation.navigate(navigationString.LOGIN);
           //setItemToLocalStorage('user',response?.data?.user);
@@ -211,11 +213,11 @@ function Register({ navigation }) {
           navigation.navigate(navigationString.LOGIN);
           // Handle successful API response here
         } else if (response.status === 422) {
-        setLoading(false);
-        console.log("Validation error");
-        // Handle validation error, possibly by displaying error messages
-        console.log(response.data); // Assuming the server provides validation error details
-      }  else {
+          setLoading(false);
+          console.log("Validation error");
+          // Handle validation error, possibly by displaying error messages
+          console.log(response.data); // Assuming the server provides validation error details
+        } else {
           setLoading(false);
           console.log("API call failed");
           // Handle API failure if needed
@@ -246,22 +248,22 @@ function Register({ navigation }) {
   //     showToast("Please enter your name!!");
   //     return;
   //   }
-  
+
   //   if (phoneNumber.length !== 10) {
   //     showToast("Enter a valid phone number!!");
   //     return;
   //   }
-  
+
   //   if (email.length < 5) {
   //     showToast("Please enter a valid email address!!");
   //     return;
   //   }
-  
+
   //   if (password.length < 4) {
   //     showToast("Please enter a valid password!!");
   //     return;
   //   }
-  
+
   //   if (
   //     phoneNumber.length >= 10 &&
   //     name.length > 0 &&
@@ -276,9 +278,9 @@ function Register({ navigation }) {
   //         `${config.BASE_URL}/app/create/user/b2c`,
   //         { withCredentials: true }
   //       );
-  
+
   //       console.log(res?.data);
-  
+
   //       if (!res?.data?.user_exists) {
   //         setLoading(false);
   //         console.log("try if");
@@ -299,30 +301,34 @@ function Register({ navigation }) {
   //       setLoading(false);
   //       console.log("catch");
   //     }
-  
+
   //     console.log("Name:", name);
   //     console.log("Phone Number:", phoneNumber);
   //     console.log("Email:", email);
   //     console.log("Password:", password);
   //     console.log("Address:", address);
-  
+
   //     // setLoading(false);
   //   } else {
   //     showToast("Enter a valid phone number!!");
   //   }
   // };
-  
+
   const handleCreateBtnB2C = async () => {
     if (!isFieldValid(name, "Name")) return;
     if (!isFieldValid(phoneNumber, "Phone Number", 10)) return;
     if (!isFieldValid(email, "Email", 5, "email")) return;
     if (!isFieldValid(password, "Password", 4)) return;
-  
+    if (selectedImage) {
+      console.log('Selected Image URL:', selectedImage.image_url);
+      // Now you can send selectedImage.image_url to your API
+    }
     setLoading(true);
-  console.log(config.BASE_URL);
+    //console.log(config.BASE_URL);
     try {
       const response = await axios.post(
-        `${config.BASE_URL}/app/create/user/b2c`,
+        `https://whale-app-88bu8.ondigitalocean.app/api/app/create/user/b2c`,
+        // `https://whale-app-88bu8.ondigitalocean.app/create/user/b2c`,
         {
           name: name,
           email: email,
@@ -331,27 +337,31 @@ function Register({ navigation }) {
         },
         { withCredentials: true }
       );
-      console.log("response",response);
+      console.log("response", response);
 
-      console.log("response.data",response.data);
-  
+      console.log("response.data", response.data);
+
       if (response.status === 200) {
         setLoading(false);
-        console.log("response.data.data",response.data.data);
+        console.log("response.data.data", response.data);
+        // console.log("response.user", response.user);
+        // console.log("response.data.user", response.data.user);
+
         console.log("API call successful");
+        Alert.alert("Account Sucessfully created");
         //navigation.navigate(navigationString.LOGIN);
         //setItemToLocalStorage('user',response?.data?.user);
         //setUserId('')
-        fetchAuthuser();
+        //fetchAuthuser();
         //showToast()
         navigation.navigate(navigationString.LOGIN);
         // Handle successful API response here
       } else if (response.status === 422) {
-      setLoading(false);
-      console.log("Validation error");
-      // Handle validation error, possibly by displaying error messages
-      console.log(response.data); // Assuming the server provides validation error details
-    }  else {
+        setLoading(false);
+        console.log("Validation error");
+        // Handle validation error, possibly by displaying error messages
+        console.log(response.data); // Assuming the server provides validation error details
+      } else {
         setLoading(false);
         console.log("API call failed");
         // Handle API failure if needed
@@ -359,35 +369,31 @@ function Register({ navigation }) {
     } catch (error) {
       setLoading(false);
       console.error("Error in API call:", error.response);
-<<<<<<< HEAD
       Alert.alert(error.response);
-=======
-      Alert.alert(error.message);
->>>>>>> 56c7fe80c01401541d3fbe2befc1c591209dda1b
       // Handle API error if needed
     }
   };
-  
+
   const isFieldValid = (value, fieldName, minLength, fieldType) => {
     if (!value || value.length < minLength) {
       showToast(`Please enter a valid ${fieldName}!`);
       return false;
     }
-  
+
     if (fieldType === "email" && !isValidEmail(value)) {
       showToast("Please enter a valid email address!");
       return false;
     }
-  
+
     return true;
   };
-  
+
   const isValidEmail = (email) => {
     // Add your email validation logic here
     // For a simple example, we'll just check for the presence of '@'
     return email.includes("@");
   };
-  
+
   const showToast = (message) => {
     ToastAndroid.showWithGravityAndOffset(
       message,
@@ -397,8 +403,43 @@ function Register({ navigation }) {
       50
     );
   };
-  
-  
+
+
+
+  const handleImageUpload = async () => {
+    try {
+      const result = await selectImage('Select Image');
+      // Update the state with the selected image and its URL
+      if (!result.cancelled) {
+        setSelectedImage({ image_url: result.uri });
+      }
+    } catch (error) {
+      // Handle error
+      console.error('Error in image selection:', error);
+    }
+  };
+
+  const selectImage = async (title) => {
+    try {
+      const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false, // Disabling the crop option
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!cancelled) {
+        return { uri };
+      } else {
+        throw new Error('User cancelled image selection');
+      }
+    } catch (error) {
+      throw new Error('Error in image selection: ' + error.message);
+    }
+  };
+
+
   const goToLogin = () => {
     navigation.navigate(navigationString.LOGIN)
   }
@@ -532,26 +573,50 @@ function Register({ navigation }) {
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="id-card-alt" size={15} />
                     </View>
 
-                    <View style={styles.commonFieldContainer} >
+                    {/* <View style={styles.commonFieldContainer} >
                       <TextInput keyboardType='numeric'
                         style={styles.commonField}
                         placeholder='Upload Document' />
                       <FontAwesome name="image" size={21} style={styles.commonIcon} />
+                    </View> */}
+                    <View style={styles.commonFieldContainer}>
+                      <TouchableOpacity onPress={handleImageUpload}>
+
+                        <View style={styles.commonField}>
+                        <FontAwesome name="image" size={21} style={styles.commonIcon} />
+
+                          {selectedImage ? (
+                            // <Image source={{ uri: selectedImage.image_url }} style={{ width: 50, height: 50 }} />
+                            <Text style={styles.imageText}>Image URL: {selectedImage.image_url}</Text>
+
+                          ) : (
+                            <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                              {/* <View>
+                                <FontAwesome name="image" size={21} style={styles.commonIcon} />
+                              </View> */}
+                              <View>
+                                <Text  style={{color:"gray"}}>Select Image</Text>
+                              </View>
+                            </View>
+                          )}
+                        </View>
+                      </TouchableOpacity>
+
+                      {/* {selectedImage && (
+        <Text style={styles.imageText}>Image URL: {selectedImage.image_url}</Text>
+      )} */}
+
+                      {/* Your other UI components... */}
                     </View>
 
 
                     <View style={styles.commonFieldContainer} >
                       <TextInput keyboardType='default'
-                      value={address}
-                        style={styles.commonField}
                         value={address}
+                        style={styles.commonField}
                         placeholder='Address'
                         onChangeText={(value) => setAddress(value)}
-<<<<<<< HEAD
                       />
-=======
-                        />
->>>>>>> 56c7fe80c01401541d3fbe2befc1c591209dda1b
                       <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
                     </View>
 
