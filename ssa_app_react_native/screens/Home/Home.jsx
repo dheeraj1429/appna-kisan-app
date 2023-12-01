@@ -23,15 +23,30 @@ function Home({ navigation }) {
   const [render, setRender] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [apiResponse, setApiResponse] = useState([]);
-  const { fetchAuthuser, authState } = UseContextState();
+  const { fetchAuthuser, authState, userData } = UseContextState();
+  const [reviewsData, setReviewsData] = useState({
+    success: false,
+    statusCode: null,
+    page: null,
+    pageSize: null,
+    totalResults: null,
+    reviews: [],
+  });
+  const [accessToken, setAccessToken] = useState(null);
 
-  const userData = authState.user;
-
-  console.log(userData,"userdat from home page");
   useEffect(() => {
-    // Call fetchAuthuser to update the user data in the global context
-    fetchAuthuser();
-  }, [fetchAuthuser]);
+    if (userData && userData.accessToken) {
+      setAccessToken(userData.accessToken);
+    }
+  }, [userData]);
+  //console.log(userData, "userdat from home page");
+
+  // useEffect(() => {
+  //   // Call fetchAuthuser to update the user data in the global context
+  //  // fetchAuthuser();
+  //   console.log(userData, "userData from home page");
+
+  // }, [ userData]);
 
   // Get the route object
   // const route = useRoute();
@@ -50,7 +65,7 @@ function Home({ navigation }) {
 
   const reviewlist = async () => {
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/reviews?page=1', {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/reviews', {
         method: 'GET',
         // headers: {
         //   'x-user-type': 'b2c',
@@ -59,17 +74,18 @@ function Home({ navigation }) {
         // },
       });
 
-      console.log('Response:', response);
+      console.log('Response of review:', response);
 
       if (response.status === 200) {
-        const data = await response.json();
-        if (data.success) {
-          console.log('data:', data);
-
-          return data;
-        } else {
-          console.log('API returned an error:', data.error);
-        }
+        // const data = await response.json();
+        // if (data.success) {
+        //   console.log('data:', data);
+        //setReviewsData(response.data);
+        console.log("response.dat",response.reviews);
+        //   return data;
+        // } else {
+        //   console.log('API returned an error:', data.error);
+        // }
       } else {
         console.log('review list HTTP request failed with status:', response.status);
       }
@@ -82,7 +98,7 @@ function Home({ navigation }) {
     const fetchList1 = async () => {
       try {
         const response = await reviewlist();
-        setApiResponse(response.reviews); // Assuming response is an array
+        //setApiResponse(response.reviews); // Assuming response is an array
         console.log('api response review', apiResponse);
       } catch (error) {
         console.log('Error fetching review list:', error);
@@ -189,7 +205,7 @@ function Home({ navigation }) {
           <View style={styles.brandHeadingBox} >
             <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 15 }} >
               <Text style={styles.brandText}>Customer Reviews</Text>
-
+              <Text>{reviewsData.statusCode}</Text>
             </View>
           </View>
           <View style={{ alignItems: "center", paddingTop: 10 }} >
@@ -204,9 +220,13 @@ function Home({ navigation }) {
           </View>
         </View>
         {/*============ CUSTOMER REVIEW======== */}
-
+        {/* {reviewsData.reviews.map((review, index) => (
+        <View key={index}>
+          <Text>Review {index + 1}:</Text>
+        </View>
+      ))} */}
       </ScrollView>
-      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end",marginRight:"2%" ,marginBottom:"15%"}}>
+      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end", marginRight: "2%", marginBottom: "15%" }}>
         <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={25} color={config.primaryColor} />
       </View>
     </View>

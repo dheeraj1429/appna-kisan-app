@@ -1,4 +1,4 @@
-import React,{useReducer,useEffect,useContext} from "react";
+import React,{useReducer,useEffect,useContext, useState} from "react";
 import axios from "axios";
 import { config } from "../config";
 import { AuthReducer } from "./reducer/AuthReducer";
@@ -20,16 +20,34 @@ const Global = React.createContext(initialState);
 export const UseContextState = ()=>useContext(Global);
 
 function GlobalContext({children}) {
+
+  const [userL, setUserL] = useState(null);
+  const [userData, setUserData] = useState(null);
+  console.log("Fdbrgdbgdb",userData);
+
+  const saveCredentials = (userCredentials) => {
+    setUserL(userCredentials);
+  };
+
+  const saveUserData = (data) => {
+    setUserData(data);
+  };
+
+  const clearCredentials = () => {
+    setUserL(null);
+    setUserData(null);
+  };
+
   const setUser = (userData) => {
     dispatch({ type: 'LOG_IN', payload: userData });
   };
-    const [authState , dispatch ] = useReducer(AuthReducer,initialState)
+  const [authState, dispatch] = useReducer(AuthReducer, initialState);
 
     console.log("AuthState ",authState)
     // getting authenticated user
     const fetchAuthuser =async()=>{
         try{
-             const user =  await getItemFromLocalStorage('userData');
+             const user =  await getItemFromLocalStorage('user');
              if(user != null){
                 dispatch({type:'LOG_IN',payload:user})
                 console.log("LOG IN SUCCESS")
@@ -92,9 +110,20 @@ function GlobalContext({children}) {
         getHomeScreenBanner();
     },[])
 
-    const value = {authState,fetchAuthuser,logoutAuthUser,cartState}
+    const value = {
+      authState,
+      fetchAuthuser,
+      logoutAuthUser,
+      cartState,
+      userL,
+      userData,
+      saveCredentials,
+      saveUserData,
+      clearCredentials,
+      setUser
+    };
 
-  return <Global.Provider value={value} >{children}</Global.Provider>
+      return <Global.Provider value={value}>{children}</Global.Provider>;
   
   
 }

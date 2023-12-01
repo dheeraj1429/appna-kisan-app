@@ -23,6 +23,7 @@ import SearchResult from "../screens/SearchResult/SearchResult";
 import { UseContextState } from "../global/GlobalContext";
 import NewArrivals from "../screens/NewArrivals/NewArrivals";
 import ViewOrder from "../screens/Orders/ViewOrder";
+import ProductInfo from "../screens/ProductInfo/ProductInfo";
 
 
 
@@ -54,10 +55,14 @@ const HomeStack =()=>{
           cardStyleInterpolator:
             CardStyleInterpolators.forHorizontalIOS,
         }} /> 
-  {/* <Stack.Screen name={navigationString.VIEW_ORDER} component={ViewOrder}  options={{
+  <Stack.Screen name={navigationString.VIEW_ORDER} component={ViewOrder}  options={{
           cardStyleInterpolator:
             CardStyleInterpolators.forHorizontalIOS,
-        }} />  */}
+        }} /> 
+        <Stack.Screen name={navigationString.PRODUCT_INFO} component={ProductInfo}  options={{
+          cardStyleInterpolator:
+            CardStyleInterpolators.forHorizontalIOS,
+        }} /> 
 </Stack.Navigator>
  )
 }
@@ -80,7 +85,7 @@ function Route({navigation}) {
 
   return (
       <Tabs.Navigator
-        initialRouteName="Account"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,

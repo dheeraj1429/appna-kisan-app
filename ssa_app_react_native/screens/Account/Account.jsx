@@ -26,10 +26,18 @@ function Account({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [render, setRender] = useState(false);
   const [getUserProfile, setGetUserProfile] = useState()
-  const { logoutAuthUser, authState } = UseContextState();
+  const { logoutAuthUser, authState ,userData} = UseContextState();
   console.log("authStateauthStateauthStateauthState", authState?.userData)
   const [userDetails, setUserDetails] = useState(null);
 
+  // const { userData } = UseContextState();
+
+  useEffect(() => {
+    // Call fetchAuthuser to update the user data in the global context
+   // fetchAuthuser();
+    console.log(userData, "userData from home page");
+
+  }, [ userData]);
   // const clickToLogout =async ()=>{
   //   await logoutAuthUser()
   // }
@@ -159,10 +167,14 @@ function Account({ navigation }) {
                     {authState?.user?.isVerified ? (
                       <>
                         <Text style={styles.userText}>Hello {authState?.user?.username?.slice(0, 14)}</Text>
+                        <Text>{userData}</Text>
                         <MaterialIcons name="verified" size={25} color={config.primaryColor} />
                       </>
                     ) : (
-                      <Text style={styles.userText}>Hello Vinay</Text>
+                      <>
+                      <Text style={styles.userText}>Hello </Text>
+                      <MaterialIcons name="verified" size={25} color={config.primaryColor} />
+                      </>
                     )}
 
                   </View>

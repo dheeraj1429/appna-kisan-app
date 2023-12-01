@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import {
   View,
   Text,
@@ -34,7 +34,8 @@ function Login({ navigation }) {
   const [email, setEmail] = useState('');
 
   const [password, setPassword] = useState('');
-  const { setUserData } = UseContextState();
+  //const { setUserData } = UseContextState();
+  const { saveUserData } = UseContextState();
 
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
@@ -127,8 +128,9 @@ function Login({ navigation }) {
           console.log("response.data", response.data);
           // console.log("API call successful");
           //fetchAuthuser();
-          //const userData = response.data;
+          const userData = response.data;
           //fetchAuthuser(userData);
+          saveUserData(userData); // Save userData to the context
 
           // setDetails(response.data);
           // console.log("response.data.accessToken", response.data.accessToken);

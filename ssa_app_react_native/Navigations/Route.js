@@ -82,7 +82,7 @@ function Route() {
     </Stack.Navigator> 
     :
     <Stack.Navigator
-    initialRouteName={navigationString.TAB_ROUTE}
+    initialRouteName={navigationString.LOGIN}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -90,7 +90,7 @@ function Route() {
         tabBarHideOnKeyboard:true
       }}
     >
-<Stack.Screen name={navigationString.TAB_ROUTE}   component={Account}  options={{
+<Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
@@ -115,8 +115,11 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
-      {/* <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} /> */}
-
+      <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
+      <Stack.Screen name={navigationString.PRODUCT_INFO}   component={ProductInfo}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
     </Stack.Navigator>
     }
 
