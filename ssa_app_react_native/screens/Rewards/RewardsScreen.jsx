@@ -35,26 +35,108 @@ import customer_review from "../../Constants/customer_review";
 
 function RewardsScreen({ route, navigation }) {
   const [loading, setLoading] = useState(false)
-  const { authState, fetchAuthuser } = UseContextState();
+  const { authState, fetchAuthuser, userData } = UseContextState();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [apiData, setApiData] = useState([]);
   const [banners, setBanners] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [rewardHistory, setRewardHistory] = useState(null);
 
-  const rewardOrderHistory = async () => {
+  const [accessToken, setAccessToken] = useState(null);
+  const [name, setName] = useState(null);
+  const [rewardPoints, setRewardPoints] = useState(null);
+
+
+  const userInfo = async () => {
+    console.log(accessToken,"access");
+
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
-      // const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': 'b2c',
+        },
       });
 
-      console.log('Response:', response);
+      console.log('Response in update profile:', response);
+
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data && data.success) {
+          return data;
+        } else {
+          console.log('API returned an error:', data ? data.error : 'No data received');
+        }
+      } else {
+        console.log('UserInfo HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Error fetching Details:', error.message);
+    }
+  };
+
+
+  useEffect(() => {
+    console.log({asdfrhjm:accessToken});
+    if(accessToken) { //code
+      const fetchList = async () => {
+        try {
+          const response = await userInfo();
+         // setApiResponse(response);
+          console.log("UserInfo", response);
+          setRewardPoints(response.user.reward_points);
+          console.log({rdp : response.user.reward_points});
+          return response; // Add this line if you want to return the response
+        } catch (error) {
+          Alert.alert('Error fetching UserInfo:', error);
+        }
+      }; 
+    
+      fetchList();
+    }
+   
+
+  }, [accessToken]);
+
+
+
+  useEffect(() => {
+    if (userData && userData.user) {
+      setAccessToken(userData.accessToken);
+      //setRewardPoints(userData.user.reward_points);
+      console.log("rewardpoint",rewardPoints);
+      console.log("userdata === ",userData);
+
+    }
+  }, [userData]);
+
+  const rewardOrderHistory = async () => {
+    console.log({"sdfghjkl":accessToken});
+    try {
+      //const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
+       const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': 'b2c',
+          'x':"Dheeraj"
+        },
+      });
+
+      console.log('Response of product:', response);
 
       if (response.status === 200) {
         const data = await response.json();
+        console.log("data",data);
         if (data.success) {
+          console.log("data product",data.orders);
           return data.products;
         } else {
           console.log('API returned an error:', data.error);
@@ -68,19 +150,22 @@ function RewardsScreen({ route, navigation }) {
   };
 
   useEffect(() => {
-    const fetchList1 = async () => {
-      try {
-        const response = await rewardOrderHistory();
-        setApiResponse(response); // Assuming response is an array
-        console.log('api response', response);
-      } catch (error) {
-        console.log('Error fetching Reward Order list:', error);
-      }
-    };
-
-    fetchList1();
-
-  }, []);
+    if (accessToken) {
+      const fetchList1 = async () => {
+        try {
+          const response = await rewardOrderHistory();
+          setApiResponse(response); // Assuming response is an array
+          console.log('api response', response);
+        } catch (error) {
+          console.log('Error fetching Reward Order list:', error);
+        }
+      };
+  
+      fetchList1();
+    
+  
+    }
+  }, [accessToken]);
 
   // console.log(authState,"authState")
 
@@ -103,7 +188,7 @@ function RewardsScreen({ route, navigation }) {
   //     try {
   //       const response = await fetch(`${config.BASE_URL}/get/rewards/banners`);
   //       console.log("response", response);
-    
+
   //       // Log the response body
   //       const responseBody = await response.text();
   //       //console.log("response body", responseBody);
@@ -122,8 +207,8 @@ function RewardsScreen({ route, navigation }) {
   //       console.error('Error fetching data:', error);
   //     }
   //   };
-    
-    
+
+
 
   //   // Call the fetchData function when the component mounts
   //   fetchData();
@@ -159,7 +244,7 @@ function RewardsScreen({ route, navigation }) {
         setBanners(response);
         startAutoSlide();
 
-        console.log("banners",banners);
+        console.log("banners", banners);
       } catch (error) {
         Alert.alert('Error fetching banner list:', error);
       }
@@ -254,88 +339,100 @@ function RewardsScreen({ route, navigation }) {
     <Provider>
       <Portal>
         {/* <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}> */}
-          <View style={styles.screenContainer}>
-            <StatusBar backgroundColor="#fff" />
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
-              <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
-              <Text style={styles.headingText} >Reward Points</Text>
-              {/* <MaterialIcons name="keyboard-arrow-left" size={27} color='white' /> */}
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert(
-                    'Button Pressed',
-                    'You pressed the TouchableOpacity!',
-                    [
-                      { text: 'OK', onPress: () => console.log('OK Pressed') }
-                    ],
-                    { cancelable: false }
-                  );
-                }}>
-
-                <View style={{
-                  flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
-                  borderRadius: 16,
-                  borderWidth: 0.5,
-                  borderColor: 'lightgray',
-
-                  paddingHorizontal: "2%",
-                  paddingVertical: 5,
-                }}
-                >
-                  <FontAwesome5 name="coins" size={20} color={config.primaryColor} style={{ marginRight: 8 }} />
-                  <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>10</Text>
-                </View>
-              </TouchableOpacity>
-
-            </View>
-
-            {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-              <ActivityIndicator color={config.primaryColor} size='large' />
-            </View>
-            }
+        <View style={styles.screenContainer}>
+          <StatusBar backgroundColor="#fff" />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
+            <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
+            <Text style={styles.headingText} >Reward Points</Text>
+            {/* <MaterialIcons name="keyboard-arrow-left" size={27} color='white' /> */}
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(navigationString.REDEEM_PROD)
+                Alert.alert(
+                  'Button Pressed',
+                  'You pressed the TouchableOpacity!',
+                  [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') }
+                  ],
+                  { cancelable: false }
+                );
               }}>
+
               <View style={{
-                backgroundColor: '#f5f5f6',
+                flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
                 borderRadius: 16,
                 borderWidth: 0.5,
                 borderColor: 'lightgray',
-                paddingVertical: "2%",
-                marginHorizontal: "5%",
-                marginVertical: "5%"
+
+                paddingHorizontal: "2%",
+                paddingVertical: 5,
               }}
               >
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}>
-                  Collect Redeem Products
-                </Text>
+                <FontAwesome5 name="coins" size={20} color={config.primaryColor} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{rewardPoints}</Text>
+
+                {/* {userData ?
+                  <>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{userData.user.reward_points ? rewardPoints : 0}</Text>
+
+                  </>
+                  :
+                  <>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>0</Text>
+
+                  </>
+                } */}
               </View>
             </TouchableOpacity>
-            <Text></Text>
-            <View>
-            <ScrollView
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onMomentumScrollEnd={(event) => {
-              const newIndex = Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width);
-              setCurrentIndex(newIndex);
-            }}
-            style={{ flexDirection: 'row' }}
-          >
-            {banners.map((banner, index) => (
-              <View key={banner._id} style={styles.bannerContainer}>
-                <Image
-                  style={{ width: '100%', height: 200 }}
-                  source={{ uri: banner.image_url }}
-                  resizeMode="cover"
-                />
-              </View>
-            ))}
-          </ScrollView>
+
           </View>
-            {/* <ScrollView
+
+          {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
+            <ActivityIndicator color={config.primaryColor} size='large' />
+          </View>
+          }
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(navigationString.REDEEM_PROD)
+            }}>
+            <View style={{
+              backgroundColor: '#f5f5f6',
+              borderRadius: 16,
+              borderWidth: 0.5,
+              borderColor: 'lightgray',
+              paddingVertical: "2%",
+              marginHorizontal: "5%",
+              marginVertical: "5%"
+            }}
+            >
+              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}>
+                Collect Redeem Products
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <Text></Text>
+          <View>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={(event) => {
+                const newIndex = Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width);
+                setCurrentIndex(newIndex);
+              }}
+              style={{ flexDirection: 'row' }}
+            >
+              {banners.map((banner, index) => (
+                <View key={banner._id} style={styles.bannerContainer}>
+                  <Image
+                    style={{ width: '100%', height: 200 }}
+                    source={{ uri: banner.image_url }}
+                    resizeMode="cover"
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+          {/* <ScrollView
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
@@ -349,7 +446,7 @@ function RewardsScreen({ route, navigation }) {
                 </View>
               ))}
             </ScrollView> */}
-            {/* 
+          {/* 
           <View style={styles.brandContainer} >
             <View style={styles.brandHeadingBox} >
               <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 15 }} >
@@ -368,15 +465,15 @@ function RewardsScreen({ route, navigation }) {
               />
             </View>
           </View> */}
-            <View style={styles.userProductsContainer}>
-              <FlatList
-                data={userCollectedProducts}
-                renderItem={({ item }) => <ProductItem item={item} />}
-                keyExtractor={(item) => item.id}
-              />
-            </View>
-
+          <View style={styles.userProductsContainer}>
+            <FlatList
+              data={userCollectedProducts}
+              renderItem={({ item }) => <ProductItem item={item} />}
+              keyExtractor={(item) => item.id}
+            />
           </View>
+
+        </View>
 
         {/* </ScrollView> */}
       </Portal>
@@ -473,9 +570,9 @@ const styles = StyleSheet.create({
   productDetails: {
     flex: 1,
   },
-  userProductsContainer:{
-marginHorizontal:"2%",
-marginTop:"5%",
+  userProductsContainer: {
+    marginHorizontal: "2%",
+    marginTop: "5%",
 
   },
   productName: {

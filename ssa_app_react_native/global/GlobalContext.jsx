@@ -3,8 +3,10 @@ import axios from "axios";
 import { config } from "../config";
 import { AuthReducer } from "./reducer/AuthReducer";
 import { clearLocalStorage,getCartProductCount,getItemFromLocalStorage,setItemToLocalStorage } from "../Utils/localstorage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AsyncStorage } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+import navigationString from "../Constants/navigationString";
 
 const initialState = {
     user:null,
@@ -18,24 +20,27 @@ const initialState = {
 // creating global context 
 const Global = React.createContext(initialState);
 export const UseContextState = ()=>useContext(Global);
+const navigation = useNavigation(); // Move useNavigation outside the function
 
 function GlobalContext({children}) {
 
   const [userL, setUserL] = useState(null);
-  const [userData, setUserData] = useState(null);
-  console.log("Fdbrgdbgdb",userData);
+  const [userData, setUserData] = useState([]);
 
   const saveCredentials = (userCredentials) => {
     setUserL(userCredentials);
+    //AsyncStorage.setItem('isAuthenticated', 'true'); // Store the authentication state
   };
 
   const saveUserData = (data) => {
     setUserData(data);
+    AsyncStorage.setItem('userData', JSON.stringify(data)); // Store userData in AsyncStorage
   };
 
   const clearCredentials = () => {
     setUserL(null);
     setUserData(null);
+    AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
   };
 
   const setUser = (userData) => {
@@ -45,36 +50,95 @@ function GlobalContext({children}) {
 
     console.log("AuthState ",authState)
     // getting authenticated user
-    const fetchAuthuser =async()=>{
-        try{
-             const user =  await getItemFromLocalStorage('user');
-             if(user != null){
-                dispatch({type:'LOG_IN',payload:user})
-                console.log("LOG IN SUCCESS")
-             }
-             else{
-                dispatch({type:"ERROR",payload:'error'})
-            }
+    // const fetchAuthuser =async()=>{
+    //     try{
+    //          const user =  await getItemFromLocalStorage('user');
+    //          if(user != null){
+    //             dispatch({type:'LOG_IN',payload:user})
+    //             console.log("LOG IN SUCCESS")
+    //          }
+    //          else{
+    //             dispatch({type:"ERROR",payload:'error'})
+    //         }
+    //     }
+    //     catch(err){
+    //         console.log(err)
+    //      }
+    // }
+    const fetchAuthuser = async () => {
+      try {
+        const user = await getItemFromLocalStorage('user');
+        if (user != null) {
+          dispatch({ type: 'LOG_IN', payload: user });
+          console.log("LOG IN SUCCESS");
+        } else {
+          const storedUserData = await AsyncStorage.getItem('userData');
+          if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+            dispatch({ type: 'LOG_IN', payload: storedUserData });
+            console.log("LOG IN SUCCESS (from AsyncStorage)");
+          } else {
+            dispatch({ type: "ERROR", payload: 'error' });
+          }
         }
-        catch(err){
-            console.log(err)
-         }
-    }
-
+      } catch (err) {
+        console.log(err);
+      }
+    };
     // logout user
-    const logoutAuthUser = async()=>{
-        try{
-            await AsyncStorage.removeItem('user')
-            auth().signOut();
-            dispatch({type:'LOG_OUT'})
-            console.log("LOG OUT SUCCESS")
+    // const logoutAuthUser = async()=>{
+    //     try{
+    //         await AsyncStorage.removeItem('user')
+    //         //auth().signOut();
+    //         dispatch({type:'LOG_OUT'})
+    //         console.log("LOG OUT SUCCESS")
 
-        }
-        catch(err){
-            console.log(err)
-        }
-    }
+    //     }
+    //     catch(err){
+    //         console.log(err)
+    //     }
+    // }
+    // const logoutAuthUser = async () => {
+    //   console.log("console.log1");
 
+    //   try {
+    //     console.log("console.log2");
+
+    //     await AsyncStorage.removeItem('user');
+    //     console.log("console.log3");
+
+    //     await AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
+    //     console.log("console.log4");
+
+    //     dispatch({ type: 'LOG_OUT' });
+    //     console.log("LOG OUT SUCCESS");
+    //     navigation.navigate(navigationString.LOGIN);
+    //     console.log("console.log5");
+
+
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    const logoutAuthUser = async () => {
+      try {
+        console.log("console.log2");
+  
+        await AsyncStorage.removeItem('user');
+        console.log("console.log3");
+  
+        await AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
+        console.log("console.log4");
+  
+        dispatch({ type: 'LOG_OUT' });
+        console.log("LOG OUT SUCCESS");
+        navigation.navigate(navigationString.LOGIN);
+        console.log("console.log5");
+  
+      } catch (err) {
+        console.log(err);
+      }
+    };
     // get cart state
     const cartState=async()=>{
       try{  
@@ -85,7 +149,6 @@ function GlobalContext({children}) {
         console.log(err);
       }
     }
-
     // get home screen banners
     const getHomeScreenBanner = async()=>{
       try{
@@ -105,6 +168,19 @@ function GlobalContext({children}) {
     }
 
     useEffect(()=>{
+      // const fetchStoredUserData = async () => {
+      //   try {
+      //     const storedUserData = await AsyncStorage.getItem("userData");
+      //     if (storedUserData) {
+      //       setUserData(JSON.parse(storedUserData));
+      //       console.log("Using stored userData");
+      //     }
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // };
+  
+      // fetchStoredUserData();
         fetchAuthuser();
         cartState();
         getHomeScreenBanner();

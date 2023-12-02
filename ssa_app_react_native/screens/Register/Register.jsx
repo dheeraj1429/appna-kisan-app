@@ -12,6 +12,8 @@ import navigationString from '../../Constants/navigationString';
 import axios from 'axios';
 import { UseContextState } from '../../global/GlobalContext';
 import { clearLocalStorage, setItemToLocalStorage } from '../../Utils/localstorage';
+import { logger } from "react-native-logs";
+
 function Register({ navigation }) {
   const [checked, setChecked] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -28,6 +30,7 @@ function Register({ navigation }) {
   const [selectedOption, setSelectedOption] = useState('B2B');
   const { authState, fetchAuthuser } = UseContextState();
   const [selectedImage, setSelectedImage] = useState(null);
+  var log = logger.createLogger();
 
   const goBack = () => {
     navigation.goBack();
@@ -41,7 +44,7 @@ function Register({ navigation }) {
   // useEffect(() => {
   //   // const xyz = axios.get("")
 
-  //   axios.get('https://api.publicapis.org/entries').then(res => console.log(res))
+  //   axios.get('https://api.publicapis.org/entries').then(res => log.info(res))
   // }, [])
 
   const handleCreateBtnB2B = async () => {
@@ -117,49 +120,49 @@ function Register({ navigation }) {
     }
     if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
       setLoading(true)
-      try {
-        const response = await axios.post(
-          `${config.BASE_URL}/app/create/user/b2b`,
-          {
-            name: name,
-            email: email,
-            owner_name: ownerName,
-            mobile: phoneNumber,
-            password: password,
-            address: address,
-            pan: panNum,
-            aaadhaar: aadharNum,
-            gstNo: gstNum,
-          },
-          { withCredentials: true }
-        );
+      // try {
+      //   const response = await axios.post(
+      //     `${config.BASE_URL}/app/create/user/b2b`,
+      //     {
+      //       name: name,
+      //       email: email,
+      //       owner_name: ownerName,
+      //       mobile: phoneNumber,
+      //       password: password,
+      //       address: address,
+      //       pan: panNum,
+      //       aaadhaar: aadharNum,
+      //       gstNo: gstNum,
+      //     },
+      //     { withCredentials: true }
+      //   );
 
-        console.log(response.data);
+      //   log.info(response.data);
 
-        if (response.status === 200) {
-          setLoading(false);
-          console.log(response.data.data);
-          console.log("API call successful");
-          // Handle successful API response here
-        } else if (response.status === 422) {
-          setLoading(false);
-          console.log("Validation error");
-          // Handle validation error, possibly by displaying error messages
-          console.log(response.data); // Assuming the server provides validation error details
-        } else {
-          setLoading(false);
-          console.log("API call failed");
-          // Handle API failure if needed
-        }
-      } catch (error) {
-        setLoading(false);
-        console.error("Error in API call:", error.response);
-        Alert.alert(error.message);
-        // Handle API error if needed
-      }
+      //   if (response.status === 200) {
+      //     setLoading(false);
+      //     log.info(response.data.data);
+      //     log.info("API call successful");
+      //     // Handle successful API response here
+      //   } else if (response.status === 422) {
+      //     setLoading(false);
+      //     log.info("Validation error");
+      //     // Handle validation error, possibly by displaying error messages
+      //     log.info(response.data); // Assuming the server provides validation error details
+      //   } else {
+      //     setLoading(false);
+      //     log.info("API call failed");
+      //     // Handle API failure if needed
+      //   }
+      // } catch (error) {
+      //   setLoading(false);
+      //   log.info("Error in API call:", error.response);
+      //   Alert.alert("try again later after some time");
+      //   // Handle API error if needed
+      // }
       // await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
       //   .then(res => {
-      //     console.log(res?.data)
+      //     log.info(res?.data)
       //     if (!res?.data?.user_exists) {
       //       setLoading(false);
       //       navigation.navigate(navigationString.OTP_SCREEN, { user_exists: false, user_name: name, phoneNumber: `+91 ${phoneNumber}` });
@@ -169,81 +172,83 @@ function Register({ navigation }) {
       //     }
       //   })
       //   .catch(err => {
-      //     console.log(err);
+      //     log.info(err);
       //     setLoading(false);
       //   })
       try {
+        const userBody  = {
+          owner_name: name,
+          company_name: ownerName,
+          email: email,
+          mobile: phoneNumber,
+          password: password,
+          address: address,
+          pan: {
+            number: panNum,
+            images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
+          },
+          // aadhaar: {
+          //   number: aadharNum,
+          //   images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
+          // },
+          gstNo: {
+            number: gstNum, // Replace with the GST number you want to send
+            images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
+          },
+        };
+        log.info("userData sfgndghndghndghmndg",userBody);
         const response = await axios.post(
           `${config.BASE_URL}/app/create/user/b2b`,
-          {
-            name: name,
-            ownerName: ownerName,
-            email: email,
-            mobile: phoneNumber,
-            password: password,
-            address: address,
-            pan: {
-              number: panNum,
-              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
-            },
-            aadhaar: {
-              number: aadharNum,
-              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
-            },
-            gstNo: {
-              number: gstNum, // Replace with the GST number you want to send
-              images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
-            },
-          },
+          userBody,
           { withCredentials: true }
         );
-        console.log("response", response);
+        log.info("response", response);
 
-        //console.log("response.data",response.data);
+        //log.info("response.data",response.data);
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           setLoading(false);
-          console.log("response.data", response.data);
-          console.log("API call successful");
+          log.info("response.data", response.data);
+          log.info("API call successful");
           //navigation.navigate(navigationString.LOGIN);
           //setItemToLocalStorage('user',response?.data?.user);
           //setUserId('')
-          fetchAuthuser();
+          //fetchAuthuser();
           //showToast()
-          navigation.navigate(navigationString.LOGIN);
+          navigation.navigate(navigationString.TAB_ROUTE);
           // Handle successful API response here
         } else if (response.status === 422) {
           setLoading(false);
-          console.log("Validation error");
+          log.info("Validation error");
           // Handle validation error, possibly by displaying error messages
-          console.log(response.data); // Assuming the server provides validation error details
+          log.info(response.data); // Assuming the server provides validation error details
         } else {
           setLoading(false);
-          console.log("API call failed");
+          log.info("API call failed");
           // Handle API failure if needed
         }
       } catch (error) {
         setLoading(false);
-        console.error("Error in API call:", error.response);
-        Alert.alert(error.response);
+        log.info("Error in API call:", error.response);
+        Alert.alert("try again later after some time");
         // Handle API error if needed
       }
-      console.log("Name:", name);
-      console.log("Owner Name:", ownerName);
-      console.log("Phone Number:", phoneNumber);
-      console.log("PAN Number:", panNum);
-      console.log("Email:", email);
-      console.log("Password:", password);
-      console.log("Aadhar Number:", aadharNum);
-      console.log("GST Number:", gstNum);
-      console.log("address:", address);
+      log.info("Name:", name);
+      log.info("Owner Name:", ownerName);
+      log.info("Phone Number:", phoneNumber);
+      log.info("PAN Number:", panNum);
+      log.info("Email:", email);
+      log.info("Password:", password);
+      log.info("Aadhar Number:", aadharNum);
+      log.info("GST Number:", gstNum);
+      log.info("address:", address);
       setLoading(false);
 
     }
   }
 
   // const handleCreateBtnB2C = async () => {
-  //   console.log("function called");
+  //   log.info("function called");
   //   if (!name.length > 0) {
   //     showToast("Please enter your name!!");
   //     return;
@@ -273,17 +278,17 @@ function Register({ navigation }) {
   //   ) {
   //     setLoading(true);
   //     try {
-  //       console.log("before api");
+  //       log.info("before api");
   //       const res = await axios.post(
   //         `${config.BASE_URL}/app/create/user/b2c`,
   //         { withCredentials: true }
   //       );
 
-  //       console.log(res?.data);
+  //       log.info(res?.data);
 
   //       if (!res?.data?.user_exists) {
   //         setLoading(false);
-  //         console.log("try if");
+  //         log.info("try if");
   //         navigation.navigate(navigationString.OTP_SCREEN, {
   //           user_exists: false,
   //           name: name,
@@ -294,19 +299,19 @@ function Register({ navigation }) {
   //       } else {
   //         setLoading(false);
   //         setModalVisible(true);
-  //         console.log("try else");
+  //         log.info("try else");
   //       }
   //     } catch (err) {
-  //       console.log(err);
+  //       log.info(err);
   //       setLoading(false);
-  //       console.log("catch");
+  //       log.info("catch");
   //     }
 
-  //     console.log("Name:", name);
-  //     console.log("Phone Number:", phoneNumber);
-  //     console.log("Email:", email);
-  //     console.log("Password:", password);
-  //     console.log("Address:", address);
+  //     log.info("Name:", name);
+  //     log.info("Phone Number:", phoneNumber);
+  //     log.info("Email:", email);
+  //     log.info("Password:", password);
+  //     log.info("Address:", address);
 
   //     // setLoading(false);
   //   } else {
@@ -320,11 +325,11 @@ function Register({ navigation }) {
     if (!isFieldValid(email, "Email", 5, "email")) return;
     if (!isFieldValid(password, "Password", 4)) return;
     if (selectedImage) {
-      console.log('Selected Image URL:', selectedImage.image_url);
+      log.info('Selected Image URL:', selectedImage.image_url);
       // Now you can send selectedImage.image_url to your API
     }
     setLoading(true);
-    //console.log(config.BASE_URL);
+    //log.info(config.BASE_URL);
     try {
       const response = await axios.post(
         `https://whale-app-88bu8.ondigitalocean.app/api/app/create/user/b2c`,
@@ -337,17 +342,17 @@ function Register({ navigation }) {
         },
         { withCredentials: true }
       );
-      console.log("response", response);
+      log.info("response", response);
 
-      console.log("response.data", response.data);
+      log.info("response.data", response.data);
 
       if (response.status === 200) {
         setLoading(false);
-        console.log("response.data.data", response.data);
-        // console.log("response.user", response.user);
-        // console.log("response.data.user", response.data.user);
+        log.info("response.data.data", response.data);
+        // log.info("response.user", response.user);
+        // log.info("response.data.user", response.data.user);
 
-        console.log("API call successful");
+        log.info("API call successful");
         Alert.alert("Account Sucessfully created");
         //navigation.navigate(navigationString.LOGIN);
         //setItemToLocalStorage('user',response?.data?.user);
@@ -358,18 +363,18 @@ function Register({ navigation }) {
         // Handle successful API response here
       } else if (response.status === 422) {
         setLoading(false);
-        console.log("Validation error");
+        log.info("Validation error");
         // Handle validation error, possibly by displaying error messages
-        console.log(response.data); // Assuming the server provides validation error details
+        log.info(response.data); // Assuming the server provides validation error details
       } else {
         setLoading(false);
-        console.log("API call failed");
+        log.info("API call failed");
         // Handle API failure if needed
       }
     } catch (error) {
       setLoading(false);
-      console.error("Error in API call:", error.response);
-      Alert.alert(error.response);
+      log.info("Error in API call:", error.response);
+      Alert.alert("try again later after some time");
       // Handle API error if needed
     }
   };
@@ -415,7 +420,7 @@ function Register({ navigation }) {
       }
     } catch (error) {
       // Handle error
-      console.error('Error in image selection:', error);
+      log.info('Error in image selection:', error);
     }
   };
 
@@ -524,9 +529,9 @@ function Register({ navigation }) {
                     <View style={styles.commonFieldContainer} >
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setPanNum(value.replace(/[^0-9]/g, ''))}
+                        onChangeText={(value) => setPanNum(value)}
                         keyboardType='defult'
-                        maxLength={10}
+                        //maxLength={10}
                         placeholder='Pan Number' />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="money-check" size={15} />
                     </View>
@@ -566,9 +571,9 @@ function Register({ navigation }) {
 
                     <View style={styles.commonFieldContainer} >
                       <TextInput style={styles.commonField}
-                        onChangeText={(value) => setGstNum(value.replace(/[^0-9]/g, ''))}
+                        onChangeText={(value) => setGstNum(value)}
                         keyboardType='defult'
-                        maxLength={10}
+                        //maxLength={10}
                         placeholder='Gst Number' />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="id-card-alt" size={15} />
                     </View>
@@ -726,7 +731,7 @@ function Register({ navigation }) {
                   <TouchableOpacity
                     onPress={() => {
                       handleCreateBtnB2C();
-                      console.log("button Clicked");
+                      log.info("button Clicked");
                     }}
                     activeOpacity={0.8} style={styles.signUpBtn} >
                     <Text style={styles.signInText} >

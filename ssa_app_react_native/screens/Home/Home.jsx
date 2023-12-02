@@ -67,11 +67,10 @@ function Home({ navigation }) {
     try {
       const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/reviews', {
         method: 'GET',
-        // headers: {
-        //   'x-user-type': 'b2c',
-        //   'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYwZGMxZWIxZjg4ODMzMzk5NjU1ZDIiLCJuYW1lIjoiU21hcnR5IiwidXNlclR5cGUiOiJCMkMiLCJpYXQiOjE3MDA5MjM0OTB9.8CqOVeMoVH6wmxq0LjCS1jRBPhQ5MQ8j9WLs-P6mfNA', // Include if required
-        //   // Add any other necessary headers
-        // },
+        headers: {
+          'x-user-type': 'b2c',
+          'Authorization': 'Bearer ' + accessToken,
+        },
       });
 
       console.log('Response of review:', response);

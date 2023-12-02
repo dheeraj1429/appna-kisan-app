@@ -39,8 +39,15 @@ function RedeemProd({ route, navigation }) {
   const [apiResponse, setApiResponse] = useState([]);
   const [productData, setProductData] = useState(null);
   const [apiResponse1, setApiResponse1] = useState([]);
+  const { fetchAuthuser, authState, userData } = UseContextState();
 
+  const [accessToken, setAccessToken] = useState(null);
 
+  useEffect(() => {
+    if (userData && userData.accessToken) {
+      setAccessToken(userData.accessToken);
+    }
+  }, [userData]);
   // console.log(authState,"authState")
 
   const prodList = async () => {
@@ -97,24 +104,24 @@ function RedeemProd({ route, navigation }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTYwZGMxZWIxZjg4ODMzMzk5NjU1ZDIiLCJuYW1lIjoiU21hcnR5IiwidXNlclR5cGUiOiJCMkMiLCJpYXQiOjE3MDA5MjM0OTB9.8CqOVeMoVH6wmxq0LjCS1jRBPhQ5MQ8j9WLs-P6mfNA', // Include if required
+          'Authorization': 'Bearer ' + accessToken,
         },
         body: JSON.stringify({ 
           product_id : product_id,
          }),
       });
-  console.log("response of add to cart",response);
+      console.log("response of add to cart",response);
       if (response.ok) {
-        const data = await response.json();
+        //const data = await response.json();
         // Extract relevant information for the alert
         const alertMessage = data.success ? 'Product added to cart successfully' : data.error;
         // Display alert with extracted information
         Alert.alert('Add to Cart', alertMessage);
       } else {
-        console.error('Failed to add product to cart:', response.status);
+        console.log('Failed to add product to cart:', response.status);
       }
     } catch (error) {
-      console.error('Error adding product to cart:', error.message);
+      console.log('Error adding product to cart:', error.message);
     }
   };
   
@@ -141,10 +148,10 @@ function RedeemProd({ route, navigation }) {
       <Text style={styles.productPoints}>{`Points: ${product.product_reward_points}`}</Text>
       <TouchableOpacity onPress={() => {
       // Implement your logic for handling order press directly inside the onPress
-      const productId = product.product_id;
+      //const productId = product.product_id;
 
       // Call the API function
-      // addToCartApi(productId);
+       addToCartApi(product.productId);
 
       // Show alert directly inside onPress
       Alert.alert('Product added to cart:', `Product: ${product.product_name}`);

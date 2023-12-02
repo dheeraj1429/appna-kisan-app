@@ -26,18 +26,82 @@ function Account({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [render, setRender] = useState(false);
   const [getUserProfile, setGetUserProfile] = useState()
-  const { logoutAuthUser, authState ,userData} = UseContextState();
+  const { logoutAuthUser, authState, userData } = UseContextState();
   console.log("authStateauthStateauthStateauthState", authState?.userData)
   const [userDetails, setUserDetails] = useState(null);
 
-  // const { userData } = UseContextState();
+  const [accessToken, setAccessToken] = useState(null);
+  const [name, setName] = useState(null);
+  const [rewardPoints, setRewardPoints] = useState(null);
+
+  const userInfo = async () => {
+    //console.log(accessToken,"access");
+
+    try {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': 'b2c',
+        },
+      });
+
+      console.log('Response in update profile:', response);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data && data.success) {
+          return data;
+        } else {
+          console.log('API returned an error:', data ? data.error : 'No data received');
+        }
+      } else {
+        console.log('UserInfo HTTP request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Error fetching Details:', error.message);
+    }
+  };
+
 
   useEffect(() => {
-    // Call fetchAuthuser to update the user data in the global context
-   // fetchAuthuser();
-    console.log(userData, "userData from home page");
+    //console.log(accessToken);
+    if (accessToken) { //code
+      const fetchList = async () => {
+        try {
+          const response = await userInfo();
+          //setApiResponse(response);
+          console.log("UserInfo asdfgg", response);
+          setName(response.user.name);
+          console.log({ rdp: response.user });
+          return response; // Add this line if you want to return the response
+        } catch (error) {
+          Alert.alert('Error fetching UserInfo:', error);
+        }
+      };
 
-  }, [ userData]);
+      fetchList();
+    }
+
+
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (userData && userData.user) {
+      setAccessToken(userData.accessToken);
+      console.log("userdata", userData);
+    }
+  }, [userData]);
+  // const { userData } = UseContextState();
+
+  // useEffect(() => {
+  //   // Call fetchAuthuser to update the user data in the global context
+  //  // fetchAuthuser();
+  //   console.log(userData, "userData from home page");
+
+  // }, [ userData]);
   // const clickToLogout =async ()=>{
   //   await logoutAuthUser()
   // }
@@ -101,11 +165,11 @@ function Account({ navigation }) {
           console.log(data, "data value page");
         }
       } catch (error) {
-        console.error('Error fetching data:', error.message);
+        console.log('Error fetching data:', error.message);
       }
     };
 
-   // fetchData();
+    // fetchData();
   }, []);
 
   const uploadProfile = async () => {
@@ -164,21 +228,16 @@ function Account({ navigation }) {
                 <View style={styles.userTextBox} >
                   <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
 
-                    {authState?.user?.isVerified ? (
-                      <>
-                        <Text style={styles.userText}>Hello {authState?.user?.username?.slice(0, 14)}</Text>
-                        <Text>{userData}</Text>
-                        <MaterialIcons name="verified" size={25} color={config.primaryColor} />
-                      </>
-                    ) : (
-                      <>
-                      <Text style={styles.userText}>Hello </Text>
-                      <MaterialIcons name="verified" size={25} color={config.primaryColor} />
-                      </>
-                    )}
+
+                    <Text style={styles.userText}>Hello {name}</Text>
+                    {/* <Text style={styles.userText}>{name}</Text> */}
+                    {/* <Text style={styles.userText}>{rewardPoints}</Text> */}
+
+                    <MaterialIcons name="verified" size={25} color={config.primaryColor} />
+
 
                   </View>
-                  <Text style={styles.phoneNumber}>{authState?.user?.phone_number}</Text>
+                  <Text style={styles.phoneNumber}>{userData?.user?.mobile}</Text>
 
                 </View>
               </View>
@@ -191,7 +250,7 @@ function Account({ navigation }) {
             <View style={styles.changeLanguageBox}>
               {/* <Ionicons name="ios-information-circle-outline" size={24} color={config.primaryColor}/> */}
               <AntDesign name="infocirlceo" size={24} color={config.primaryColor} />
-              <Text style={styles.languageText}>About Us</Text>
+              <Text style={styles.languageText}>About Us{name}</Text>
             </View>
             <View style={styles.changeLanguageBox}>
               <Feather name="phone-call" size={24} color={config.primaryColor} />
@@ -275,7 +334,10 @@ function Account({ navigation }) {
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Cancel</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity activeOpacity={0.5} onPress={logoutAuthUser} >
+                  <TouchableOpacity activeOpacity={0.5} onPress={() => {
+                    console.log("Log Out Button Clicked");
+                    logoutAuthUser();
+                  }} >
                     <View  >
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Log out</Text>
                     </View>

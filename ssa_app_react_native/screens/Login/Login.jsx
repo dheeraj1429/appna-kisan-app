@@ -86,7 +86,7 @@ function Login({ navigation }) {
         }
       } catch (error) {
         setLoading(false);
-        console.error("Error in API call:", error.response);
+        console.log("Error in API call:", error.response);
         Alert.alert(error.response);
         // Handle API error if needed
       }
@@ -108,7 +108,6 @@ function Login({ navigation }) {
   const handleSignup = async () => {
       if ((email && password.length >= 4) || phoneNumber ) 
       {
-
       try {
         const response = await axios.post(
           // `${config.BASE_URL}login/user/b2b/b2c`,
@@ -127,7 +126,7 @@ function Login({ navigation }) {
           setLoading(false);
           console.log("response.data", response.data);
           // console.log("API call successful");
-          //fetchAuthuser();
+          fetchAuthuser();
           const userData = response.data;
           //fetchAuthuser(userData);
           saveUserData(userData); // Save userData to the context
@@ -148,8 +147,8 @@ function Login({ navigation }) {
         }
       } catch (error) {
         setLoading(false);
-        console.error("Error in API call:", error.response);
-        //Alert.alert(error.response);
+        console.log("Error in API call:", error.response);
+        Alert.alert("Please fill valid credentials");
       }
     } else {
       ToastAndroid.showWithGravityAndOffset(

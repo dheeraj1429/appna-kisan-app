@@ -30,17 +30,26 @@ import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
+import Toast from 'react-native-toast-message';
 
 function UpdateProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false)
-  const { authState, fetchAuthuser } = UseContextState();
+  const { authState, fetchAuthuser, userData } = UseContextState();
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState('');
+  const [nameq, setNameq] = useState('');
+
   const [apiResponse, setApiResponse] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
 
+  useEffect(() => {
+    if (userData && userData.accessToken) {
+      setAccessToken(userData.accessToken);
+    }
+  }, [userData]);
   const handleImagePicker = async () => {
     try {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -62,7 +71,8 @@ function UpdateProfile({ route, navigation }) {
         setIsImagePickerOpen(false); // Close the image picker after selecting an image
       }
     } catch (error) {
-      console.error("Error picking image:", error);
+      console.log("Error picking image:", error);
+      Alert.alert("try again later after some time");
     }
   };
 
@@ -295,7 +305,6 @@ function UpdateProfile({ route, navigation }) {
       </TouchableOpacity>
     )
   }, [editUserDetails?.state])
-
   // const userInfo = async () => {
   //   try {
   //     const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
@@ -329,16 +338,20 @@ function UpdateProfile({ route, navigation }) {
   //   }
   // };
   const userInfo = async () => {
+    console.log(accessToken,"access");
+
     try {
       const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY4NDg2YWI4YzYyYjFjNDc5YzllMmUiLCJuYW1lIjoiVmluYXkiLCJ1c2VyVHlwZSI6IkIyQyIsImlhdCI6MTcwMTMzMzA5OH0.DyM6Cv_VHo2gfh8bDAw5ZtowWv7M2YSRBItLd5qoGCI',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': 'b2c',
         },
       });
 
       console.log('Response in update profile:', response);
+
 
       if (response.ok) {
         const data = await response.json();
@@ -352,26 +365,86 @@ function UpdateProfile({ route, navigation }) {
         console.log('UserInfo HTTP request failed with status:', response.status);
       }
     } catch (error) {
-      console.error('Error fetching Details:', error.message);
+      console.log('Error fetching Details:', error.message);
     }
   };
 
 
   useEffect(() => {
-    const fetchList = async () => {
-      try {
-        const response = await userInfo();
-        setApiResponse(response);
-        console.log("UserInfo", response);
-        return response; // Add this line if you want to return the response
-      } catch (error) {
-        Alert.alert('Error fetching UserInfo:', error);
+    console.log(accessToken);
+    if(accessToken) { //code
+      const fetchList = async () => {
+        try {
+          const response = await userInfo();
+          setApiResponse(response);
+          console.log("UserInfo", response);
+          return response; // Add this line if you want to return the response
+        } catch (error) {
+          Alert.alert('Error fetching UserInfo:', error);
+        }
+      }; 
+    
+      fetchList();
+    }
+   
+
+  }, [accessToken]);
+
+  const UpdateProfile = async () => {
+    try {
+      const profileData = {
+        password: password,
+        name: nameq,
       }
-    };
+      if (selectedImage) {
+        profileData.profile = {
+          path: "some_path",
+          image_url: selectedImage || null,
+          image_name: "some_name",
+        }
+      }
+      const response = await fetch(`https://whale-app-88bu8.ondigitalocean.app/api/user/update/info`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': 'b2c',
+        },
+        body: JSON.stringify(profileData),
+      });
+      console.log("response of profile", response.data);
+      //const dt = await response.json();
+      //console.log("response of profile", dt,response);
 
-    fetchList();
-  }, []);
-
+      if (response.status === 200) {
+        const data = await response.json();
+        // Extract relevant information for the alert
+        // Display alert with extracted information
+        console.log("response.data", data);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: 'Success',
+          text2: response.message,
+          visibilityTime: 4000, // 4 seconds
+          autoHide: true,
+        });
+        //Alert.alert('Profile Updated', alertMessage);
+      } else {
+        console.log('Failed to update profile try again later:', response.status);
+      }
+    } catch (error) {
+      console.log('Error Failed to update profile try again later:', error.message);
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'API Error',
+        text2: error.message,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+    }
+  };
 
   return (
     <Provider>
@@ -486,7 +559,7 @@ function UpdateProfile({ route, navigation }) {
 
 
             <View style={{ ...styles.commonFieldContainer, marginTop: -10 }} >
-              <TextInput onChangeText={value => handleChange(value, 'username')} value={editUserDetails?.username} keyboardType={'default'} style={styles.commonField} placeholder='Full Name' />
+              <TextInput onChangeText={value => setNameq(value)} value={nameq} keyboardType={'default'} style={styles.commonField} placeholder='Full Name' />
               <MaterialCommunityIcons style={styles.commonIcon} name="account" size={20} />
             </View>
 
@@ -507,7 +580,7 @@ function UpdateProfile({ route, navigation }) {
 
             {/* address ,state, pincode */}
             <TouchableOpacity onPress={() => {
-              Alert.alert('Profile updated', ``);
+              UpdateProfile();
             }} activeOpacity={0.8} style={styles.checkoutBtn}>
               <Text style={styles.checkouttext}>Update Profile </Text>
             </TouchableOpacity>
