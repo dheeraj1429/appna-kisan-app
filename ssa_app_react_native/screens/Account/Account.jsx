@@ -27,13 +27,14 @@ function Account({ navigation }) {
   const [render, setRender] = useState(false);
   const [getUserProfile, setGetUserProfile] = useState()
   const { logoutAuthUser, authState, userData } = UseContextState();
+  const [isApproved, setIsApproved] = useState(false);
   console.log("authStateauthStateauthStateauthState", authState?.userData)
   const [userDetails, setUserDetails] = useState(null);
-
   const [accessToken, setAccessToken] = useState(null);
   const [name, setName] = useState(null);
   const [rewardPoints, setRewardPoints] = useState(null);
-
+  const userType = userData?.user?.type;
+  console.log(userType, "usertype");
   const userInfo = async () => {
     //console.log(accessToken,"access");
 
@@ -43,7 +44,7 @@ function Account({ navigation }) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': 'b2c',
+          'x-user-type': userType,
         },
       });
 
@@ -51,7 +52,10 @@ function Account({ navigation }) {
 
       if (response.ok) {
         const data = await response.json();
-
+        console.log(data, "Vdggnfgnfhgn");
+        if (data.user?.is_approved) {
+          setIsApproved(true);
+        }
         if (data && data.success) {
           return data;
         } else {
@@ -65,28 +69,29 @@ function Account({ navigation }) {
     }
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
 
-  useEffect(() => {
-    //console.log(accessToken);
-    if (accessToken) { //code
-      const fetchList = async () => {
-        try {
-          const response = await userInfo();
-          //setApiResponse(response);
-          console.log("UserInfo asdfgg", response);
-          setName(response.user.name);
-          console.log({ rdp: response.user });
-          return response; // Add this line if you want to return the response
-        } catch (error) {
-          Alert.alert('Error fetching UserInfo:', error);
-        }
-      };
+      // Your code here
+      if (accessToken) { //code
+        const fetchList = async () => {
+          try {
+            const response = await userInfo();
+            //setApiResponse(response);
+            console.log("UserInfo asdfgg", response);
+            setName(response.user.name);
+            console.log({ rdp: response.user });
+            return response; // Add this line if you want to return the response
+          } catch (error) {
+            Alert.alert('Error fetching UserInfo:', error);
+          }
+        };
 
-      fetchList();
-    }
+        fetchList();
+      }
 
-
-  }, [accessToken]);
+    }, [accessToken])
+  );
 
   useEffect(() => {
     if (userData && userData.user) {
@@ -233,7 +238,7 @@ function Account({ navigation }) {
                     {/* <Text style={styles.userText}>{name}</Text> */}
                     {/* <Text style={styles.userText}>{rewardPoints}</Text> */}
 
-                    <MaterialIcons name="verified" size={25} color={config.primaryColor} />
+                    {isApproved ? <MaterialIcons name="verified" size={25} color={config.primaryColor} /> : null}
 
 
                   </View>
@@ -250,7 +255,7 @@ function Account({ navigation }) {
             <View style={styles.changeLanguageBox}>
               {/* <Ionicons name="ios-information-circle-outline" size={24} color={config.primaryColor}/> */}
               <AntDesign name="infocirlceo" size={24} color={config.primaryColor} />
-              <Text style={styles.languageText}>About Us{name}</Text>
+              <Text style={styles.languageText}>About Us</Text>
             </View>
             <View style={styles.changeLanguageBox}>
               <Feather name="phone-call" size={24} color={config.primaryColor} />
@@ -337,6 +342,7 @@ function Account({ navigation }) {
                   <TouchableOpacity activeOpacity={0.5} onPress={() => {
                     console.log("Log Out Button Clicked");
                     logoutAuthUser();
+                    navigation.navigate(navigationString.LOGIN);
                   }} >
                     <View  >
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Log out</Text>

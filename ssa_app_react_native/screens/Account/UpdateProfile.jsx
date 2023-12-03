@@ -31,6 +31,7 @@ import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
+import { Ionicons } from '@expo/vector-icons'; 
 
 function UpdateProfile({ route, navigation }) {
   const [loading, setLoading] = useState(false)
@@ -44,7 +45,8 @@ function UpdateProfile({ route, navigation }) {
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-
+  const  userType = userData?.user?.type;
+  console.log(userType,"usertype");
   useEffect(() => {
     if (userData && userData.accessToken) {
       setAccessToken(userData.accessToken);
@@ -346,7 +348,7 @@ function UpdateProfile({ route, navigation }) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': 'b2c',
+          'x-user-type': userType,
         },
       });
 
@@ -393,9 +395,9 @@ function UpdateProfile({ route, navigation }) {
   const UpdateProfile = async () => {
     try {
       const profileData = {
-        password: password,
         name: nameq,
       }
+      if(password) {profileData.password = password}
       if (selectedImage) {
         profileData.profile = {
           path: "some_path",
@@ -403,43 +405,41 @@ function UpdateProfile({ route, navigation }) {
           image_name: "some_name",
         }
       }
-      const response = await fetch(`https://whale-app-88bu8.ondigitalocean.app/api/user/update/info`, {
-        method: 'PATCH',
+      const response = await axios.patch(`https://whale-app-88bu8.ondigitalocean.app/api/user/update/info`, profileData,{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': 'b2c',
+          'x-user-type': userType,
         },
-        body: JSON.stringify(profileData),
       });
       console.log("response of profile", response.data);
       //const dt = await response.json();
       //console.log("response of profile", dt,response);
 
-      if (response.status === 200) {
-        const data = await response.json();
+      if (response.data.statusCode === 200) {
+        //const data = await response.json();
         // Extract relevant information for the alert
         // Display alert with extracted information
-        console.log("response.data", data);
+        //console.log("response.data", data);
         Toast.show({
           type: 'success',
           position: 'top',
           text1: 'Success',
-          text2: response.message,
+          text2: response.data.message,
           visibilityTime: 4000, // 4 seconds
           autoHide: true,
         });
         //Alert.alert('Profile Updated', alertMessage);
       } else {
-        console.log('Failed to update profile try again later:', response.status);
+        console.log('Failed to update profile try again later:', response);
       }
     } catch (error) {
-      console.log('Error Failed to update profile try again later:', error.message);
+      //console.log('Error Failed to update profile try again later:', error.message);
       Toast.show({
         type: 'error',
         position: 'top',
         text1: 'API Error',
-        text2: error.message,
+        text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
       });
@@ -453,7 +453,7 @@ function UpdateProfile({ route, navigation }) {
           <StatusBar backgroundColor="#fff" />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
             <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
-            <Text style={styles.headingText} >Edit Profile</Text>
+            <Text style={styles.headingText} >Update Profile</Text>
             <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
           </View>
           {/* 
@@ -524,7 +524,7 @@ function UpdateProfile({ route, navigation }) {
               </ImageBackground> */}
 
               <ImageBackground
-                source={selectedImage ? { uri: selectedImage } : require('../../assets/personimage.jpeg')}
+                source={selectedImage ? { uri: selectedImage } : require('../../assets/personimage.jpeg') }
                 resizeMode="cover"
                 style={{
                   width: "100%",
@@ -547,8 +547,8 @@ function UpdateProfile({ route, navigation }) {
                         opacity: 0.6
                       }}
                       name="camera"
-                      size={28}
-                      color={"white"}
+                      size={30}
+                      color={"black"}
                     />
                   </TouchableOpacity>
                 )}

@@ -13,6 +13,8 @@ import axios from 'axios';
 import { UseContextState } from '../../global/GlobalContext';
 import { clearLocalStorage, setItemToLocalStorage } from '../../Utils/localstorage';
 import { logger } from "react-native-logs";
+import Toast from 'react-native-toast-message';
+import { uploadFileToFirebase } from '../../Utils/helperFunctions';
 
 function Register({ navigation }) {
   const [checked, setChecked] = useState(true);
@@ -30,6 +32,8 @@ function Register({ navigation }) {
   const [selectedOption, setSelectedOption] = useState('B2B');
   const { authState, fetchAuthuser } = UseContextState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const { saveUserData } = UseContextState();
+const [image, setImage] = useState(null);
   var log = logger.createLogger();
 
   const goBack = () => {
@@ -48,6 +52,7 @@ function Register({ navigation }) {
   // }, [])
 
   const handleCreateBtnB2B = async () => {
+    log.info(selectedImage,"selectedImageeeeee");
     if (!name.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter your name!!",
@@ -118,6 +123,16 @@ function Register({ navigation }) {
       );
       return;
     }
+    if (!selectedImage.image_url ) {
+      ToastAndroid.showWithGravityAndOffset(
+        "Please select an Image!!",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50
+      );
+      return;
+    }
     if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
       setLoading(true)
       // try {
@@ -176,6 +191,11 @@ function Register({ navigation }) {
       //     setLoading(false);
       //   })
       try {
+        // const imageToFirebase = await uploadFileToFirebase(
+        //   `/ssastore/banners/xyz/`,
+        //   image
+        // );
+    
         const userBody  = {
           owner_name: name,
           company_name: ownerName,
@@ -215,6 +235,17 @@ function Register({ navigation }) {
           //setUserId('')
           //fetchAuthuser();
           //showToast()
+          fetchAuthuser();
+          const userData = response.data;
+          saveUserData(userData); // Save userData to the context
+          Toast.show({
+            type: 'success',
+            position: 'top',
+            text1: 'Success',
+            text2: response.message,
+            visibilityTime: 4000, // 4 seconds
+            autoHide: true,
+          });
           navigation.navigate(navigationString.TAB_ROUTE);
           // Handle successful API response here
         } else if (response.status === 422) {
@@ -229,8 +260,17 @@ function Register({ navigation }) {
         }
       } catch (error) {
         setLoading(false);
-        log.info("Error in API call:", error.response);
-        Alert.alert("try again later after some time");
+        log.info("hjbkjbkjhError in API call:", error);
+        console.log(error.response.data,"errorresponse");
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'API Error',
+          text2: error.response.data.message,
+          visibilityTime: 4000, // 4 seconds
+          autoHide: true,
+        });
+        //Alert.alert("try again later after some time");
         // Handle API error if needed
       }
       log.info("Name:", name);
@@ -243,6 +283,7 @@ function Register({ navigation }) {
       log.info("GST Number:", gstNum);
       log.info("address:", address);
       setLoading(false);
+      console.log(image,"imageof blob");
 
     }
   }
@@ -346,19 +387,22 @@ function Register({ navigation }) {
 
       log.info("response.data", response.data);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         setLoading(false);
         log.info("response.data.data", response.data);
         // log.info("response.user", response.user);
         // log.info("response.data.user", response.data.user);
 
         log.info("API call successful");
-        Alert.alert("Account Sucessfully created");
+        //Alert.alert("Account Sucessfully created");
         //navigation.navigate(navigationString.LOGIN);
         //setItemToLocalStorage('user',response?.data?.user);
         //setUserId('')
         //fetchAuthuser();
         //showToast()
+        fetchAuthuser();
+        const userData = response.data;
+        saveUserData(userData); // Save userData to the context
         navigation.navigate(navigationString.LOGIN);
         // Handle successful API response here
       } else if (response.status === 422) {
@@ -374,7 +418,15 @@ function Register({ navigation }) {
     } catch (error) {
       setLoading(false);
       log.info("Error in API call:", error.response);
-      Alert.alert("try again later after some time");
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'API Error',
+        text2: error.response.data.message,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+      //Alert.alert("try again later after some time");
       // Handle API error if needed
     }
   };
@@ -410,13 +462,32 @@ function Register({ navigation }) {
   };
 
 
-
+  const getBlobFroUri = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+  
+    return blob;
+  };
   const handleImageUpload = async () => {
     try {
       const result = await selectImage('Select Image');
+      console.log(result,"result of image");
       // Update the state with the selected image and its URL
       if (!result.cancelled) {
         setSelectedImage({ image_url: result.uri });
+        const blob = await getBlobFroUri(result.uri);
+        console.log(blob,"blob");
+        setImage(blob._data);
       }
     } catch (error) {
       // Handle error

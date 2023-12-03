@@ -21,4 +21,5 @@ export default {
     REWARDS_SCREEN:'RewardsScreen',
     NEW_ARRIVALS:'New_Arrivals',
     REDEEM_PROD: 'RedeemProd',
+    OTP_FORGOT: 'OtpForgot',
 }

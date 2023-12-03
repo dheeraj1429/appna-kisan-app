@@ -30,6 +30,9 @@ import { getCartProductCount, getAllCartProducts, setItemToLocalStorage, clearLo
 import { useFocusEffect } from "@react-navigation/native";
 import { UseContextState } from "../../global/GlobalContext";
 import { useCallback } from "react";
+import { logger } from "react-native-logs";
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import Toast from 'react-native-toast-message';
 
 function ProductInfo({ route, navigation }) {
   const [productDetail, setProductDetail] = useState();
@@ -42,31 +45,38 @@ function ProductInfo({ route, navigation }) {
   const [productQuantity, setProductQuantity] = useState(route.params?.product_quantity ? route.params?.product_quantity : 1);
   const [cartProducts, setCartProducts] = useState([]);
   const [render, setRender] = useState(false);
-  const { cartState, authState } = UseContextState()
-  const [userType, setUserType] = useState("b2c");
+  const { cartState, authState, userData } = UseContextState()
+  const log = logger.createLogger();
+  const [startRating, setStarRating] = useState(1);
+  log.info(userData, "asdfsgadfbfg");
+  const  userType = userData?.user?.type;
+  console.log(userType,"usertype");
   //const [productId, setProductID] = useState("prod_001797");
   const { product_id } = route.params;
   //const product_id = productId;
-  // console.log("PRODUCT ID", product_id);
-  console.log("route.params; ", route.params);
-  console.log("productDetail", productDetail)
+  log.info("PRODUCT ID", product_id);
+  log.info("route.params; ", route.params);
+  log.info("productDetail", productDetail)
   useEffect(() => {
     setLoading(true)
     axios.get(`${config.BACKEND_URI}/api/get/product/by/id/${product_id}`, { withCredentials: true })
       .then(res => {
-        // console.log("PRODUCT INFO=>",res?.data);
+        log.info("product info", res);
+        // log.info("PRODUCT INFO=>",res?.data);
         setProductDetail({ ...res?.data, product_quantity_by: route.params?.product_quantity_by ? route.params?.product_quantity_by : 'piece' });
         setLoading(false)
         setRefreshing(false)
       })
       .catch(err => {
-        console.log(err)
+        log.info(err)
       })
 
   }, [product_id, refreshing])
   const [reviewText, setReviewText] = useState('');
-
-  const handleReviewSubmit = () => {
+  const ratingCompleted = (rating) => {
+    setStarRating(rating);
+  }
+  const handleReviewSubmit = async () => {
     // Validate if the review text is not empty
     if (!reviewText.trim()) {
       Alert.alert('Error', 'Please enter a review.');
@@ -74,17 +84,51 @@ function ProductInfo({ route, navigation }) {
     }
 
     // Call the parent component's function to submit the review
-    onReviewSubmit(reviewText);
+    //onReviewSubmit(reviewText);
+    try {
 
+      const response = await axios.post("https://whale-app-88bu8.ondigitalocean.app/api/reviews", {
+        rating: startRating,
+        message: reviewText,
+        product: product_id
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + userData.accessToken,
+            "x-user-type": userType,
+          }
+        })
+      log.info(response, "response of review");
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: 'Success',
+        text2: response.data?.message,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+
+    } catch (error) {
+      //log.info(error, "error in review");
+      //log.info(error.message, "errormessage");
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text2: error.response.data?.message,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+    }
     // Show a success message using Alert
-    Alert.alert('Success', 'Review posted successfully.');
+    //Alert.alert('Success', 'Review posted successfully.');
 
     // Clear the input field
     setReviewText('');
   };
   // const updateExistingProduct=async()=>{
   //   const result =  await getAllCartProducts();
-  //   console.log("Newresult=>",result)
+  //   log.info("Newresult=>",result)
   //   if( result != null){
   //     setCartProducts(result);
   //   }
@@ -106,7 +150,7 @@ function ProductInfo({ route, navigation }) {
 
   const checkProductInCart = async (product_id) => {
     const result = await findProductInCart(product_id);
-    // console.log("result=>",result)
+    // log.info("result=>",result)
     setViewCart(result);
     setRefreshing(false)
   }
@@ -118,7 +162,7 @@ function ProductInfo({ route, navigation }) {
 
   const getItemCount = async () => {
     const count = await getCartProductCount();
-    // console.log('ITEM FROM Cart=>',count)
+    // log.info('ITEM FROM Cart=>',count)
     setCartItemCount(count);
     setRefreshing(false)
   }
@@ -130,7 +174,7 @@ function ProductInfo({ route, navigation }) {
   // ADD TO CART BUTTON
   const addToCartButton = async (product) => {
     await addToCart({ ...product, product_quantity: productQuantity });
-    // console.log('PRODUCT ADDED TO Cart')
+    // log.info('PRODUCT ADDED TO Cart')
     setUpdateCart(prev => !prev)
     await cartState()
     // await clearLocalStorage()
@@ -139,18 +183,18 @@ function ProductInfo({ route, navigation }) {
   // UPDATE CART BUTTON
   const updateCartButton = async (product) => {
     const result = await getAllCartProducts();
-    // console.log("Newresult=>",result)
+    // log.info("Newresult=>",result)
     const updateProducts = result
     await result.filter((value, index) => {
       if (value?._id == product?._id) {
         updateProducts[index] = ({ ...product, product_quantity: productQuantity })
       }
     })
-    // console.log("updateProducts",updateProducts)
+    // log.info("updateProducts",updateProducts)
     await setItemToLocalStorage('@cartproducts', updateProducts);
     navigation.navigate(navigationString?.CART)
     //  await clearLocalStorage()
-    // console.log("MAIN PRODUCT=>",{...product,product_quantity:productQuantity})
+    // log.info("MAIN PRODUCT=>",{...product,product_quantity:productQuantity})
   }
 
   const goBack = () => {
@@ -168,20 +212,20 @@ function ProductInfo({ route, navigation }) {
   }
 
   const increaseQuantity = async (product_id) => {
-    console.log("productQuantity", productQuantity)
+    log.info("productQuantity", productQuantity)
     if (productQuantity >= 9999) {
       return
     }
     setProductQuantity(productQuantity + 1)
     setProductDetail((prev) => ({ ...prev, product_quantity: productQuantity + 1 }))
-    //  console.log(product_id,"cart product id")
+    //  log.info(product_id,"cart product id")
     //  const updatedCartProduct = cartProducts; 
     //  cartProducts?.map((value,index)=>{
     //    if(value._id == product_id ){
-    //      console.log("FIND>>>>")
+    //      log.info("FIND>>>>")
     //      updatedCartProduct[index] ={...value,product_quantity:value.product_quantity + 1}
     //      setCartProducts(updatedCartProduct);// previous work
-    //      console.log("updated cart products",updatedCartProduct)
+    //      log.info("updated cart products",updatedCartProduct)
     //    }
     //  })
 
@@ -283,7 +327,7 @@ function ProductInfo({ route, navigation }) {
                     </TouchableOpacity>
                     {/* <Text style={styles.quantityText}> */}
                     <TextInput style={styles.quantityText} onChangeText={value => {
-                      console.log("VALUE=", value)
+                      log.info("VALUE=", value)
                       if (value?.length > 4) {
                         return
                       }
@@ -346,7 +390,17 @@ function ProductInfo({ route, navigation }) {
 
 
                     <View style={{ flexDirection: 'row' }}>
-                      {userType === 'b2c' ? (
+                    
+                      {userType === 'basic' ? (
+                           <>
+                           <Text style={styles.descriptionInnerText}>Product Price: </Text>
+ 
+                           <Text style={{ fontSize: 12, color: '#555', textTransform: 'capitalize' }}>
+                             {productDetail?.product_price}
+                           </Text>
+                         </>
+                      ): 
+                      userType === 'b2b' ? (
                         <>
                           <Text style={styles.descriptionInnerText}>B2B Product Price: </Text>
 
@@ -362,7 +416,8 @@ function ProductInfo({ route, navigation }) {
                             {productDetail?.b2c_user_product_price}
                           </Text>
                         </>
-                      )}
+                      )
+                      }
                     </View>
 
 
@@ -383,6 +438,44 @@ function ProductInfo({ route, navigation }) {
                   </View>
                 </View>
               </View>
+
+
+            </View>
+            <View style={{ backgroundColor: 'white', width: '100%', height: 75 }} >
+              {viewCart ?
+
+                <TouchableOpacity onPress={() => updateCartButton(productDetail)} activeOpacity={0.8} style={styles.viewCartBtn}>
+
+                  <Zocial
+                    name="cart"
+                    size={24}
+                    style={{ paddingBottom: 2, width: 35 }}
+                    color="white"
+                  />
+                  <Text style={styles.viewCartText}>View Cart </Text>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity onPress={() => addToCartButton(productDetail)} activeOpacity={0.8} style={styles.addToCartBtn}>
+                  <Zocial
+                    name="cart"
+                    size={24}
+                    style={{ paddingBottom: 2, width: 35 }}
+                    color="white"
+                  />
+                  <Text style={styles.addToCartText}>Add To Cart </Text>
+                </TouchableOpacity>
+              }
+
+            </View>
+            <View style={{ marginBottom: "25%", padding: "5%" }}>
+              <AirbnbRating
+                count={5}
+                reviews={["Bad", "OK", "Good", "Very Good", "Wow"]}
+                defaultRating={startRating}
+                size={20}
+                ratingColor='#efefef'
+                onFinishRating={ratingCompleted}
+              />
               <View style={styles.commonFieldContainer} >
                 <TextInput
                   placeholder="Enter your review..."
@@ -391,40 +484,17 @@ function ProductInfo({ route, navigation }) {
                   onChangeText={(text) => setReviewText(text)}
                 />
               </View>
-              <TouchableOpacity onPress={handleReviewSubmit}
+
+              <TouchableOpacity onPress={() => {
+                handleReviewSubmit();
+              }}
                 activeOpacity={0.8} style={styles.signUpBtn} >
                 <Text style={styles.signInText} >
                   Post Review</Text>
               </TouchableOpacity>
-
             </View>
           </ScrollView>
-          <View style={{ backgroundColor: 'white', width: '100%', height: 75 }} >
-            {viewCart ?
 
-              <TouchableOpacity onPress={() => updateCartButton(productDetail)} activeOpacity={0.8} style={styles.viewCartBtn}>
-
-                <Zocial
-                  name="cart"
-                  size={24}
-                  style={{ paddingBottom: 2, width: 35 }}
-                  color="white"
-                />
-                <Text style={styles.viewCartText}>View Cart </Text>
-              </TouchableOpacity>
-              :
-              <TouchableOpacity onPress={() => addToCartButton(productDetail)} activeOpacity={0.8} style={styles.addToCartBtn}>
-                <Zocial
-                  name="cart"
-                  size={24}
-                  style={{ paddingBottom: 2, width: 35 }}
-                  color="white"
-                />
-                <Text style={styles.addToCartText}>Add To Cart </Text>
-              </TouchableOpacity>
-            }
-
-          </View>
         </View>
       }
 
@@ -688,6 +758,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.49,
     shadowRadius: 10,
     elevation: 5,
+
   },
   viewCartText: {
     fontSize: 15,

@@ -5,8 +5,6 @@ import { AuthReducer } from "./reducer/AuthReducer";
 import { clearLocalStorage,getCartProductCount,getItemFromLocalStorage,setItemToLocalStorage } from "../Utils/localstorage";
 import { AsyncStorage } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
-import navigationString from "../Constants/navigationString";
 
 const initialState = {
     user:null,
@@ -20,7 +18,6 @@ const initialState = {
 // creating global context 
 const Global = React.createContext(initialState);
 export const UseContextState = ()=>useContext(Global);
-const navigation = useNavigation(); // Move useNavigation outside the function
 
 function GlobalContext({children}) {
 
@@ -86,18 +83,18 @@ function GlobalContext({children}) {
       }
     };
     // logout user
-    // const logoutAuthUser = async()=>{
-    //     try{
-    //         await AsyncStorage.removeItem('user')
-    //         //auth().signOut();
-    //         dispatch({type:'LOG_OUT'})
-    //         console.log("LOG OUT SUCCESS")
+    const logoutAuthUser = async()=>{
+        try{
+            await AsyncStorage.removeItem('user')
+            //auth().signOut();
+            dispatch({type:'LOG_OUT'})
+            console.log("LOG OUT SUCCESS")
 
-    //     }
-    //     catch(err){
-    //         console.log(err)
-    //     }
-    // }
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
     // const logoutAuthUser = async () => {
     //   console.log("console.log1");
 
@@ -120,25 +117,24 @@ function GlobalContext({children}) {
     //     console.log(err);
     //   }
     // };
-    const logoutAuthUser = async () => {
-      try {
-        console.log("console.log2");
+    // const logoutAuthUser = async () => {
+    //   try {
+    //     console.log("console.log2");
   
-        await AsyncStorage.removeItem('user');
-        console.log("console.log3");
+    //     await AsyncStorage.removeItem('user');
+    //     console.log("console.log3");
   
-        await AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
-        console.log("console.log4");
+    //     await AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
+    //     console.log("console.log4");
   
-        dispatch({ type: 'LOG_OUT' });
-        console.log("LOG OUT SUCCESS");
-        navigation.navigate(navigationString.LOGIN);
-        console.log("console.log5");
+    //     dispatch({ type: 'LOG_OUT' });
+    //     console.log("LOG OUT SUCCESS");
+    //     console.log("console.log5");
   
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
     // get cart state
     const cartState=async()=>{
       try{  

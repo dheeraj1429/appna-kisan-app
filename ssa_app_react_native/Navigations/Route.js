@@ -26,6 +26,7 @@ import NewArrivals from "../screens/NewArrivals/NewArrivals";
 import ViewOrder from "../screens/Orders/ViewOrder";
 import RedeemProd from "../screens/Rewards/RedeemProd";
 import Account from "../screens/Account/Account";
+import OtpForgot from "../screens/Otp/OtpForgot";
 
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
@@ -54,6 +55,10 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forBottomSheetAndroid,
       }} />
+        <Stack.Screen name={navigationString.REGISTER}  component={Register}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
       <Stack.Screen name={navigationString.SEARCH_SCREEN} component={SearchScreen}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forBottomSheetAndroid,
@@ -78,7 +83,22 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
-      
+       <Stack.Screen name={navigationString.UPDATE_PROFILE}   component={UpdateProfile}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+        <Stack.Screen name={navigationString.REWARDS_SCREEN}   component={RewardsScreen}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+        <Stack.Screen name={navigationString.REDEEM_PROD}   component={RedeemProd}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
+      <Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
     </Stack.Navigator> 
     :
     <Stack.Navigator
@@ -110,7 +130,10 @@ function Route() {
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
       }} />
-      
+       <Stack.Screen name={navigationString.EDIT_PROFILE}   component={EditProfile}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forHorizontalIOS,
+      }} />
       <Stack.Screen name={navigationString.REDEEM_PROD}   component={RedeemProd}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,

@@ -37,12 +37,16 @@ function Checkout({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [formError, setFormError] = useState([])
-  const { authState, cartState } = UseContextState();
+  const { authState, cartState,userData } = UseContextState();
   console.log("formError", formError)
+  const  userType = userData?.user?.type;
+  console.log(userType,"usertype");
   const [checkoutDetail, setCheckoutDetail] = useState({
-    customer_id: authState?.user?.user_id,
+    //customer_id: authState?.user?.user_id,
+    customer_id: userData?.user?._id,
     customer_name: '',
     customer_phone_number: `${authState?.user?.phone_number}`,
+
     customer_email: '',
     customer_business: '',
     customer_gst: '',
@@ -186,7 +190,7 @@ function Checkout({ route, navigation }) {
       setLoading(true)
       await axios.post(`${config.BACKEND_URI}/api/app/cart/checkout/for/products`, checkoutDetail, { withCredentials: true })
         .then(res => {
-          // console.log(res?.data);
+          console.log(res?.data,"handlecheck response");
           if (res?.data?.status === true) {
             // onOrderComplete();
             clearLocalStorage();
@@ -209,7 +213,7 @@ function Checkout({ route, navigation }) {
           }
         })
         .catch(err => {
-          console.log(err)
+          console.log(err,"handle check error")
           setLoading(false)
         })
 
@@ -224,6 +228,10 @@ function Checkout({ route, navigation }) {
     }
 
   }
+
+ const payOnline =  async () => {
+  console.log(checkoutDetail,"pay online");
+ }
 
   const onClickState = (selectedState) => {
     setModalVisible(false)
@@ -359,9 +367,22 @@ function Checkout({ route, navigation }) {
                 <Entypo name="location-pin" size={26} style={styles.commonIcon} />
               </View>
               {/* address ,state, pincode */}
-              <TouchableOpacity onPress={handleCheckOut} activeOpacity={0.8} style={styles.checkoutBtn}>
-                <Text style={styles.checkouttext}>Confirm Order </Text>
-              </TouchableOpacity>
+              <>
+      {userType === "b2b" ? (
+        <>
+          <TouchableOpacity onPress={handleCheckOut} activeOpacity={0.8} style={styles.checkoutBtn}>
+            <Text style={styles.checkouttext}>Pay Later</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
+            <Text style={styles.checkouttext}>Pay Online</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
+          <Text style={styles.checkouttext}>Pay Online</Text>
+        </TouchableOpacity>
+      )}
+    </>
             </View>
             {/* for extra spacing */}
             <View style={{ paddingBottom: 20 }} ></View>

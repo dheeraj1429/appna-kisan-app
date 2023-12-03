@@ -32,6 +32,7 @@ import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
 import customer_review from "../../Constants/customer_review";
 import ProductCard from "../../components/ProductCard";
+import Toast from 'react-native-toast-message';
 
 
 function RedeemProd({ route, navigation }) {
@@ -40,7 +41,8 @@ function RedeemProd({ route, navigation }) {
   const [productData, setProductData] = useState(null);
   const [apiResponse1, setApiResponse1] = useState([]);
   const { fetchAuthuser, authState, userData } = UseContextState();
-
+  const  userType = userData?.user?.type;
+  console.log(userType,"usertype");
   const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
@@ -56,10 +58,11 @@ function RedeemProd({ route, navigation }) {
         method: 'GET',
       });
 
-     // console.log('Response:', response);
+      // console.log('Response:', response);
 
       if (response.status === 200) {
         const data = await response.json();
+        console.log(data, "sdfdfbfgb");
         if (data.success) {
           return data.products;
         } else {
@@ -100,32 +103,48 @@ function RedeemProd({ route, navigation }) {
 
   const addToCartApi = async (product_id) => {
     try {
-      const response = await fetch(`https://whale-app-88bu8.ondigitalocean.app/cart/checkout/for/rewards/products`, {
-        method: 'POST',
+      const response = await axios.post(`https://whale-app-88bu8.ondigitalocean.app/api/app/cart/checkout/for/rewards/products`, {
+        productId: product_id,
+      },{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
+          'x-user-type':userType,
         },
-        body: JSON.stringify({ 
-          product_id : product_id,
-         }),
       });
-      console.log("response of add to cart",response);
-      if (response.ok) {
+      console.log("response of add to cart", response);
+      if (response.status === 201) {
+        //console.log(response.order, "vdfhbsfgnmkfmgbkfg");
         //const data = await response.json();
         // Extract relevant information for the alert
-        const alertMessage = data.success ? 'Product added to cart successfully' : data.error;
+        //const alertMessage = data.success ? 'Product added to cart successfully' : data.error;
         // Display alert with extracted information
-        Alert.alert('Add to Cart', alertMessage);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: 'Success',
+          text2: response.data.message,
+          visibilityTime: 4000, // 4 seconds
+          autoHide: true,
+        });
+        //Alert.alert('Add to Cart', alertMessage);
       } else {
         console.log('Failed to add product to cart:', response.status);
       }
     } catch (error) {
       console.log('Error adding product to cart:', error.message);
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'API Error',
+        text2: error.response.data.message,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
     }
   };
-  
-  
+
+
 
   const goBack = () => {
     navigation.goBack();
@@ -145,21 +164,21 @@ function RedeemProd({ route, navigation }) {
     <View style={styles.cardContainer}>
       <Image source={{ uri: product.product_images[0].image_url }} style={styles.productImage} />
       <Text style={styles.productName}>{product.product_name}</Text>
-      <Text style={styles.productPoints}>{`Points: ${product.product_reward_points}`}</Text>
+      <Text style={styles.productPoints}>{`Points: ${product.product_collected_points}`}</Text>
       <TouchableOpacity onPress={() => {
-      // Implement your logic for handling order press directly inside the onPress
-      //const productId = product.product_id;
+        // Implement your logic for handling order press directly inside the onPress
+        //const productId = product.product_id;
 
-      // Call the API function
-       addToCartApi(product.productId);
+        // Call the API function
+        addToCartApi(product._id);
 
-      // Show alert directly inside onPress
-      Alert.alert('Product added to cart:', `Product: ${product.product_name}`);
-    }}>
-      <View style={styles.orderButton}>
-        <Text style={styles.orderButtonText}>Redeem Product</Text>
-      </View>
-    </TouchableOpacity>
+        // Show alert directly inside onPress
+        //Alert.alert('Product added to cart:', `Product: ${product.product_name}`);
+      }}>
+        <View style={styles.orderButton}>
+          <Text style={styles.orderButtonText}>Redeem Product</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 

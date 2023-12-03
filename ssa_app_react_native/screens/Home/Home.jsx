@@ -14,6 +14,7 @@ import customer_review from "../../Constants/customer_review";
 import { FontAwesome } from '@expo/vector-icons';
 import { UseContextState } from "../../global/GlobalContext.jsx";
 // import { useRoute } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; 
 
 
 export const SLIDER_WIDTH = Dimensions.get("window").width;
@@ -24,22 +25,18 @@ function Home({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [apiResponse, setApiResponse] = useState([]);
   const { fetchAuthuser, authState, userData } = UseContextState();
-  const [reviewsData, setReviewsData] = useState({
-    success: false,
-    statusCode: null,
-    page: null,
-    pageSize: null,
-    totalResults: null,
-    reviews: [],
-  });
+  const [reviewsData, setReviewsData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
-
+  const  userType = userData?.user?.type;
+  console.log(userType,"usertype");
   useEffect(() => {
     if (userData && userData.accessToken) {
       setAccessToken(userData.accessToken);
+      console.log(userData, "userdat from home page");
+
     }
   }, [userData]);
-  //console.log(userData, "userdat from home page");
+  console.log(userData, "userdat from home page");
 
   // useEffect(() => {
   //   // Call fetchAuthuser to update the user data in the global context
@@ -55,6 +52,65 @@ function Home({ navigation }) {
   // const details = route.params?.details;
   // console.log("details from navigation", details);
 
+  // const userInfo = async () => {
+  //   //console.log(accessToken,"access");
+
+  //   try {
+  //     const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ' + accessToken,
+  //         'x-user-type': 'b2c',
+  //       },
+  //     });
+
+  //     console.log('Response in update profile:', response);
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data, "Vdggnfgnfhgn");
+  //       if (data.user?.isApproved) {
+  //         setIsApproved(true);
+  //       }
+  //       if (data && data.success) {
+  //         return data;
+  //       } else {
+  //         console.log('API returned an error:', data ? data.error : 'No data received');
+  //       }
+  //     } else {
+  //       console.log('UserInfo HTTP request failed with status:', response.status);
+  //     }
+  //   } catch (error) {
+  //     console.log('Error fetching Details:', error.message);
+  //   }
+  // };
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+
+  //     // Your code here
+  //     if (accessToken) { //code
+  //       const fetchList = async () => {
+  //         try {
+  //           const response = await userInfo();
+  //           //setApiResponse(response);
+  //           console.log("UserInfo asdfgg", response);
+  //           setName(response.user.name);
+  //           console.log({ rdp: response.user });
+  //           return response; // Add this line if you want to return the response
+  //         } catch (error) {
+  //           Alert.alert('Error fetching UserInfo:', error);
+  //         }
+  //       };
+
+  //       fetchList();
+  //     }
+
+  //   }, [accessToken])
+  // );
+
+
   const showToast = () => {
     Toast.show({
       type: 'success',
@@ -63,12 +119,12 @@ function Home({ navigation }) {
     });
   }
 
+
   const reviewlist = async () => {
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/reviews', {
-        method: 'GET',
+      const response = await axios.get('https://whale-app-88bu8.ondigitalocean.app/api/reviews', {
         headers: {
-          'x-user-type': 'b2c',
+          'x-user-type': userType,
           'Authorization': 'Bearer ' + accessToken,
         },
       });
@@ -76,11 +132,11 @@ function Home({ navigation }) {
       console.log('Response of review:', response);
 
       if (response.status === 200) {
-        // const data = await response.json();
+        // const data = response.data; // Axios automatically parses JSON
         // if (data.success) {
         //   console.log('data:', data);
-        //setReviewsData(response.data);
-        console.log("response.dat",response.reviews);
+        setReviewsData(response.data.reviews);
+        console.log("response.data", response.data.reviews);
         //   return data;
         // } else {
         //   console.log('API returned an error:', data.error);
@@ -93,12 +149,13 @@ function Home({ navigation }) {
     }
   };
 
+
   useEffect(() => {
     const fetchList1 = async () => {
       try {
         const response = await reviewlist();
         //setApiResponse(response.reviews); // Assuming response is an array
-        console.log('api response review', apiResponse);
+        console.log('api response review', reviewsData);
       } catch (error) {
         console.log('Error fetching review list:', error);
       }
@@ -136,20 +193,32 @@ function Home({ navigation }) {
     navigation.navigate(navigationString.SEARCH_SCREEN)
   }
 
-  const renderAllReviews = (({ item, index }) => {
-    console.log(item)
+  const renderReviewItem = ({ item }) => {
     return (
-      <View style={styles?.reviewBox} >
+      <View style={styles?.reviewBox}>
         <View>
-
-          <View>
-            <Text style={{ fontSize: 13, color: '#222', textTransform: 'capitalize' }} >{item?.content}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
+            <View>
+              <Ionicons name="md-person-circle-sharp" size={35} color={config.primaryColor} style={{ marginRight: 8 }} />
+            </View>
+            <View>
+              <Text style={{ fontWeight: '500', fontSize: 13, textTransform: 'capitalize', paddingTop: 3 }}>{item?.user.name}</Text>
+              <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
+                {/* Adjust the star icons based on the rating */}
+                {Array.from({ length: Math.floor(item?.rating) }, (_, index) => (
+                  <Ionicons key={index} name="ios-star" size={15} color="gold" style={{ marginRight: 8 }} />
+                ))}
+                {item?.rating % 1 !== 0 && (
+                  <Ionicons name="ios-star-half" size={15} color="gold" style={{ marginRight: 8 }} />
+                )}
+              </View>
+            </View>
           </View>
-          <Text style={{ fontWeight: '500', fontSize: 13, textTransform: 'capitalize', paddingTop: 3 }} >{item?.name}</Text>
+          <Text style={{ fontSize: 13, color: '#222', textTransform: 'capitalize' }}>{item?.message}</Text>
         </View>
       </View>
-    )
-  })
+    );
+  };
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -204,20 +273,29 @@ function Home({ navigation }) {
           <View style={styles.brandHeadingBox} >
             <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 15 }} >
               <Text style={styles.brandText}>Customer Reviews</Text>
-              <Text>{reviewsData.statusCode}</Text>
             </View>
           </View>
           <View style={{ alignItems: "center", paddingTop: 10 }} >
-            <FlatList
+            {/* <FlatList
               data={customer_review?.reviews}
               renderItem={renderAllReviews}
               contentContainerStyle={{ paddingHorizontal: 15 }}
               keyExtractor={(item) => item.name}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+            /> */}
+            <FlatList
+              data={reviewsData}
+              renderItem={renderReviewItem}
+              keyExtractor={(item) => item?._id}
+              horizontal={true} // Set to true for horizontal scrolling
+              showsHorizontalScrollIndicator={false} // Optional: hide the horizontal scrollbar
+              // Add any additional FlatList props as needed
+            // Add any additional FlatList props as needed
             />
           </View>
         </View>
+
         {/*============ CUSTOMER REVIEW======== */}
         {/* {reviewsData.reviews.map((review, index) => (
         <View key={index}>

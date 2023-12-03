@@ -31,7 +31,7 @@ import { UseContextState } from "../../global/GlobalContext";
 import imageImport from "../../Constants/imageImport";
 import { FlatList } from "react-native-gesture-handler";
 import customer_review from "../../Constants/customer_review";
-
+import Toast from 'react-native-toast-message';
 
 function RewardsScreen({ route, navigation }) {
   const [loading, setLoading] = useState(false)
@@ -47,10 +47,11 @@ function RewardsScreen({ route, navigation }) {
   const [accessToken, setAccessToken] = useState(null);
   const [name, setName] = useState(null);
   const [rewardPoints, setRewardPoints] = useState(null);
-
-
+  const [orderHistory, setOrderHistory] = useState([]);
+  const userType = userData?.user?.type;
+  console.log(userType, "usertype");
   const userInfo = async () => {
-    console.log(accessToken,"access");
+    console.log(accessToken, "access");
 
     try {
       const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
@@ -58,7 +59,7 @@ function RewardsScreen({ route, navigation }) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': 'b2c',
+          'x-user-type': userType,
         },
       });
 
@@ -67,8 +68,16 @@ function RewardsScreen({ route, navigation }) {
 
       if (response.ok) {
         const data = await response.json();
-
+        console.log(data, "sdfsv");
         if (data && data.success) {
+          // Toast.show({
+          //   type: 'success',
+          //   position: 'top',
+          //   text1: 'Success',
+          //   text2: data.success,
+          //   visibilityTime: 4000, // 4 seconds
+          //   autoHide: true,
+          // });
           return data;
         } else {
           console.log('API returned an error:', data ? data.error : 'No data received');
@@ -78,55 +87,38 @@ function RewardsScreen({ route, navigation }) {
       }
     } catch (error) {
       console.log('Error fetching Details:', error.message);
+      // Toast.show({
+      //   type: 'error',
+      //   position: 'top',
+      //   text1: 'API Error',
+      //   text2: error.message,
+      //   visibilityTime: 4000, // 4 seconds
+      //   autoHide: true,
+      // });
     }
   };
-
-
-  useEffect(() => {
-    console.log({asdfrhjm:accessToken});
-    if(accessToken) { //code
-      const fetchList = async () => {
-        try {
-          const response = await userInfo();
-         // setApiResponse(response);
-          console.log("UserInfo", response);
-          setRewardPoints(response.user.reward_points);
-          console.log({rdp : response.user.reward_points});
-          return response; // Add this line if you want to return the response
-        } catch (error) {
-          Alert.alert('Error fetching UserInfo:', error);
-        }
-      }; 
-    
-      fetchList();
-    }
-   
-
-  }, [accessToken]);
-
-
 
   useEffect(() => {
     if (userData && userData.user) {
       setAccessToken(userData.accessToken);
       //setRewardPoints(userData.user.reward_points);
-      console.log("rewardpoint",rewardPoints);
-      console.log("userdata === ",userData);
+      console.log("rewardpoint", rewardPoints);
+      console.log("userdata === ", userData);
 
     }
   }, [userData]);
 
   const rewardOrderHistory = async () => {
-    console.log({"sdfghjkl":accessToken});
+    console.log({ "sdfghjkl": accessToken });
     try {
       //const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
-       const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
+      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': 'b2c',
-          'x':"Dheeraj"
+          'x-user-type': userType,
+          'x': "Dheeraj"
         },
       });
 
@@ -134,9 +126,18 @@ function RewardsScreen({ route, navigation }) {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log("data",data);
+        console.log("data", data);
         if (data.success) {
-          console.log("data product",data.orders);
+          console.log("data product", data.orders);
+          setOrderHistory(data.orders);
+          // Toast.show({
+          //   type: 'success',
+          //   position: 'top',
+          //   text1: 'Success',
+          //   text2: data.success,
+          //   visibilityTime: 4000, // 4 seconds
+          //   autoHide: true,
+          // });
           return data.products;
         } else {
           console.log('API returned an error:', data.error);
@@ -146,26 +147,49 @@ function RewardsScreen({ route, navigation }) {
       }
     } catch (error) {
       console.log('Error fetching Reward Order List:', error.message);
+      // Toast.show({
+      //   type: 'error',
+      //   position: 'top',
+      //   text1: 'API Error',
+      //   text2: error.message,
+      //   visibilityTime: 4000, // 4 seconds
+      //   autoHide: true,
+      // });
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      if (accessToken) {
+        const fetchList1 = async () => {
+          try {
+            const response = await rewardOrderHistory();
+            setApiResponse(response); // Assuming response is an array
+            console.log('api response', response);
+          } catch (error) {
+            console.log('Error fetching Reward Order list:', error);
+          }
+        };
 
-  useEffect(() => {
-    if (accessToken) {
-      const fetchList1 = async () => {
-        try {
-          const response = await rewardOrderHistory();
-          setApiResponse(response); // Assuming response is an array
-          console.log('api response', response);
-        } catch (error) {
-          console.log('Error fetching Reward Order list:', error);
-        }
-      };
-  
-      fetchList1();
-    
-  
-    }
-  }, [accessToken]);
+        fetchList1();
+
+        const fetchList = async () => {
+          try {
+            const response = await userInfo();
+            // setApiResponse(response);
+            console.log("UserInfo", response);
+            setRewardPoints(response.user.reward_points);
+            console.log({ rdp: response.user.reward_points });
+            return response; // Add this line if you want to return the response
+          } catch (error) {
+            Alert.alert('Error fetching UserInfo:', error);
+          }
+        };
+
+        fetchList();
+      }
+    }, [accessToken])
+  );
+
 
   // console.log(authState,"authState")
 
@@ -298,11 +322,11 @@ function RewardsScreen({ route, navigation }) {
 
   const ProductItem = ({ item }) => (
     <View style={styles.productItem}>
-      <Image source={item.image} style={styles.productImage} />
+      <Image source={{ uri: item.product.product_images?.[0]?.image_url }} style={styles.productImage} />
       <View style={styles.productDetails}>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productName}>{`Quantity: ${item.quantity}`}</Text>
-        <Text style={styles.productName}>{`Points: ${item.points}`}</Text>
+        <Text style={styles.productName}>{item.product.product_name}</Text>
+        <Text style={styles.productName}>{`Quantity: ${item.product.quantityBought}`}</Text>
+        <Text style={styles.productName}>{`Points: ${item.reward_point_price}`}</Text>
       </View>
     </View>
   );
@@ -332,7 +356,28 @@ function RewardsScreen({ route, navigation }) {
   //     </View>
   //   )
   // })
-
+  const renderOrderHistory = () => {
+    if (orderHistory.length > 0) {
+      // If there are items in orderHistory, render the view with the orders
+      return (
+        <ScrollView>
+          <View style={{ padding: 10 }}>
+            {orderHistory.map((item, index) => (
+              <ProductItem key={index} item={item} />
+            ))}
+          </View>
+        </ScrollView>
+      );
+    } else {
+      // If orderHistory is empty, render a message indicating no orders
+      return (
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}>
+            You haven't redeemed any products</Text>
+        </View>
+      );
+    }
+  };
 
 
   return (
@@ -465,13 +510,15 @@ function RewardsScreen({ route, navigation }) {
               />
             </View>
           </View> */}
-          <View style={styles.userProductsContainer}>
+          {/* <View style={styles.userProductsContainer}>
             <FlatList
               data={userCollectedProducts}
               renderItem={({ item }) => <ProductItem item={item} />}
               keyExtractor={(item) => item.id}
             />
-          </View>
+          </View> */}
+          {renderOrderHistory()}
+
 
         </View>
 
