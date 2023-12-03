@@ -732,8 +732,43 @@ function ViewOrder({ handleClose, orderId }) {
   };
   //############################# INVOICE PREVIEW SIDE BAR DRAWER FUNCTION #############################
 
-  const updateOrderPrice = function (data) {
-    console.log(data);
+  const updateOrderPrice = async function (data) {
+    if(!data?.order_price) {
+      setSnackbarOpen(true);
+        setMessage((prev) => ({
+          ...prev,
+          type: "error",
+          message: "Please provide a valid order price",
+        }));
+        return;
+    }
+
+    setLoading(true);
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/update/order/amount`,
+        data
+      )
+      .then((res) => {
+        console.log(res)
+        setSnackbarOpen(true);
+        setLoading(false);
+        setMessage((prev) => ({
+          ...prev,
+          type: "success",
+          message: "Order price Updated Successfully !!",
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        setSnackbarOpen(true);
+        setMessage((prev) => ({
+          ...prev,
+          type: "error",
+          message: "Something went wrong updating order price",
+        }));
+      });
   };
 
   return (
@@ -821,6 +856,16 @@ function ViewOrder({ handleClose, orderId }) {
                     #{orderDetail?.order_id}
                   </p>
                 </div>
+                <div>
+                  <div className="flex">
+                <h4>Total order price</h4>
+                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs.1900008</p>
+                </div>
+                <div className="flex">
+                <h4>Order price</h4>
+                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs.1900008</p>
+                </div>
+                  </div>
                 <div className="flex" style={{ gap: 15 }}>
                   {/* {orderDetail?.order_status} */}
 
@@ -861,8 +906,7 @@ function ViewOrder({ handleClose, orderId }) {
                             _id: orderDetail?._id,
                             customer_id: orderDetail?.customer_id,
                             order_id: orderDetail?.order_id,
-                            customer_email: orderDetail?.customer_email,
-                            order_price: orderDetail?.order_price,
+                            order_price: +orderDetail?.order_price,
                           })
                         }
                       >
