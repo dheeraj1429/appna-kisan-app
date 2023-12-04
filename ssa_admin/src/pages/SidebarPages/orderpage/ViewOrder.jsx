@@ -742,7 +742,6 @@ function ViewOrder({ handleClose, orderId }) {
         }));
         return;
     }
-
     setLoading(true);
     axios
       .patch(
@@ -859,18 +858,18 @@ function ViewOrder({ handleClose, orderId }) {
                 <div>
                   <div className="flex">
                 <h4>Total order price</h4>
-                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs.1900008</p>
+                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs {orderDetail?.total_amount}</p>
                 </div>
                 <div className="flex">
-                <h4>Order price</h4>
-                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs.1900008</p>
+                <h4>Billing price</h4>
+                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs {orderDetail?.billing_amount}</p>
                 </div>
                   </div>
                 <div className="flex" style={{ gap: 15 }}>
                   {/* {orderDetail?.order_status} */}
 
                   {/* <label htmlFor=""> Select Category  </label> */}
-                  <div>
+                  {orderDetail?.user_type === 'B2BUsers' ? <div>
                     <div
                       style={{
                         display: "flex",
@@ -913,7 +912,7 @@ function ViewOrder({ handleClose, orderId }) {
                         Update order price
                       </Button>
                     </div>
-                  </div>
+                  </div> : null}
                   <div className="flex">
                     <TextField
                       style={{

@@ -45,7 +45,7 @@ function Orders({ navigation }) {
       setLoading(true);
       axios
         .get(
-          `${config.BACKEND_URI}/api/app/get/all/user/orders/${authState?.user?.user_id}`,
+          `${config.BACKEND_URI}/api/app/get/all/user/orders?customer_id=${authState?.user?.user_id}`,
           { withCredentials: true }
         )
         .then((res) => {
