@@ -27,7 +27,7 @@ import Toast from 'react-native-toast-message';
 function Otp({ route, navigation }) {
   // const {user_name,user_exists} = route.params;
   const { phoneNumber, user_name,user_exists } = route.params;
-  const modifiedPhoneNumber = phoneNumber.substring(3);
+  const modifiedPhoneNumber = phoneNumber.substring(2);
   const [loading, setLoading] = useState(false);
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
   const [autoverifyingLoading, setAutoverifyingLoading] = useState(false);
@@ -105,7 +105,7 @@ function Otp({ route, navigation }) {
       // console.log("AUTO_VERIFIED-credential",credential)
       if (user_exists) {
         console.log("LOGIN CALLED");
-        navigation.navigate(navigationString.RESET_PASS, { phone: modifiedPhoneNumber});
+        navigation.navigate(navigationString.RESET_PASS, { phone: modifiedPhoneNumber });
         console.log("navigate to reset page");
        // loginUser();
         setVerifyOtpLoading(false)
