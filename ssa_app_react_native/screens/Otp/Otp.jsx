@@ -27,7 +27,7 @@ import Toast from 'react-native-toast-message';
 function Otp({ route, navigation }) {
   // const {user_name,user_exists} = route.params;
   const { phoneNumber, user_name,user_exists } = route.params;
-  const modifiedPhoneNumber = phoneNumber.substring(2);
+  const modifiedPhoneNumber = phoneNumber.substring(4);
   const [loading, setLoading] = useState(false);
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
   const [autoverifyingLoading, setAutoverifyingLoading] = useState(false);

@@ -15,7 +15,7 @@ import {
   Pressable
 } from "react-native";
 import { config } from "../../config";
-import { Modal, Portal, Provider } from 'react-native-paper';
+import { Modal, Portal, Provider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from "expo-status-bar";
 import navigationString from "../../Constants/navigationString";
@@ -40,17 +40,20 @@ function Login({ navigation }) {
   const [forgotField, setForgotField] = useState('');
   const [password, setPassword] = useState('');
   //const { setUserData } = UseContextState();
-  const { saveUserData, setPhone} = UseContextState();
+  const { saveUserData } = UseContextState();
+
+  const [selectedUserType, setSelectedUserType] = useState('B2B');
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
+    setSelectedUserType(option);
   };
 
+
   const handleSendOtp = async () => {
-     // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-      //console.log("CONFIRMATION++++++++",confirmation);
-      //setConfirm(confirmation);
-    
+    // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    //console.log("CONFIRMATION++++++++",confirmation);
+    //setConfirm(confirmation);
+
     if (forgotField.length === 10) { // Example: Assuming phone number should be 10 digits
       axios.get(`${config.BASE_URL}app/check-mobile-number?phoneNumber=${forgotField}`, {
         headers: {
@@ -61,10 +64,9 @@ function Login({ navigation }) {
           console.log("responsein otp send", response.data);
           if (response.status === 200) {
             console.log("responsein otp send", response.data);
-            setPhone(forgotField);
             setForgotField('');
             //navigation.navigate(navigationString.OTP_SCREEN, { phoneNumber: forgotField });
-            navigation.navigate(navigationString.OTP_SCREEN,{user_exists:true,phoneNumber:`+91 ${forgotField}`});
+            navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${forgotField}` });
 
           } else {
             console.log('Failed to send otp:', response.status);
@@ -93,7 +95,7 @@ function Login({ navigation }) {
     }
     setModalVisible1(!modalVisible1);
   };
-  
+
   const goBack = () => {
     // navigation.goBack();
     BackHandler.exitApp()
@@ -175,7 +177,7 @@ function Login({ navigation }) {
             email: email || undefined, // Use email if provided, otherwise undefined
             mobile: phoneNumber || undefined, // Use phoneNumber if provided, otherwise undefined
             password: password || undefined,
-            userType: "B2B"
+            userType: selectedUserType
           },
           { withCredentials: true }
         );
@@ -303,9 +305,33 @@ function Login({ navigation }) {
 
 
                 </View>
+                <View style={styles.radioButtonsContainer}>
+                  <View style={styles.radioButtonItem}>
+                    <RadioButton.Android
+                      value="B2B"
+                      status={selectedUserType === 'B2B' ? 'checked' : 'unchecked'}
+                      onPress={() => handleOptionClick('B2B')}
+                    />
+                    <Text>B2B</Text>
+                  </View>
+                  <View style={styles.radioButtonItem}>
+                    <RadioButton.Android
+                      value="B2C"
+                      status={selectedUserType === 'B2C' ? 'checked' : 'unchecked'}
+                      onPress={() => handleOptionClick('B2C')}
+                    />
+                    <Text>B2C</Text>
+                  </View>
+                </View>
+
 
                 <TouchableOpacity onPress={handleSignup} activeOpacity={0.8} style={styles.signUpBtn}>
                   <Text style={styles.signInText}>Sign in</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() =>{
+                  navigation.navigate(navigationString.LOGIN_WITH_OTP);
+                }} activeOpacity={0.8} style={styles.signUpBtn}>
+                  <Text style={styles.signInText}>Login with OTP</Text>
                 </TouchableOpacity>
                 <View style={{ marginVertical: "5%" }}>
 
@@ -592,5 +618,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
-  }
+  },
+  radioButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  radioButtonItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });

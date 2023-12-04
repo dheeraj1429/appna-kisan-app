@@ -15,11 +15,14 @@ export default {
     CHECKOUT:'Checkout',
     ORDER_COMPLETED:'Order_Completed',
     OTP_SCREEN:'OTP_Screen',
+    OTP_FORGOT:'OtpForgot',
     SEND_ENQUIRY:'Send_Enquiry',
     EDIT_PROFILE:'Edit_Profile',
     UPDATE_PROFILE:'UpdateProfile',
     REWARDS_SCREEN:'RewardsScreen',
     NEW_ARRIVALS:'New_Arrivals',
     REDEEM_PROD: 'RedeemProd',
-    RESET_PASS: 'ResetPass'
+    RESET_PASS: 'ResetPass',
+    LOGIN_WITH_OTP:'LoginWithOtp',
+    SIGNUP_WITH_OTP:'SignupWithOtp',
 }

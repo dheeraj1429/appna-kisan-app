@@ -33,7 +33,7 @@ function Register({ navigation }) {
   const { authState, fetchAuthuser } = UseContextState();
   const [selectedImage, setSelectedImage] = useState(null);
   const { saveUserData } = UseContextState();
-const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
   var log = logger.createLogger();
 
   const goBack = () => {
@@ -52,7 +52,7 @@ const [image, setImage] = useState(null);
   // }, [])
 
   const handleCreateBtnB2B = async () => {
-    log.info(selectedImage,"selectedImageeeeee");
+    log.info(selectedImage, "selectedImageeeeee");
     if (!name.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter your name!!",
@@ -123,7 +123,7 @@ const [image, setImage] = useState(null);
       );
       return;
     }
-    if (!selectedImage.image_url ) {
+    if (!selectedImage.image_url) {
       ToastAndroid.showWithGravityAndOffset(
         "Please select an Image!!",
         ToastAndroid.LONG,
@@ -195,8 +195,8 @@ const [image, setImage] = useState(null);
         //   `/ssastore/banners/xyz/`,
         //   image
         // );
-    
-        const userBody  = {
+
+        const userBody = {
           owner_name: name,
           company_name: ownerName,
           email: email,
@@ -216,7 +216,7 @@ const [image, setImage] = useState(null);
             images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
           },
         };
-        log.info("userData sfgndghndghndghmndg",userBody);
+        log.info("userData sfgndghndghndghmndg", userBody);
         const response = await axios.post(
           `${config.BASE_URL}/app/create/user/b2b`,
           userBody,
@@ -261,7 +261,7 @@ const [image, setImage] = useState(null);
       } catch (error) {
         setLoading(false);
         log.info("hjbkjbkjhError in API call:", error);
-        console.log(error.response.data,"errorresponse");
+        console.log(error.response.data, "errorresponse");
         Toast.show({
           type: 'error',
           position: 'top',
@@ -283,7 +283,7 @@ const [image, setImage] = useState(null);
       log.info("GST Number:", gstNum);
       log.info("address:", address);
       setLoading(false);
-      console.log(image,"imageof blob");
+      console.log(image, "imageof blob");
 
     }
   }
@@ -475,18 +475,18 @@ const [image, setImage] = useState(null);
       xhr.open("GET", uri, true);
       xhr.send(null);
     });
-  
+
     return blob;
   };
   const handleImageUpload = async () => {
     try {
       const result = await selectImage('Select Image');
-      console.log(result,"result of image");
+      console.log(result, "result of image");
       // Update the state with the selected image and its URL
       if (!result.cancelled) {
         setSelectedImage({ image_url: result.uri });
         const blob = await getBlobFroUri(result.uri);
-        console.log(blob,"blob");
+        console.log(blob, "blob");
         setImage(blob._data);
       }
     } catch (error) {
@@ -659,7 +659,7 @@ const [image, setImage] = useState(null);
                       <TouchableOpacity onPress={handleImageUpload}>
 
                         <View style={styles.commonField}>
-                        <FontAwesome name="image" size={21} style={styles.commonIcon} />
+                          <FontAwesome name="image" size={21} style={styles.commonIcon} />
 
                           {selectedImage ? (
                             // <Image source={{ uri: selectedImage.image_url }} style={{ width: 50, height: 50 }} />
@@ -671,7 +671,7 @@ const [image, setImage] = useState(null);
                                 <FontAwesome name="image" size={21} style={styles.commonIcon} />
                               </View> */}
                               <View>
-                                <Text  style={{color:"gray"}}>Select Image</Text>
+                                <Text style={{ color: "gray" }}>Select Image</Text>
                               </View>
                             </View>
                           )}
@@ -714,6 +714,11 @@ const [image, setImage] = useState(null);
                     <Text style={styles.signInText} >
                       Create and Verify
                     </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate(navigationString.SIGNUP_WITH_OTP);
+                  }} activeOpacity={0.8} style={styles.signUpBtn}>
+                    <Text style={styles.signInText}>Sign up with OTP</Text>
                   </TouchableOpacity>
                   <Text style={styles.orText} >or</Text>
                   <View style={styles.dontHaveAccountBox} >
@@ -808,6 +813,11 @@ const [image, setImage] = useState(null);
                     <Text style={styles.signInText} >
                       Create and Verify
                     </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate(navigationString.SIGNUP_WITH_OTP);
+                  }} activeOpacity={0.8} style={styles.signUpBtn}>
+                    <Text style={styles.signInText}>Sign up with OTP</Text>
                   </TouchableOpacity>
                   <Text style={styles.orText} >or</Text>
                   <View style={styles.dontHaveAccountBox} >

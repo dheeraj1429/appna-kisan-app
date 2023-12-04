@@ -27,136 +27,159 @@ import ViewOrder from "../screens/Orders/ViewOrder";
 import RedeemProd from "../screens/Rewards/RedeemProd";
 import Account from "../screens/Account/Account";
 import ResetPass from "../screens/Login/ResetPass";
+import LoginWithOtp from "../screens/Login/LoginWithOtp";
+import SignupWithOtp from "../screens/Register/SignupWithOtp";
+import OtpForgot from "../screens/Otp/OtpForgot";
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
 
 const Tabs = createBottomTabNavigator();
 
 function Route() {
-  const {authState} = UseContextState();
+  const { authState } = UseContextState();
   // console.log(authState,'authState');
   // console.log(authState?.isAuthenticated)
   return (
 
     <NavigationContainer>
       {/* {authState?.isAuthenticated ?  */}
-      {authState?.isAuthenticated ? 
-      <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: styles.screenOption,
-        tabBarHideOnKeyboard:true
-      }}
-    >
-      <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
-      <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forBottomSheetAndroid,
-      }} />
-      <Stack.Screen name={navigationString.PRODUCT_INFO} component={ProductInfo}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forBottomSheetAndroid,
-      }} />
-        <Stack.Screen name={navigationString.REGISTER}  component={Register}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-      <Stack.Screen name={navigationString.SEARCH_SCREEN} component={SearchScreen}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forBottomSheetAndroid,
-      }} />
-       <Stack.Screen name={navigationString.CHECKOUT} component={Checkout}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-        <Stack.Screen name={navigationString.ORDER_COMPLETED} component={OrderCompleted}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.SEND_ENQUIRY}   component={SendEnquiry}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.EDIT_PROFILE}   component={EditProfile}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.VIEW_ORDER}   component={ViewOrder}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.UPDATE_PROFILE}   component={UpdateProfile}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-        <Stack.Screen name={navigationString.REWARDS_SCREEN}   component={RewardsScreen}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-        <Stack.Screen name={navigationString.REDEEM_PROD}   component={RedeemProd}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-      <Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-    </Stack.Navigator> 
-    :
-    <Stack.Navigator
-    initialRouteName={navigationString.LOGIN}
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: styles.screenOption,
-        tabBarHideOnKeyboard:true
-      }}
-    >
-<Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forBottomSheetAndroid,
-      }} />
-      <Stack.Screen name={navigationString.REGISTER}  component={Register}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-      <Stack.Screen name={navigationString.OTP_SCREEN} component={Otp}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.UPDATE_PROFILE}   component={UpdateProfile}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.REWARDS_SCREEN}   component={RewardsScreen}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-       <Stack.Screen name={navigationString.EDIT_PROFILE}   component={EditProfile}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-      <Stack.Screen name={navigationString.REDEEM_PROD}   component={RedeemProd}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-      <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
-      <Stack.Screen name={navigationString.PRODUCT_INFO}   component={ProductInfo}  options={{
-        cardStyleInterpolator:
-          CardStyleInterpolators.forHorizontalIOS,
-      }} />
-    </Stack.Navigator>
-    }
+      {authState?.isAuthenticated ?
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarStyle: styles.screenOption,
+            tabBarHideOnKeyboard: true
+          }}
+        >
+          <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
+          <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.PRODUCT_INFO} component={ProductInfo} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.SIGNUP_WITH_OTP} component={SignupWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.REGISTER} component={Register} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.LOGIN_WITH_OTP} component={LoginWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.OTP_FORGOT} component={OtpForgot} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.SEARCH_SCREEN} component={SearchScreen} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.CHECKOUT} component={Checkout} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.ORDER_COMPLETED} component={OrderCompleted} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.SEND_ENQUIRY} component={SendEnquiry} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.EDIT_PROFILE} component={EditProfile} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.VIEW_ORDER} component={ViewOrder} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.UPDATE_PROFILE} component={UpdateProfile} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.REWARDS_SCREEN} component={RewardsScreen} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.REDEEM_PROD} component={RedeemProd} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.LOGIN} component={Login} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+        </Stack.Navigator>
+        :
+        <Stack.Navigator
+          initialRouteName={navigationString.LOGIN}
+          screenOptions={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarStyle: styles.screenOption,
+            tabBarHideOnKeyboard: true
+          }}
+        >
+          <Stack.Screen name={navigationString.LOGIN} component={Login} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.SIGNUP_WITH_OTP} component={SignupWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.LOGIN_WITH_OTP} component={LoginWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.REGISTER} component={Register} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.OTP_SCREEN} component={Otp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.UPDATE_PROFILE} component={UpdateProfile} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.REWARDS_SCREEN} component={RewardsScreen} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.EDIT_PROFILE} component={EditProfile} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.REDEEM_PROD} component={RedeemProd} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
+          <Stack.Screen name={navigationString.PRODUCT_INFO} component={ProductInfo} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+        </Stack.Navigator>
+      }
 
       {/* if user not logged in */}
-     
+
     </NavigationContainer>
-   
+
 
     // <TabBar/>
     // <BottomNav />
@@ -175,6 +198,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
-   
+
   },
 });
