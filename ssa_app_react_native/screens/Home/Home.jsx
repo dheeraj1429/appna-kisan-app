@@ -16,6 +16,7 @@ import { UseContextState } from "../../global/GlobalContext.jsx";
 // import { useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
 
+import { useFocusEffect } from "@react-navigation/native";
 
 export const SLIDER_WIDTH = Dimensions.get("window").width;
 function Home({ navigation }) {
@@ -149,22 +150,30 @@ function Home({ navigation }) {
     }
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
 
-  useEffect(() => {
-    const fetchList1 = async () => {
-      try {
-        const response = await reviewlist();
-        //setApiResponse(response.reviews); // Assuming response is an array
-        console.log('api response review', reviewsData);
-      } catch (error) {
-        console.log('Error fetching review list:', error);
+      // Your code here
+      if (accessToken) { //code
+        const fetchList1 = async () => {
+          try {
+            const response = await reviewlist();
+            //setApiResponse(response.reviews); // Assuming response is an array
+            console.log('api response review', reviewsData);
+          } catch (error) {
+            console.log('Error fetching review list:', error);
+          }
+        };
+    
+    
+        fetchList1();
+  
       }
-    };
+
+    }, [accessToken,render])
+  );
 
 
-    fetchList1();
-
-  }, []);
 
 
   useEffect(() => {
