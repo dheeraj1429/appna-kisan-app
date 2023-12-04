@@ -27,6 +27,7 @@ import { UseContextState } from "../../global/GlobalContext";
 import imageImport from "../../Constants/imageImport";
 import emailjs from '@emailjs/browser';
 import { FlatList } from "react-native-gesture-handler";
+import Toast from 'react-native-toast-message';
 
 
 
@@ -40,27 +41,29 @@ function Checkout({ route, navigation }) {
   const { authState, cartState,userData } = UseContextState();
   console.log("formError", formError)
   const  userType = userData?.user?.type;
+  const user_id = userData?.user?.id;
+  const accessToken = userData?.accessToken;
+  const phone_number = userData?.user?.phone_number;
   console.log(userType,"usertype");
   const [checkoutDetail, setCheckoutDetail] = useState({
     //customer_id: authState?.user?.user_id,
-    customer_id: userData?.user?._id,
-    customer_name: '',
-    customer_phone_number: `${authState?.user?.phone_number}`,
-
-    customer_email: '',
-    customer_business: '',
-    customer_gst: '',
-    products: checkoutProducts || [],
-    shipping_address: '',
-    state: '',
-    pincode: '',
-    transport_detail: ''
+    customer_id: user_id,
+    customer_name:'',
+    customer_phone_number:phone_number,
+    customer_email:'',
+    customer_business:'',
+    customer_gst:'',
+    products:checkoutProducts || [],
+    shipping_address:'',
+    state:'',
+    pincode:'',
+    transport_detail:''
   })
-
+  
   useFocusEffect(
     useCallback(() => {
-      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id}`, { withCredentials: true })
-        .then(res => {
+      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id || userData?.user?._id}`, { withCredentials: true })
+      .then(res => {
           // console.log("RESPONSE=>",res?.data?.user);
           setCheckoutDetail((prev) => ({
             ...prev,
@@ -76,11 +79,22 @@ function Checkout({ route, navigation }) {
         })
         .catch(err => {
           console.log(err);
+          // Toast.show({
+          //   type: 'error',
+          //   position: 'top',
+          //   text1: 'API Error',
+          //   text2: err.response.data.message,
+          //   visibilityTime: 4000, // 4 seconds
+          //   autoHide: true,
+          // });
         })
     }, [])
   )
 
-  // console.log("checkoutProducts",checkoutProducts)
+  console.log("checkoutProducts",checkoutProducts)
+
+
+
 
   const goBack = () => {
     navigation.goBack();
@@ -126,7 +140,7 @@ function Checkout({ route, navigation }) {
     if (name == 'customer_gst') {
       setCheckoutDetail(value => ({
         ...value,
-        customer_gst: form
+        customer_gst: form.toUpperCase()
       }))
     }
     if (name == 'shipping_address') {
@@ -139,6 +153,12 @@ function Checkout({ route, navigation }) {
       setCheckoutDetail(value => ({
         ...value,
         state: form
+      }))
+    }
+    if (name == 'transport_detail') {
+      setCheckoutDetail(value => ({
+        ...value,
+        transport_detail: form
       }))
     }
   }
@@ -188,10 +208,16 @@ function Checkout({ route, navigation }) {
       && checkoutDetail?.shipping_address != '' && checkoutDetail?.pincode && checkoutDetail?.state != ''
       && checkoutDetail?.products?.length > 0) {
       setLoading(true)
-      await axios.post(`${config.BACKEND_URI}/api/app/cart/checkout/for/products`, checkoutDetail, { withCredentials: true })
+      console.log(checkoutDetail,"checkdtls");
+      await axios.post(`${config.BASE_URL}app/cart/checkout/for/products/v2`, checkoutDetail, 
+      {headers:{ 
+        withCredentials: true ,
+        'x-user-type' : userType, 
+        'Authorization': 'Bearer ' + accessToken,
+      }})
         .then(res => {
           console.log(res?.data,"handlecheck response");
-          if (res?.data?.status === true) {
+          if (res?.data?.success === true) {
             // onOrderComplete();
             clearLocalStorage();
             cartState();
@@ -207,13 +233,22 @@ function Checkout({ route, navigation }) {
               customer_gst: '',
               shipping_address: '',
               state: '',
-              pincode: ''
+              pincode: '',
+              transport_detail:''
             })
 
           }
         })
         .catch(err => {
-          console.log(err,"handle check error")
+          console.log(err,"handle check error");
+          Toast.show({
+            type: 'error',
+            position: 'top',
+            text1: 'API Error',
+            text2: err.response.data.message,
+            visibilityTime: 4000, // 4 seconds
+            autoHide: true,
+          });
           setLoading(false)
         })
 
@@ -365,6 +400,10 @@ function Checkout({ route, navigation }) {
               <View style={styles.commonFieldContainer} >
                 <TextInput onChangeText={value => handleChange(value, 'pincode')} value={checkoutDetail?.pincode} keyboardType='numeric' maxLength={6} style={styles.commonField} placeholder='Pincode*' />
                 <Entypo name="location-pin" size={26} style={styles.commonIcon} />
+              </View>
+              <View style={styles.commonFieldContainer} >
+                <TextInput onChangeText={value => handleChange(value, 'transport_detail')} value={checkoutDetail?.transport_detail} keyboardType='default' style={styles.commonField} placeholder='Transport Details' />
+                <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
               </View>
               {/* address ,state, pincode */}
               <>

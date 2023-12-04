@@ -22,7 +22,7 @@ function Cart({navigation}) {
   const [ render , setRender ] = useState(false)
   const [refreshing, setRefreshing] = React.useState(false);
   const {cartState} = UseContextState();
-
+console.log(cartProducts,"cartproduct");
 
   console.log("CART PRODUCTS =>",cartProducts)
   const getAllProducts=async()=>{
@@ -144,14 +144,14 @@ function Cart({navigation}) {
              {...styles.cartItemBox, borderBottomColor:"#fff",
                borderBottomWidth:1 } : {...styles.cartItemBox,}} >
            <View style={{flexDirection:'row'}} >
-            <TouchableOpacity onPress={()=>navigation.navigate(navigationString.PRODUCT_INFO,{product_id:value?._id,product_quantity:value?.product_quantity,product_quantity_by:value?.product_quantity_by})} activeOpacity={0.7} >
+            <TouchableOpacity onPress={()=>navigation.navigate(navigationString.PRODUCT_INFO,{product_id:value?._id,product_quantity:value?.product_quantity,product_quantity_by:value?.product_quantity_by || "Piece"})} activeOpacity={0.7} >
             <Image 
-             source={{uri:value?.product_images[0]?.image_url}}
+             source={{uri:value?.product_images?.[0]?.image_url}}
              style={{width:80,height:80}}
              />
             </TouchableOpacity>
                <View style={styles.cartDetails} >
-            <TouchableOpacity onPress={()=>navigation.navigate(navigationString.PRODUCT_INFO,{product_id:value?._id,product_quantity:value?.product_quantity,product_quantity_by:value?.product_quantity_by})} activeOpacity={0.8} >
+            <TouchableOpacity onPress={()=>navigation.navigate(navigationString.PRODUCT_INFO,{product_id:value?._id,product_quantity:value?.product_quantity,product_quantity_by:value?.product_quantity_by || "Piece"})} activeOpacity={0.8} >
             <Text style={styles.productName} >{value.product_name?.slice(0,24)}{value?.product_name?.length > 24 &&'...'}</Text>
             </TouchableOpacity>
            
@@ -176,7 +176,7 @@ function Cart({navigation}) {
              <TouchableOpacity activeOpacity={0.7} onPress={()=>increaseQuantity(value._id)} >
              <Ionicons style={{backgroundColor:'#f5f5f6',paddingVertical:6,paddingHorizontal:7,borderRadius:10}} name="md-add" size={18} color="#555" />
              </TouchableOpacity>
-             <Text style={styles.productQuantityBy} >{value?.product_quantity_by}</Text>
+             <Text style={styles.productQuantityBy} >{value?.product_quantity_by || "Piece"}</Text>
              </View>
            </View>
            </View>

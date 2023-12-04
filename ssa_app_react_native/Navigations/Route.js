@@ -26,8 +26,7 @@ import NewArrivals from "../screens/NewArrivals/NewArrivals";
 import ViewOrder from "../screens/Orders/ViewOrder";
 import RedeemProd from "../screens/Rewards/RedeemProd";
 import Account from "../screens/Account/Account";
-import OtpForgot from "../screens/Otp/OtpForgot";
-
+import ResetPass from "../screens/Login/ResetPass";
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
 
@@ -51,6 +50,10 @@ function Route() {
       }}
     >
       <Stack.Screen name={navigationString.TAB_ROUTE} component={TabRoute} />
+      <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forBottomSheetAndroid,
+      }} />
       <Stack.Screen name={navigationString.PRODUCT_INFO} component={ProductInfo}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forBottomSheetAndroid,
@@ -113,6 +116,10 @@ function Route() {
 <Stack.Screen name={navigationString.LOGIN}   component={Login}  options={{
         cardStyleInterpolator:
           CardStyleInterpolators.forHorizontalIOS,
+      }} />
+       <Stack.Screen name={navigationString.RESET_PASS} component={ResetPass}  options={{
+        cardStyleInterpolator:
+          CardStyleInterpolators.forBottomSheetAndroid,
       }} />
       <Stack.Screen name={navigationString.REGISTER}  component={Register}  options={{
         cardStyleInterpolator:

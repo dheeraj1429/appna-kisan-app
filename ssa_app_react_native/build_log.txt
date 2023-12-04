@@ -1,0 +1,3 @@
+
+  $ expo build:android is not supported in the local CLI, please use eas build -p android instead
+

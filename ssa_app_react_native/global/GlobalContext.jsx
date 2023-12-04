@@ -12,7 +12,8 @@ const initialState = {
     cartCount:null,
     isAuthenticated:false,
     loading:false,
-    homeBanner:null
+    homeBanner:null,
+
 }
 
 // creating global context 
@@ -192,7 +193,7 @@ function GlobalContext({children}) {
       saveCredentials,
       saveUserData,
       clearCredentials,
-      setUser
+      setUser,
     };
 
       return <Global.Provider value={value}>{children}</Global.Provider>;

@@ -26,16 +26,13 @@ import Toast from 'react-native-toast-message';
 
 function OtpForgot({route,navigation}) {
     // const {user_name,user_exists} = route.params;
-    //const {phoneNumber,name,user_exists,email,password} = route.params;
+    const {phoneNumber,name,user_exists,email,password} = route.params;
     const [ loading , setLoading ] = useState(false);
     const [ verifyOtpLoading , setVerifyOtpLoading ] = useState(false);
     const [ autoverifyingLoading , setAutoverifyingLoading ] = useState(false);
     const [ resend , setResend ] = useState(false);
     const [confirm, setConfirm] = useState(null);
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [otp, setOtp] = useState('');
     const [code, setCode] = useState('');
     const [existingUser, setExistingUser] = useState();
     const [ getUserID , setGetUserID ] = useState('')

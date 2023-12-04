@@ -25,6 +25,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { UseContextState } from "../../global/GlobalContext";
 import Toast from 'react-native-toast-message';
 import { logger } from "react-native-logs";
+import auth from '@react-native-firebase/auth';
 
 function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -34,18 +35,65 @@ function Login({ navigation }) {
   const { authState, fetchAuthuser } = UseContextState();
   const [details, setDetails] = useState([]);
   const log = logger.createLogger();
-const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
   const [email, setEmail] = useState('');
-const [forgotField, setForgotField] = useState('');
+  const [forgotField, setForgotField] = useState('');
   const [password, setPassword] = useState('');
   //const { setUserData } = UseContextState();
-  const { saveUserData } = UseContextState();
+  const { saveUserData, setPhone} = UseContextState();
 
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
   };
-  //log.info('phoneNumber', phoneNumber);
 
+  const handleSendOtp = async () => {
+     // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+      //console.log("CONFIRMATION++++++++",confirmation);
+      //setConfirm(confirmation);
+    
+    if (forgotField.length === 10) { // Example: Assuming phone number should be 10 digits
+      axios.get(`${config.BASE_URL}app/check-mobile-number?phoneNumber=${forgotField}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          console.log("responsein otp send", response.data);
+          if (response.status === 200) {
+            console.log("responsein otp send", response.data);
+            setPhone(forgotField);
+            setForgotField('');
+            //navigation.navigate(navigationString.OTP_SCREEN, { phoneNumber: forgotField });
+            navigation.navigate(navigationString.OTP_SCREEN,{user_exists:true,phoneNumber:`+91 ${forgotField}`});
+
+          } else {
+            console.log('Failed to send otp:', response.status);
+          }
+        })
+        .catch(error => {
+          console.log('Error sending otp:', error.message);
+          Toast.show({
+            type: 'error',
+            position: 'top',
+            text1: 'API Error',
+            text2: error.response?.data?.message || 'Unknown error',
+            visibilityTime: 4000, // 4 seconds
+            autoHide: true,
+          });
+        });
+    } else {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'fail',
+        text2: "please enter valid phone number",
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+    }
+    setModalVisible1(!modalVisible1);
+  };
+  
   const goBack = () => {
     // navigation.goBack();
     BackHandler.exitApp()
@@ -262,7 +310,7 @@ const [forgotField, setForgotField] = useState('');
                 <View style={{ marginVertical: "5%" }}>
 
                   <Text onPress={() => setModalVisible1(true)}
-                   style={{ color: config.primaryColor, fontWeight: "600" }}>
+                    style={{ color: config.primaryColor, fontWeight: "600" }}>
                     Forgot Password
                   </Text>
                 </View>
@@ -291,28 +339,30 @@ const [forgotField, setForgotField] = useState('');
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={{fontSize:15}}>Forgot Password ?</Text>
-              <Text style={{fontSize:15}}>Enter your register phone number</Text>
+              <Text style={{ fontSize: 15 }}>Forgot Password ?</Text>
+              <Text style={{ fontSize: 15 }}>Enter your register phone number</Text>
               <View style={styles.commonFieldContainer}>
-                    <TextInput
-                      style={styles.commonField}
-                      value={forgotField}
-                      onChangeText={(value) => setForgotField(value.replace(/[^0-9]/g, ''))}
-                    />
-                  </View>
-              <View style={{flexDirection:"row", justifyContent:"space-evenly",alignContent:"center",}}>
+                <TextInput
+                  style={styles.commonField}
+                  value={forgotField}
+                  onChangeText={(value) => setForgotField(value.replace(/[^0-9]/g, ''))}
+                />
+              </View>
+              <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignContent: "center", }}>
                 <Pressable
-                style={styles.Btn}
-                  onPress={() => setModalVisible1(!modalVisible1)}>
+                  style={styles.Btn}
+                  onPress={() => {
+                    setModalVisible1(!modalVisible1);
+                    //navigation.navigate(navigationString.RESET_PASS);
+                  }
+                  }>
                   <Text style={styles.textStyle}>CANCEL</Text>
                 </Pressable>
                 <Text>    </Text>
                 <Pressable
-                style={styles.Btn}
+                  style={styles.Btn}
                   onPress={() => {
-                    setModalVisible1(!modalVisible1);
-                   // handleForgotPassword();
-                    //navigation.navigate(navigationString.OTP_FORGOT);
+                    handleSendOtp();
                   }}>
                   <Text style={styles.textStyle}>SEND</Text>
                 </Pressable>

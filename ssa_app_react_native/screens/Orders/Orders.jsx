@@ -20,6 +20,8 @@ import { convertDate, convertDateForOrder } from "../../Utils/helperFunctions";
 import axios from "axios";
 import navigationString from "../../Constants/navigationString";
 import { UseContextState } from "../../global/GlobalContext";
+import { logger } from "react-native-logs";
+import { addToCart } from "../../Utils/localstorage";
 
 function Orders({ navigation }) {
   const [allOrders, setAllOrders] = React.useState([]);
@@ -28,9 +30,11 @@ function Orders({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [render, setRender] = useState(false);
   const [modalVisible, setModalVisible] = useState({ state: false, order_id: '' });
-  const { authState,cartState,userData } = UseContextState();
-  const [ viewCart , setViewCart] = useState(false);
-
+  const { authState, cartState, userData } = UseContextState();
+  const [viewCart, setViewCart] = useState(false);
+  const log = logger.createLogger();
+  console.log(userData, "userData");
+  console.log(allOrders, "allordersa");
 
   const goToViewOrder = (orderId, clickedOrder) => {
     navigation.navigate(navigationString.VIEW_ORDER, { order_id: orderId, order: [clickedOrder] })
@@ -39,9 +43,16 @@ function Orders({ navigation }) {
   useFocusEffect(
     useCallback(() => {
       setLoading(true)
-      axios.get(`${config.BACKEND_URI}/api/app/get/all/user/orders/${authState?.user?.user_id}`, { withCredentials: true })
+      let url = `${config.BACKEND_URI}/api/app/get/all/user/orders`
+      if (userData?.user?._id) {
+        url += `?user_id=${userData?.user?._id}`
+      } else if (authState?.user?.user_id) {
+        url += `?customer_id=${authState?.user?.user_id}`
+      }
+      console.log(url, "urlllll");
+      axios.get(url, { withCredentials: true })
         .then(res => {
-          // console.log(res?.data);
+          console.log(res?.data, "responsedata");
           setAllOrders(res?.data);
           setLoading(false)
           setRefreshing(false)
@@ -56,7 +67,7 @@ function Orders({ navigation }) {
   const cancelOrderFunc = async (order_id) => {
     await axios.patch(`${config.BACKEND_URI}/api/app/cancel/order/by/id/${order_id}`, {}, { withCredentials: true })
       .then(res => {
-        console.log(res?.data);
+        log.info(res?.data);
         setModalVisible((prev) => ({ ...prev, state: false, order_id: '' }))
         setRender(prev => !prev)
       })
@@ -69,10 +80,18 @@ function Orders({ navigation }) {
     setRefreshing(true)
   }
 
-
-  const addToCartButton = async (product)=>{
-    await addToCart(product);
-    console.log('PRODUCT ADDED TO Cart')
+  // const addToCartButton = async (product) => {
+  //   await addToCart({ ...product, product_quantity: productQuantity });
+  //   // log.info('PRODUCT ADDED TO Cart')
+  //   setUpdateCart(prev => !prev)
+  //   await cartState()
+  //   // await clearLocalStorage()
+  // }
+  const addToCartButton = async (product) => {
+    //const products = product.map(item => item.product_quantity_by = "Piece");
+    const products = product.map(product => ({...product, _id:product?.product_unique_id}) )
+    await addToCart(...products);
+    console.log('PRODUCT ADDED TO Cart ',product);
     // setUpdateCart(prev=>!prev)
     await cartState()
     setViewCart(true)
@@ -192,30 +211,22 @@ function Orders({ navigation }) {
                                 null
                                 :
                                 <>
-                                <TouchableOpacity onPress={() => setModalVisible((prev) => ({ ...prev, state: true, order_id: item?._id }))} activeOpacity={0.6} style={styles.cancelOrder} >
-                                  <Text style={{ fontSize: 12, fontWeight: "600", color: "#e24243", }}>
-                                    Cancel Order
-                                  </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity 
-                                //onPress={() => navigation.navigate(navigationString.SEND_ENQUIRY, { order_id: item?.order_id })} 
-                                // onPress={()=>addToCartButton({product_name: item?.products?._name,
-                                //   _id:item?.product?._id,
-                                //   product_quantity:item?.products?.length,
-                                //   product_images,
-                                //   product_code,
-                                //   product_main_category,
-                                //   product_subcategory,
-                                //   product_variant,
-                                //   product_quantity_by:'piece',
-                                //   product_category})}
-                                //   activeOpacity={0.6} style={styles.sendEnquiry}
-                                   >
-                                <Text style={{ fontSize: 12, fontWeight: "600", color: config.primaryColor, }}>
-                                 Re Order
-                                </Text>
-                              </TouchableOpacity>
-</>
+                                  <TouchableOpacity onPress={() => setModalVisible((prev) => ({ ...prev, state: true, order_id: item?._id }))} activeOpacity={0.6} style={styles.cancelOrder} >
+                                    <Text style={{ fontSize: 12, fontWeight: "600", color: "#e24243", }}>
+                                      Cancel Order
+                                    </Text>
+                                  </TouchableOpacity>
+                                  <TouchableOpacity
+                                  style={[styles.sendEnquiry, {marginTop:"5%"}]}
+                                  //onPress={() => navigation.navigate(navigationString.SEND_ENQUIRY, { order_id: item?.order_id })} 
+                                  onPress={()=>addToCartButton(item.products)}
+                                    activeOpacity={0.6} 
+                                  >
+                                    <Text style={{ fontSize: 12, fontWeight: "600", color: config.primaryColor,textAlign:"center" }}>
+                                      Re Order
+                                    </Text>
+                                  </TouchableOpacity>
+                                </>
                             }
 
                           </View>
