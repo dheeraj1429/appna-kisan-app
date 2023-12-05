@@ -41,6 +41,7 @@ function Login({ navigation }) {
   const [password, setPassword] = useState('');
   //const { setUserData } = UseContextState();
   const { saveUserData } = UseContextState();
+  const [loginInput, setLoginInput] = useState('');
 
   const [selectedUserType, setSelectedUserType] = useState('B2B');
 
@@ -77,7 +78,7 @@ function Login({ navigation }) {
           Toast.show({
             type: 'error',
             position: 'top',
-            text1: 'API Error',
+            text1: 'Error',
             text2: error.response?.data?.message || 'Unknown error',
             visibilityTime: 4000, // 4 seconds
             autoHide: true,
@@ -100,82 +101,86 @@ function Login({ navigation }) {
     // navigation.goBack();
     BackHandler.exitApp()
   };
-  const handleSignupPhone = async () => {
-    if (phoneNumber.length >= 10) {
+  // const handleSignupPhone = async () => {
+  //   if (phoneNumber.length >= 10) {
 
-      try {
-        const response = await axios.post(
-          `${config.BASE_URL}/app/login/user/b2b/b2c`,
-          {
-            email: email,
-            mobile: phoneNumber,
-            password: password,
-          },
-          { withCredentials: true }
-        );
-        log.info("response", response);
+  //     try {
+  //       const response = await axios.post(
+  //         `${config.BASE_URL}/app/login/user/b2b/b2c`,
+  //         {
+  //           email: email,
+  //           mobile: phoneNumber,
+  //           password: password,
+  //         },
+  //         { withCredentials: true }
+  //       );
+  //       log.info("response", response);
 
-        //log.info("response.data",response.data);
+  //       //log.info("response.data",response.data);
 
-        if (response.status === 200) {
-          setLoading(false);
-          log.info("response.data", response.data);
-          log.info("API call successful");
-          //navigation.navigate(navigationString.LOGIN);
-          //setItemToLocalStorage('user',response?.data?.user);
-          //setUserId('')
-          fetchAuthuser();
-          //showToast()
-          navigation.navigate(navigationString.HOME);
-          // Handle successful API response here
-        } else if (response.status === 422) {
-          setLoading(false);
-          log.info("Validation error");
-          // Handle validation error, possibly by displaying error messages
-          log.info(response.data); // Assuming the server provides validation error details
-        } else {
-          setLoading(false);
-          log.info("API call failed");
-          // Handle API failure if needed
-        }
-      } catch (error) {
-        setLoading(false);
-        //log.info("Error in API call:", error?.data?.message);
-        Toast.show({
-          type: 'error',
-          position: 'top',
-          text1: 'API Error',
-          text2: error.data.message,
-          visibilityTime: 4000, // 4 seconds
-          autoHide: true,
-        });
-        //Alert.alert(error.response);
-        // Handle API error if needed
-      }
+  //       if (response.status === 200) {
+  //         setLoading(false);
+  //         log.info("response.data", response.data);
+  //         log.info("API call successful");
+  //         //navigation.navigate(navigationString.LOGIN);
+  //         //setItemToLocalStorage('user',response?.data?.user);
+  //         //setUserId('')
+  //         fetchAuthuser();
+  //         //showToast()
+  //         navigation.navigate(navigationString.HOME);
+  //         // Handle successful API response here
+  //       } else if (response.status === 422) {
+  //         setLoading(false);
+  //         log.info("Validation error");
+  //         // Handle validation error, possibly by displaying error messages
+  //         log.info(response.data); // Assuming the server provides validation error details
+  //       } else {
+  //         setLoading(false);
+  //         log.info("API call failed");
+  //         // Handle API failure if needed
+  //       }
+  //     } catch (error) {
+  //       setLoading(false);
+  //       //log.info("Error in API call:", error?.data?.message);
+  //       Toast.show({
+  //         type: 'error',
+  //         position: 'top',
+  //         text1: 'Error',
+  //         text2: error.data.message,
+  //         visibilityTime: 4000, // 4 seconds
+  //         autoHide: true,
+  //       });
+  //       //Alert.alert(error.response);
+  //       // Handle error if needed
+  //     }
 
-      // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
-    }
-    else {
-      ToastAndroid.showWithGravityAndOffset(
-        "Enter a Valid Credentials!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
+  //     // navigation.navigate(navigationString.OTP_SCREEN,{phoneNumber:`+91 ${phoneNumber}`});
+  //   }
+  //   else {
+  //     ToastAndroid.showWithGravityAndOffset(
+  //       "Enter a Valid Credentials!!",
+  //       ToastAndroid.LONG,
+  //       ToastAndroid.CENTER,
+  //       25,
+  //       50
+  //     );
 
-    }
-  }
+  //   }
+  // }
 
   const handleSignup = async () => {
-    if ((email && password.length >= 4) || phoneNumber) {
+    const emailOrPhone = loginInput.trim().replace(/\s/g, '');
+    console.log(emailOrPhone,"emailOrPhone");
+    if (loginInput.length >= 6) {
       try {
+        setLoading(true);
         const response = await axios.post(
           // `${config.BASE_URL}login/user/b2b/b2c`,
           `https://whale-app-88bu8.ondigitalocean.app/api/app/login/user/b2b/b2c`,
           {
-            email: email || undefined, // Use email if provided, otherwise undefined
-            mobile: phoneNumber || undefined, // Use phoneNumber if provided, otherwise undefined
+            //email: email || undefined, // Use email if provided, otherwise undefined
+            //mobile: phoneNumber || undefined, // Use phoneNumber if provided, otherwise undefined
+            emailOrPhone : emailOrPhone,
             password: password || undefined,
             userType: selectedUserType
           },
@@ -187,11 +192,12 @@ function Login({ navigation }) {
           setLoading(false);
           log.info("response.data", response.data);
           // log.info("API call successful");
-          fetchAuthuser();
+          //fetchAuthuser();
           const userData = response.data;
           //fetchAuthuser(userData);
           saveUserData(userData); // Save userData to the context
-
+          setItemToLocalStorage('user', response.data);
+          fetchAuthuser();
           // setDetails(response.data);
           // log.info("response.data.accessToken", response.data.accessToken);
           // log.info("response.data.user.id", response.data.user._id);
@@ -210,10 +216,12 @@ function Login({ navigation }) {
         setLoading(false);
         log.info("Error in API call:", error.response);
         //Alert.alert("Please fill valid credentials");
+        console.log("Error in API call:", error.response);
+        console.log("error in login", error);
         Toast.show({
           type: 'error',
           position: 'top',
-          text1: 'API Error',
+          text1: 'Error',
           text2: error.response.data.message,
           visibilityTime: 4000, // 4 seconds
           autoHide: true,
@@ -244,7 +252,7 @@ function Login({ navigation }) {
           </View>
 
           {loading ?
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:config.secondry}} >
               <ActivityIndicator size='large' color={config.primaryColor} />
             </View>
             :
@@ -253,7 +261,7 @@ function Login({ navigation }) {
 
               <View style={styles.loginContainer}>
 
-
+{/* 
                 <View style={styles.phoneFieldContainer}>
                   <TextInput
                     maxLength={10}
@@ -266,35 +274,45 @@ function Login({ navigation }) {
                   <View style={styles.indiaIcon}>
                     <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
                   </View>
-                </View>
+                </View> */}
 
 
 
               </View>
-              <Text style={styles.orText}>or</Text>
+              {/* <Text style={styles.orText}>or</Text> */}
 
               <View style={styles.registerContainer}  >
                 <View style={styles.commonFieldMainBox} >
 
 
-
-
-                  <View style={styles.commonFieldContainer}>
+                <View style={styles.commonFieldContainer}>
                     <TextInput
                       style={styles.commonField}
-                      onChangeText={(value) => setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ''))}
+                      onChangeText={(value) => setLoginInput(value)}
                       keyboardType='email-address' // This sets the keyboard to the email address format
                       maxLength={50} // Adjust the maximum length as needed
-                      placeholder='Email'
+                      placeholder='Email or Phone Number'
                     />
                     <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
                   </View>
 
 
+                  {/* <View style={styles.commonFieldContainer}>
+                    <TextInput
+                      style={styles.commonField}
+                      onChangeText={(value) => setEmail(value)}
+                      keyboardType='email-address' // This sets the keyboard to the email address format
+                      maxLength={50} // Adjust the maximum length as needed
+                      placeholder='Email'
+                    />
+                    <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
+                  </View> */}
+
+
                   <View style={styles.commonFieldContainer}>
                     <TextInput
                       style={styles.commonField}
-                      onChangeText={(value) => setPassword(value.replace(/[^a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/g, ''))}
+                      onChangeText={(value) => setPassword(value)}
                       secureTextEntry={true} // This hides the entered text for a password field
                       maxLength={20} // Adjust the maximum length as needed
                       placeholder='Password'

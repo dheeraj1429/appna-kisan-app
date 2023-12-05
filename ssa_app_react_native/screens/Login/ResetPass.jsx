@@ -51,7 +51,7 @@ const ResetPass = ({ route, navigation }) => {
                 Toast.show({
                     type: 'error',
                     position: 'top',
-                    text1: 'API Error',
+                    text1: 'Error',
                     text2: error.response.data.message,
                     visibilityTime: 4000, // 4 seconds
                     autoHide: true,

@@ -25,4 +25,5 @@ export default {
     RESET_PASS: 'ResetPass',
     LOGIN_WITH_OTP:'LoginWithOtp',
     SIGNUP_WITH_OTP:'SignupWithOtp',
+    REGISTRATION_OTP:'RegisterOtp',
 }

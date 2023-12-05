@@ -102,6 +102,7 @@ function RedeemProd({ route, navigation }) {
   ];
 
   const addToCartApi = async (product_id) => {
+    setLoading(true);
     try {
       const response = await axios.post(`https://whale-app-88bu8.ondigitalocean.app/api/app/cart/checkout/for/rewards/products`, {
         productId: product_id,
@@ -127,6 +128,8 @@ function RedeemProd({ route, navigation }) {
           visibilityTime: 4000, // 4 seconds
           autoHide: true,
         });
+        setLoading(false);
+
         //Alert.alert('Add to Cart', alertMessage);
       } else {
         console.log('Failed to add product to cart:', response.status);
@@ -136,11 +139,13 @@ function RedeemProd({ route, navigation }) {
       Toast.show({
         type: 'error',
         position: 'top',
-        text1: 'API Error',
+        text1: 'Error',
         text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
       });
+      setLoading(false);
+
     }
   };
 
@@ -165,7 +170,8 @@ function RedeemProd({ route, navigation }) {
       <Image source={{ uri: product.product_images[0].image_url }} style={styles.productImage} />
       <Text style={styles.productName}>{product.product_name}</Text>
       <Text style={styles.productPoints}>{`Points: ${product.product_collected_points}`}</Text>
-      <TouchableOpacity onPress={() => {
+      <TouchableOpacity style={styles.orderButton}
+       onPress={() => {
         // Implement your logic for handling order press directly inside the onPress
         //const productId = product.product_id;
 
@@ -175,9 +181,7 @@ function RedeemProd({ route, navigation }) {
         // Show alert directly inside onPress
         //Alert.alert('Product added to cart:', `Product: ${product.product_name}`);
       }}>
-        <View style={styles.orderButton}>
           <Text style={styles.orderButtonText}>Redeem Product</Text>
-        </View>
       </TouchableOpacity>
     </View>
   );
@@ -185,6 +189,13 @@ function RedeemProd({ route, navigation }) {
   return (
     <Provider>
       <Portal>
+
+      {loading && <View style={{ position: 'absolute', top: '0%', bottom: '0%', left: '0%', right: '0%', zIndex: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.3)', padding: 14, borderRadius: 8 }} >
+        <View style={{ paddingTop: 190 }} >
+          <ActivityIndicator color={config.primaryColor} size='large' />
+        </View>
+      </View>
+      }
         <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}>
           <View style={styles.screenContainer}>
             <StatusBar backgroundColor="#fff" />
@@ -195,10 +206,6 @@ function RedeemProd({ route, navigation }) {
 
             </View>
 
-            {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-              <ActivityIndicator color={config.primaryColor} size='large' />
-            </View>
-            }
 
 
           </View>
@@ -306,7 +313,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   orderButton: {
-    width: 350,
+    width: 280,
     marginTop: 10,
     alignItems: 'center',
     paddingVertical: 12,

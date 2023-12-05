@@ -24,10 +24,9 @@ import { useCallback } from "react";
 import { UseContextState } from "../../global/GlobalContext";
 import Toast from 'react-native-toast-message';
 
-function Otp({ route, navigation }) {
+function RegisterOtp({ route, navigation }) {
   // const {user_name,user_exists} = route.params;
-  const { phoneNumber, user_exists } = route.params;
-  
+  const { phoneNumber, user_exists,data } = route.params;
   const modifiedPhoneNumber = phoneNumber.substring(4);
   const [loading, setLoading] = useState(false);
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
@@ -83,7 +82,7 @@ function Otp({ route, navigation }) {
     firebase.auth().signOut();
   }
 
-  function onAuthStateChanged(user) {
+  function onAuthStateChanged (user) {
     if (user) {
       setExistingUser(user)
       logOutFirebase()
@@ -106,7 +105,23 @@ function Otp({ route, navigation }) {
       // console.log("AUTO_VERIFIED-credential",credential)
       if (user_exists) {
         console.log("LOGIN CALLED");
-        navigation.navigate(navigationString.RESET_PASS, { phone: modifiedPhoneNumber });
+        //navigation.navigate(navigationString.RESET_PASS, { phone: modifiedPhoneNumber });
+        axios.post(`${config.BASE_URL}app/verify/register/with/otp`,{
+            "sessionId": data.sessionId,
+            "userType": data.userType,
+        }).then(res => {
+                    navigation.navigate(navigationString.LOGIN);
+                  
+        } ).catch(err => {console.log(err,"eror in register otp verification");
+            Toast.show({
+                type: 'success',
+                position: 'top',
+                text1: 'Success',
+                text2: err.response.data.message,
+                visibilityTime: 4000, // 4 seconds
+                autoHide: true,
+              });
+})
         console.log("navigate to reset page");
        // loginUser();
         setVerifyOtpLoading(false)
@@ -332,7 +347,7 @@ function Otp({ route, navigation }) {
   )
 }
 
-export default Otp
+export default RegisterOtp
 
 const styles = StyleSheet.create({
   signUpBtn: {

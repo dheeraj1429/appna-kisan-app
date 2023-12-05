@@ -438,7 +438,7 @@ function UpdateProfile({ route, navigation }) {
       Toast.show({
         type: 'error',
         position: 'top',
-        text1: 'API Error',
+        text1: 'Error',
         text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
@@ -456,11 +456,11 @@ function UpdateProfile({ route, navigation }) {
             <Text style={styles.headingText} >Update Profile</Text>
             <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
           </View>
-          {/* 
-          {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-            <ActivityIndicator color={config.primaryColor} size='large' />
-          </View>
-          } */}
+          {loading ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:config.secondry}} >
+              <ActivityIndicator size='large' color={config.primaryColor} />
+            </View>
+            :
 
           <View style={styles.commonFieldMainBox} >
             <View style={{
@@ -594,11 +594,9 @@ function UpdateProfile({ route, navigation }) {
 
           </View>
 
-          {/* for extra spacing */}
-          {/* <View style={{ paddingBottom: 20 }} ></View> */}
-          {/* for extra spacing */}
+    
 
-
+  }
 
         </View>
         {/* <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.containerStyle}>

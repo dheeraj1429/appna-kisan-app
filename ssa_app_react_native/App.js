@@ -6,6 +6,7 @@ import { WithSplashScreen } from './components/SplashScreen';
 import GlobalContext from './global/GlobalContext';
 import Route from './Navigations/Route';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const theme={

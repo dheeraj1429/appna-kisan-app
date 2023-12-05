@@ -339,11 +339,13 @@ function Account({ navigation }) {
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Cancel</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity activeOpacity={0.5} onPress={() => {
-                    console.log("Log Out Button Clicked");
-                    logoutAuthUser();
-                    navigation.navigate(navigationString.LOGIN);
-                  }} >
+                  <TouchableOpacity activeOpacity={0.5} onPress={logoutAuthUser}
+                  // onPress={() => {
+                  //   console.log("Log Out Button Clicked");
+                  //   navigation.navigate(navigationString.LOGIN);
+                  //   logoutAuthUser();
+                  // }}
+                   >
                     <View  >
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Log out</Text>
                     </View>

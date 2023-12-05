@@ -15,6 +15,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { UseContextState } from "../../global/GlobalContext.jsx";
 // import { useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -25,7 +26,7 @@ function Home({ navigation }) {
   const [render, setRender] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [apiResponse, setApiResponse] = useState([]);
-  const { fetchAuthuser, authState, userData } = UseContextState();
+  const { fetchAuthuser, authState, userData ,setUserData } = UseContextState();
   const [reviewsData, setReviewsData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
   const  userType = userData?.user?.type;
@@ -38,6 +39,17 @@ function Home({ navigation }) {
     }
   }, [userData]);
   console.log(userData, "userdat from home page");
+  const setAsyncUserData = async () => {
+    const  userData1 = await AsyncStorage.getItem('userData');
+    if (userData1) {
+      setUserData(JSON.parse(userData1));
+    }
+    console.log(userData1,"userdata1")
+  }
+useEffect(() => {
+console.log("welcome to home screen");
+setAsyncUserData()
+}, [])
 
   // useEffect(() => {
   //   // Call fetchAuthuser to update the user data in the global context
@@ -312,7 +324,7 @@ function Home({ navigation }) {
         </View>
       ))} */}
       </ScrollView>
-      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end", marginRight: "2%", marginBottom: "15%" }}>
+      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end", marginRight: "2%", marginBottom: "19%" }}>
         <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={25} color={config.primaryColor} />
       </View>
     </View>

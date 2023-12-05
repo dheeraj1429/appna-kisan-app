@@ -52,7 +52,7 @@ function Register({ navigation }) {
   // }, [])
 
   const handleCreateBtnB2B = async () => {
-    log.info(selectedImage, "selectedImageeeeee");
+    //log.info(selectedImage, "selectedImageeeeee");
     if (!name.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter your name!!",
@@ -73,9 +73,9 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (!gstNum.length > 0) {
+    if (!panNum.length > 0) {
       ToastAndroid.showWithGravityAndOffset(
-        "Please enter GST number!!",
+        "Please enter PAN number!!",
         ToastAndroid.LONG,
         ToastAndroid.CENTER,
         25,
@@ -113,7 +113,7 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (password.length < 4) {
+    if (password.length < 6) {
       ToastAndroid.showWithGravityAndOffset(
         "Please enter valid paasword!!",
         ToastAndroid.LONG,
@@ -123,9 +123,9 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (!selectedImage.image_url) {
+    if (aadharNum.length < 4) {
       ToastAndroid.showWithGravityAndOffset(
-        "Please select an Image!!",
+        "Please enter valid aadhar!!",
         ToastAndroid.LONG,
         ToastAndroid.CENTER,
         25,
@@ -133,7 +133,17 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (phoneNumber.length >= 10 && name.length > 0 && gstNum.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
+    // if (!selectedImage.image_url) {
+    //   ToastAndroid.showWithGravityAndOffset(
+    //     "Please select an Image!!",
+    //     ToastAndroid.LONG,
+    //     ToastAndroid.CENTER,
+    //     25,
+    //     50
+    //   );
+    //   return;
+    // }
+    if (phoneNumber.length >= 10 && name.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
       setLoading(true)
       // try {
       //   const response = await axios.post(
@@ -173,7 +183,7 @@ function Register({ navigation }) {
       //   setLoading(false);
       //   log.info("Error in API call:", error.response);
       //   Alert.alert("try again later after some time");
-      //   // Handle API error if needed
+      //   // Handle error if needed
       // }
       // await axios.get(`${config.BACKEND_URI}/api/app/check/user/exists/${phoneNumber}`, { withCredentials: true })
       //   .then(res => {
@@ -205,18 +215,25 @@ function Register({ navigation }) {
           address: address,
           pan: {
             number: panNum,
-            images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
+            // images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
           },
-          // aadhaar: {
-          //   number: aadharNum,
+          aadhaar: {
+            number: aadharNum,
+            //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
+          },
+          // gstNo: {
+          //   number: gstNum, // Replace with the GST number you want to send
           //   images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
           // },
-          gstNo: {
-            number: gstNum, // Replace with the GST number you want to send
-            images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
-          },
         };
-        log.info("userData sfgndghndghndghmndg", userBody);
+        if(gstNum) {userBody.gstNo = {
+          number: gstNum, // Replace with the GST number you want to send
+          //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
+        }}
+        if(selectedImage?.image_url) {
+          userBody.aadhaar.images = [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }];
+        }
+        log.info("userData ", userBody);
         const response = await axios.post(
           `${config.BASE_URL}/app/create/user/b2b`,
           userBody,
@@ -246,7 +263,9 @@ function Register({ navigation }) {
             visibilityTime: 4000, // 4 seconds
             autoHide: true,
           });
-          navigation.navigate(navigationString.TAB_ROUTE);
+          navigation.navigate(navigationString.REGISTRATION_OTP,{ data:response.data, user_exists:true,phoneNumber:`+91 ${phoneNumber}`});
+
+        //  navigation.navigate(navigationString.TAB_ROUTE);
           // Handle successful API response here
         } else if (response.status === 422) {
           setLoading(false);
@@ -265,13 +284,13 @@ function Register({ navigation }) {
         Toast.show({
           type: 'error',
           position: 'top',
-          text1: 'API Error',
+          text1: 'Error',
           text2: error.response.data.message,
           visibilityTime: 4000, // 4 seconds
           autoHide: true,
         });
         //Alert.alert("try again later after some time");
-        // Handle API error if needed
+        // Handle error if needed
       }
       log.info("Name:", name);
       log.info("Owner Name:", ownerName);
@@ -360,7 +379,8 @@ function Register({ navigation }) {
   //   }
   // };
 
-  const handleCreateBtnB2C = async () => {
+  const handleCreateBtnB2C = async (event) => {
+    event.preventDefault()
     if (!isFieldValid(name, "Name")) return;
     if (!isFieldValid(phoneNumber, "Phone Number", 10)) return;
     if (!isFieldValid(email, "Email", 5, "email")) return;
@@ -403,7 +423,7 @@ function Register({ navigation }) {
         fetchAuthuser();
         const userData = response.data;
         saveUserData(userData); // Save userData to the context
-        navigation.navigate(navigationString.LOGIN);
+       navigation.navigate(navigationString.REGISTRATION_OTP,{ data:response.data, user_exists:true,phoneNumber:`+91 ${phoneNumber}`});
         // Handle successful API response here
       } else if (response.status === 422) {
         setLoading(false);
@@ -421,13 +441,13 @@ function Register({ navigation }) {
       Toast.show({
         type: 'error',
         position: 'top',
-        text1: 'API Error',
+        text1: 'Error',
         text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
       });
       //Alert.alert("try again later after some time");
-      // Handle API error if needed
+      // Handle error if needed
     }
   };
 
@@ -531,7 +551,7 @@ function Register({ navigation }) {
             <MaterialIcons name="" size={27} color='white' />
           </View>
           {loading ?
-            <View style={{ justifyContent: 'center', alignItems: 'center' }} >
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: config.secondry }} >
               <ActivityIndicator size='large' color={config.primaryColor} />
             </View>
             :
@@ -622,7 +642,7 @@ function Register({ navigation }) {
                     <View style={styles.commonFieldContainer}>
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setPassword(value.replace(/[^a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/g, ''))}
+                        onChangeText={(value) => setPassword(value)}
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
                         placeholder='Password'
@@ -633,9 +653,9 @@ function Register({ navigation }) {
 
                     <View style={styles.commonFieldContainer} >
                       <TextInput style={styles.commonField}
-                        onChangeText={(value) => setAadharNum(value.replace(/[^0-9]/g, ''))}
+                        onChangeText={(value) => setAadharNum(value)}
                         keyboardType='defult'
-                        maxLength={12}
+                        //maxLength={12}
                         placeholder='Aadhar Number' />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="address-card" size={15} />
                     </View>
@@ -769,7 +789,7 @@ function Register({ navigation }) {
                     <View style={styles.commonFieldContainer}>
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setPassword(value.replace(/[^a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/g, ''))}
+                        onChangeText={(value) => setPassword(value)}
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
                         placeholder='Password'
@@ -805,8 +825,8 @@ function Register({ navigation }) {
                   </View>
 
                   <TouchableOpacity
-                    onPress={() => {
-                      handleCreateBtnB2C();
+                    onPress={(event) => {
+                      handleCreateBtnB2C(event);
                       log.info("button Clicked");
                     }}
                     activeOpacity={0.8} style={styles.signUpBtn} >

@@ -49,8 +49,8 @@ function ProductInfo({ route, navigation }) {
   const log = logger.createLogger();
   const [startRating, setStarRating] = useState(1);
   log.info(userData, "asdfsgadfbfg");
-  const  userType = userData?.user?.type;
-  console.log(userType,"usertype");
+  const userType = userData?.user?.type;
+  console.log(userType, "usertype");
   //const [productId, setProductID] = useState("prod_001797");
   const { product_id } = route.params;
   //const product_id = productId;
@@ -300,6 +300,36 @@ function ProductInfo({ route, navigation }) {
             <View style={styles.productDetailContainer}>
               <View style={{ marginTop: 30 }}>
                 <Text style={styles.productName} >{productDetail?.product_name}</Text>
+                <View style={{ flexDirection: 'row',marginTop:"2%" }}>
+
+{userType === 'basic' ? (
+  <>
+    <Text style={[styles.descriptionInnerText,{fontSize: 14}]}>Product Price: </Text>
+
+    <Text style={{ fontSize: 14, color: '#555', textTransform: 'capitalize',fontWeight:"600" }}>
+    ₹ {productDetail?.product_price}
+    </Text>
+  </>
+) :
+  userType === 'b2b' ? (
+    <>
+      <Text style={[styles.descriptionInnerText,{fontSize: 14}]}>B2B Product Price: </Text>
+
+      <Text style={{ fontSize: 14, color: '#555', textTransform: 'capitalize' ,fontWeight:"600" }}>
+      ₹ {productDetail?.b2b_user_product_price}
+      </Text>
+    </>
+  ) : (
+    <>
+      <Text style={[styles.descriptionInnerText,{fontSize: 14}]}>B2C Product Price: </Text>
+
+      <Text style={{ fontSize: 14, color: '#555', textTransform: 'capitalize' ,fontWeight:"600" }}>
+      ₹ {productDetail?.b2c_user_product_price}
+      </Text>
+    </>
+  )
+}
+</View>
                 <Text style={styles.productVariation} >Variation : {productDetail?.product_variant}</Text>
                 <View style={styles.selectBulkAndSingleBox} >
                   <View style={styles.selectBoxBorder} >
@@ -363,6 +393,7 @@ function ProductInfo({ route, navigation }) {
                 <View showsVerticalScrollIndicator={true} style={styles.DescriptionDetailsBox} >
                   <Text style={styles.DescriptionHeading} >Product Details </Text>
                   <View style={{ marginTop: 6 }} >
+              
                     <View style={{ flexDirection: 'row' }} >
                       <Text style={styles.descriptionInnerText} >Product Code : </Text>
                       <Text style={{ fontSize: 12, color: '#555', textTransform: 'uppercase' }} >{productDetail?.product_code}</Text>
@@ -377,7 +408,7 @@ function ProductInfo({ route, navigation }) {
                     </View>
                     <View style={{ flexDirection: 'row' }} >
                       <Text style={styles.descriptionInnerText} >Brand : </Text>
-                      <Text style={{ fontSize: 12, color: '#555', textTransform: 'capitalize' }} >{productDetail?.product_main_category}</Text>
+                      <Text style={{ fontSize: 12, color: '#555',fontWeight:"600" }} >SS GOLD</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }} >
                       <Text style={styles.descriptionInnerText} >Category : </Text>
@@ -389,36 +420,7 @@ function ProductInfo({ route, navigation }) {
                     </View>
 
 
-                    <View style={{ flexDirection: 'row' }}>
-                    
-                      {userType === 'basic' ? (
-                           <>
-                           <Text style={styles.descriptionInnerText}>Product Price: </Text>
- 
-                           <Text style={{ fontSize: 12, color: '#555', textTransform: 'capitalize' }}>
-                             {productDetail?.product_price}
-                           </Text>
-                         </>
-                      ): 
-                      userType === 'b2b' ? (
-                        <>
-                          <Text style={styles.descriptionInnerText}>B2B Product Price: </Text>
 
-                          <Text style={{ fontSize: 12, color: '#555', textTransform: 'capitalize' }}>
-                            {productDetail?.b2b_user_product_price}
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <Text style={styles.descriptionInnerText}>B2C Product Price: </Text>
-
-                          <Text style={{ fontSize: 12, color: '#555', textTransform: 'capitalize' }}>
-                            {productDetail?.b2c_user_product_price}
-                          </Text>
-                        </>
-                      )
-                      }
-                    </View>
 
 
 

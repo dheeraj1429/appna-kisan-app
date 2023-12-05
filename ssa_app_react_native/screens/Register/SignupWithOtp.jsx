@@ -50,7 +50,9 @@ function SignupWithOtp({navigation}) {
           console.log(res?.data)
           if(!res?.data?.user_exists){
                 setLoading(false);
-             navigation.navigate(navigationString.OTP_FORGOT,{user_exists:false,user_name:name,phoneNumber:`+91 ${phoneNumber}`});
+                navigation.navigate(navigationString.OTP_SCREEN, { user_exists: true, phoneNumber: `+91 ${phoneNumber}` });
+
+             //navigation.navigate(navigationString.OTP_FORGOT,{user_exists:false,user_name:name,phoneNumber:`+91 ${phoneNumber}`});
           }else{
             setLoading(false);
             setModalVisible(true);

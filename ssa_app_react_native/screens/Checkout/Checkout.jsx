@@ -38,32 +38,34 @@ function Checkout({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [formError, setFormError] = useState([])
-  const { authState, cartState,userData } = UseContextState();
+  const { authState, cartState, userData } = UseContextState();
   console.log("formError", formError)
-  const  userType = userData?.user?.type;
+  const userType = JSON.parse(userData)?.user?.type;
+  //const userType = 'b2c';
+console.log("userType", userData);
   const user_id = userData?.user?.id;
-  const accessToken = userData?.accessToken;
-  const phone_number = userData?.user?.phone_number;
-  console.log(userType,"usertype");
+  const accessToken = JSON.parse(userData)?.accessToken;
+  const phone_number = JSON.parse(userData)?.user?.phone_number;
+  console.log(userType, "usertype");
   const [checkoutDetail, setCheckoutDetail] = useState({
     //customer_id: authState?.user?.user_id,
     customer_id: user_id,
-    customer_name:'',
-    customer_phone_number:phone_number,
-    customer_email:'',
-    customer_business:'',
-    customer_gst:'',
-    products:checkoutProducts || [],
-    shipping_address:'',
-    state:'',
-    pincode:'',
-    transport_detail:''
+    customer_name: '',
+    customer_phone_number: phone_number,
+    customer_email: '',
+    customer_business: '',
+    customer_gst: '',
+    products: checkoutProducts || [],
+    shipping_address: '',
+    state: '',
+    pincode: '',
+    transport_detail: ''
   })
-  
+
   useFocusEffect(
     useCallback(() => {
       axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id || userData?.user?._id}`, { withCredentials: true })
-      .then(res => {
+        .then(res => {
           // console.log("RESPONSE=>",res?.data?.user);
           setCheckoutDetail((prev) => ({
             ...prev,
@@ -82,7 +84,7 @@ function Checkout({ route, navigation }) {
           // Toast.show({
           //   type: 'error',
           //   position: 'top',
-          //   text1: 'API Error',
+          //   text1: 'Error',
           //   text2: err.response.data.message,
           //   visibilityTime: 4000, // 4 seconds
           //   autoHide: true,
@@ -91,7 +93,7 @@ function Checkout({ route, navigation }) {
     }, [])
   )
 
-  console.log("checkoutProducts",checkoutProducts)
+  console.log("checkoutProducts", checkoutProducts)
 
 
 
@@ -208,15 +210,21 @@ function Checkout({ route, navigation }) {
       && checkoutDetail?.shipping_address != '' && checkoutDetail?.pincode && checkoutDetail?.state != ''
       && checkoutDetail?.products?.length > 0) {
       setLoading(true)
-      console.log(checkoutDetail,"checkdtls");
-      await axios.post(`${config.BASE_URL}app/cart/checkout/for/products/v2`, checkoutDetail, 
-      {headers:{ 
-        withCredentials: true ,
-        'x-user-type' : userType, 
-        'Authorization': 'Bearer ' + accessToken,
-      }})
+      console.log(checkoutDetail, "checkdtls");
+      const checkOutInformation = {
+        ...checkoutDetail, customer_gst: checkoutDetail?.customer_gst ? checkoutDetail.customer_gst : undefined
+     }
+      await axios.post(`${config.BASE_URL}app/cart/checkout/for/products/v2`, checkOutInformation,
+        
+      {
+          headers: {
+            withCredentials: true,
+            'x-user-type': userType,
+            'Authorization': 'Bearer ' + accessToken,
+          }
+        })
         .then(res => {
-          console.log(res?.data,"handlecheck response");
+          console.log(res?.data, "handlecheck response");
           if (res?.data?.success === true) {
             // onOrderComplete();
             clearLocalStorage();
@@ -225,26 +233,26 @@ function Checkout({ route, navigation }) {
             navigation.navigate(navigationString.ORDER_COMPLETED)
             // navigation.navigate(navigationString.ORDER)
             setLoading(false)
-            setCheckoutDetail({
-              customer_name: '',
-              customer_phone_number: '',
-              customer_email: '',
-              customer_business: '',
-              customer_gst: '',
-              shipping_address: '',
-              state: '',
-              pincode: '',
-              transport_detail:''
-            })
+            // setCheckoutDetail({
+            //   customer_name: '',
+            //   customer_phone_number: '',
+            //   customer_email: '',
+            //   customer_business: '',
+            //   customer_gst: '',
+            //   shipping_address: '',
+            //   state: '',
+            //   pincode: '',
+            //   transport_detail: ''
+            // })
 
           }
         })
         .catch(err => {
-          console.log(err,"handle check error");
+          console.log(err, "handle check error");
           Toast.show({
             type: 'error',
             position: 'top',
-            text1: 'API Error',
+            text1: 'Error',
             text2: err.response.data.message,
             visibilityTime: 4000, // 4 seconds
             autoHide: true,
@@ -264,9 +272,16 @@ function Checkout({ route, navigation }) {
 
   }
 
- const payOnline =  async () => {
-  console.log(checkoutDetail,"pay online");
- }
+  const payOnline = async () => {
+    console.log(checkoutDetail, "pay online");
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: 'This feature is under development',
+      visibilityTime: 4000, // 4 seconds
+      autoHide: true,
+    });
+  }
 
   const onClickState = (selectedState) => {
     setModalVisible(false)
@@ -348,11 +363,14 @@ function Checkout({ route, navigation }) {
   return (
     <Provider>
       <Portal>
+      {loading && <View style={{ position: 'absolute', top: '0%', bottom: '0%', left: '0%', right: '0%', zIndex: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.3)', padding: 14, borderRadius: 8 }} >
+        <View style={{ paddingTop: 190 }} >
+          <ActivityIndicator color={config.primaryColor} size='large' />
+        </View>
+      </View>
+      }
         <View style={styles.screenContainer}>
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.8)' }} >
-            <ActivityIndicator color={config.primaryColor} size='large' />
-          </View>
-          }
+       
           <StatusBar backgroundColor="#fff" />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
             <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
@@ -407,21 +425,27 @@ function Checkout({ route, navigation }) {
               </View>
               {/* address ,state, pincode */}
               <>
-      {userType === "b2b" ? (
-        <>
-          <TouchableOpacity onPress={handleCheckOut} activeOpacity={0.8} style={styles.checkoutBtn}>
-            <Text style={styles.checkouttext}>Pay Later</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
-            <Text style={styles.checkouttext}>Pay Online</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
-          <Text style={styles.checkouttext}>Pay Online</Text>
-        </TouchableOpacity>
-      )}
-    </>
+                {userType === "b2b" ? (
+                  <>
+                    <TouchableOpacity onPress={handleCheckOut} activeOpacity={0.8} style={styles.checkoutBtn}>
+                      <Text style={styles.checkouttext}>Pay Later</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
+                      <Text style={styles.checkouttext}>Pay Online</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  
+                  <>
+                  {/* <TouchableOpacity onPress={handleCheckOut} activeOpacity={0.8} style={styles.checkoutBtn}>
+                    <Text style={styles.checkouttext}>Pay Later</Text>
+                  </TouchableOpacity> */}
+                  <TouchableOpacity onPress={payOnline} activeOpacity={0.8} style={styles.checkoutBtn}>
+                    <Text style={styles.checkouttext}>Pay Online</Text>
+                  </TouchableOpacity>
+                </>
+                )}
+              </>
             </View>
             {/* for extra spacing */}
             <View style={{ paddingBottom: 20 }} ></View>

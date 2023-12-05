@@ -30,6 +30,7 @@ import ResetPass from "../screens/Login/ResetPass";
 import LoginWithOtp from "../screens/Login/LoginWithOtp";
 import SignupWithOtp from "../screens/Register/SignupWithOtp";
 import OtpForgot from "../screens/Otp/OtpForgot";
+import RegisterOtp from "../screens/Otp/RegisterOtp";
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
 
@@ -113,10 +114,10 @@ function Route() {
             cardStyleInterpolator:
               CardStyleInterpolators.forHorizontalIOS,
           }} />
-          <Stack.Screen name={navigationString.LOGIN} component={Login} options={{
+          {/* <Stack.Screen name={navigationString.LOGIN} component={Login} options={{
             cardStyleInterpolator:
               CardStyleInterpolators.forHorizontalIOS,
-          }} />
+          }} /> */}
         </Stack.Navigator>
         :
         <Stack.Navigator
@@ -133,6 +134,10 @@ function Route() {
               CardStyleInterpolators.forHorizontalIOS,
           }} />
           <Stack.Screen name={navigationString.SIGNUP_WITH_OTP} component={SignupWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forBottomSheetAndroid,
+          }} />
+          <Stack.Screen name={navigationString.REGISTRATION_OTP} component={RegisterOtp} options={{
             cardStyleInterpolator:
               CardStyleInterpolators.forBottomSheetAndroid,
           }} />

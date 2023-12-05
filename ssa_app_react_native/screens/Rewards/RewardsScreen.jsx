@@ -90,7 +90,7 @@ function RewardsScreen({ route, navigation }) {
       // Toast.show({
       //   type: 'error',
       //   position: 'top',
-      //   text1: 'API Error',
+      //   text1: 'Error',
       //   text2: error.message,
       //   visibilityTime: 4000, // 4 seconds
       //   autoHide: true,
@@ -150,7 +150,7 @@ function RewardsScreen({ route, navigation }) {
       // Toast.show({
       //   type: 'error',
       //   position: 'top',
-      //   text1: 'API Error',
+      //   text1: 'Error',
       //   text2: error.message,
       //   visibilityTime: 4000, // 4 seconds
       //   autoHide: true,
@@ -390,17 +390,7 @@ function RewardsScreen({ route, navigation }) {
             <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
             <Text style={styles.headingText} >Reward Points</Text>
             {/* <MaterialIcons name="keyboard-arrow-left" size={27} color='white' /> */}
-            <TouchableOpacity
-              onPress={() => {
-                Alert.alert(
-                  'Button Pressed',
-                  'You pressed the TouchableOpacity!',
-                  [
-                    { text: 'OK', onPress: () => console.log('OK Pressed') }
-                  ],
-                  { cancelable: false }
-                );
-              }}>
+       
 
               <View style={{
                 flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
@@ -427,7 +417,6 @@ function RewardsScreen({ route, navigation }) {
                   </>
                 } */}
               </View>
-            </TouchableOpacity>
 
           </View>
 
