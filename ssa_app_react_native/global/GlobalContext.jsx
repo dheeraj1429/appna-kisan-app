@@ -1,10 +1,11 @@
-import React, { useReducer, useEffect, useContext,useState } from "react";
+import React, { useReducer, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { config } from "../config";
 import { AuthReducer } from "./reducer/AuthReducer";
 import { clearLocalStorage, getCartProductCount, getItemFromLocalStorage, setItemToLocalStorage } from "../Utils/localstorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import auth from '@react-native-firebase/auth';
+import navigationString from "../Constants/navigationString";
 
 const initialState = {
   user: null,
@@ -62,10 +63,14 @@ function GlobalContext({ children }) {
   const logoutAuthUser = async () => {
     try {
       await AsyncStorage.removeItem('user')
-      auth().signOut();
-      dispatch({ type: 'LOG_OUT' })
-      console.log("LOG OUT SUCCESS")
+      await AsyncStorage.removeItem('userData')
+      await AsyncStorage.setItem('isAuthenticated', 'false'); // Store the authentication state
 
+       //auth().signOut();
+      // dispatch({ type: 'LOG_OUT' })
+      console.log("LOG OUT SUCCESS")
+      //Updates.reload();
+      
     }
     catch (err) {
       console.log(err)

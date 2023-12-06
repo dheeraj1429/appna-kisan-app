@@ -24,6 +24,7 @@ export default {
     REDEEM_PROD: 'RedeemProd',
     RESET_PASS: 'ResetPass',
     LOGIN_WITH_OTP:'LoginWithOtp',
+    LOGIN_SCREEN:'LoginScreen',
     SIGNUP_WITH_OTP:'SignupWithOtp',
     REGISTRATION_OTP:'RegisterOtp',
 }

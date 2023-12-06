@@ -620,7 +620,8 @@ function Register({ navigation }) {
                     <View style={styles.commonFieldContainer} >
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setPanNum(value)}
+                        //onChangeText={(value) => setPanNum(value)}
+                        onChangeText={(value) => setPanNum(value.toUpperCase())}
                         keyboardType='defult'
                         //maxLength={10}
                         placeholder='Pan Number'
@@ -659,7 +660,7 @@ function Register({ navigation }) {
                         onChangeText={(value) => setAadharNum(value)}
                         keyboardType='defult'
                         //maxLength={12}
-                        placeholder='Aadhar Number'
+                        placeholder='Aadhar Number(3456 3456 3456)'
                         value={aadharNum}/>
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="address-card" size={15} />
                     </View>
@@ -968,7 +969,7 @@ const styles = StyleSheet.create({
   commonField: {
     width: '100%',
     marginTop: 15,
-    paddingHorizontal: 45,
+    paddingHorizontal: 40,
     paddingVertical: 9,
     fontSize: 14,
     backgroundColor: '#f5f5f6',

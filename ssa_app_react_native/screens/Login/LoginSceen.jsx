@@ -26,9 +26,8 @@ import { UseContextState } from "../../global/GlobalContext";
 import Toast from 'react-native-toast-message';
 import { logger } from "react-native-logs";
 import auth from '@react-native-firebase/auth';
-import { CommonActions } from '@react-navigation/native';
 
-function Login({ navigation }) {
+function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,6 +63,7 @@ function Login({ navigation }) {
     return () => backHandler.remove(); // Cleanup the event listener when the component is unmounted
   }, []);
   
+
   const handleSendOtp = async () => {
     // const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     //console.log("CONFIRMATION++++++++",confirmation);
@@ -214,14 +214,8 @@ function Login({ navigation }) {
           fetchAuthuser();
           // setDetails(response.data);
           // log.info("response.data.accessToken", response.data.accessToken);
-          // log.info("response.data.user.id", response.data.user._id)
+          // log.info("response.data.user.id", response.data.user._id);
           navigation.navigate(navigationString.TAB_ROUTE);
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: navigationString.HOME }],
-            })
-          );
           // navigation.navigate(navigationString.TAB_ROUTE, { details });
 
         } else if (response.status === 422) {
@@ -457,7 +451,7 @@ function Login({ navigation }) {
   );
 }
 
-export default Login;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   loginContainer: {

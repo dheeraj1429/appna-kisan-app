@@ -86,7 +86,7 @@ function Account({ navigation }) {
             Alert.alert('Error fetching UserInfo:', error);
           }
         };
-
+        setModalVisible(false);
         fetchList();
       }
 
@@ -339,12 +339,13 @@ function Account({ navigation }) {
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Cancel</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity activeOpacity={0.5} onPress={logoutAuthUser}
-                  // onPress={() => {
-                  //   console.log("Log Out Button Clicked");
-                  //   navigation.navigate(navigationString.LOGIN);
-                  //   logoutAuthUser();
-                  // }}
+                  <TouchableOpacity activeOpacity={0.5}
+                   //onPress={logoutAuthUser}
+                  onPress={() => {
+                    console.log("Log Out Button Clicked");
+                    navigation.navigate(navigationString.LOGIN_SCREEN);
+                    logoutAuthUser();
+                  }}
                    >
                     <View  >
                       <Text style={{ color: config.primaryColor, fontSize: 14, fontWeight: '700' }} >Log out</Text>

@@ -31,6 +31,7 @@ import LoginWithOtp from "../screens/Login/LoginWithOtp";
 import SignupWithOtp from "../screens/Register/SignupWithOtp";
 import OtpForgot from "../screens/Otp/OtpForgot";
 import RegisterOtp from "../screens/Otp/RegisterOtp";
+import LoginScreen from "../screens/Login/LoginSceen";
 // const Stack = createNativeStackNavigator()
 const Stack = createStackNavigator();
 
@@ -46,6 +47,7 @@ function Route() {
       {/* {authState?.isAuthenticated ?  */}
       {authState?.isAuthenticated ?
         <Stack.Navigator
+        initialRouteName={navigationString.TAB_ROUTE}
           screenOptions={{
             headerShown: false,
             tabBarShowLabel: false,
@@ -71,6 +73,10 @@ function Route() {
               CardStyleInterpolators.forHorizontalIOS,
           }} />
           <Stack.Screen name={navigationString.LOGIN_WITH_OTP} component={LoginWithOtp} options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forHorizontalIOS,
+          }} />
+          <Stack.Screen name={navigationString.LOGIN_SCREEN} component={LoginScreen} options={{
             cardStyleInterpolator:
               CardStyleInterpolators.forHorizontalIOS,
           }} />

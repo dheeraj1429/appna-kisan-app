@@ -36,6 +36,7 @@ const Stack = createStackNavigator();
 const HomeStack =()=>{
  return(
   <Stack.Navigator 
+  initialRouteName={navigationString.HOME}
   screenOptions={{
     headerShown: false,
     tabBarShowLabel: false,

@@ -40,12 +40,13 @@ function Checkout({ route, navigation }) {
   const [formError, setFormError] = useState([])
   const { authState, cartState, userData } = UseContextState();
   console.log("formError", formError)
-  const userType = JSON.parse(userData)?.user?.type;
+  const userType = userData?.user?.type;
   //const userType = 'b2c';
 console.log("userType", userData);
+console.log(checkoutProducts,"checkoutProducts");
   const user_id = userData?.user?.id;
-  const accessToken = JSON.parse(userData)?.accessToken;
-  const phone_number = JSON.parse(userData)?.user?.phone_number;
+  const accessToken = userData?.accessToken;
+  const phone_number = userData?.user?.phone_number;
   console.log(userType, "usertype");
   const [checkoutDetail, setCheckoutDetail] = useState({
     //customer_id: authState?.user?.user_id,
