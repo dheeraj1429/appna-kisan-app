@@ -292,6 +292,7 @@ function Login({ navigation }) {
                       keyboardType='email-address' // This sets the keyboard to the email address format
                       maxLength={50} // Adjust the maximum length as needed
                       placeholder='Email or Phone Number'
+                      value={loginInput}
                     />
                     <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
                   </View>
@@ -316,6 +317,7 @@ function Login({ navigation }) {
                       secureTextEntry={true} // This hides the entered text for a password field
                       maxLength={20} // Adjust the maximum length as needed
                       placeholder='Password'
+                      value={password}
                     />
                     <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
                   </View>

@@ -382,7 +382,8 @@ console.log("userType", userData);
 
             <View style={styles.commonFieldMainBox} >
               <View style={{ ...styles.commonFieldContainer, marginTop: -10 }} >
-                <TextInput onChangeText={value => handleChange(value, 'customer_name')} value={checkoutDetail?.customer_name} keyboardType={'default'} style={styles.commonField} placeholder='Full Name*' />
+                <TextInput 
+                                        onChangeText={value => handleChange(value, 'customer_name')} value={checkoutDetail?.customer_name} keyboardType={'default'} style={styles.commonField} placeholder='Full Name*' />
                 <MaterialCommunityIcons style={styles.commonIcon} name="account" size={20} />
               </View>
               <View style={styles.phoneFieldContainer} >

@@ -73,11 +73,12 @@ const ResetPass = ({ route, navigation }) => {
     return (
         <Provider>
             <Portal>
+                
                 <View style={{ flex: 1, backgroundColor: '#fff' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }}>
-                        <Text></Text>
+                    <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
                         <Text style={styles.headingText}>Change Password</Text>
-                        <Text></Text>
+                        <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
                     </View>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.loginContainer}>

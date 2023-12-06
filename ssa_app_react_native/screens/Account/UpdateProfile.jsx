@@ -574,6 +574,8 @@ function UpdateProfile({ route, navigation }) {
                 secureTextEntry={true} // This hides the entered text for a password field
                 maxLength={20} // Adjust the maximum length as needed
                 placeholder='Password'
+                value={password}
+
               />
               <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
             </View>

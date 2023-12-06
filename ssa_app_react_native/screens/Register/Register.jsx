@@ -623,7 +623,8 @@ function Register({ navigation }) {
                         onChangeText={(value) => setPanNum(value)}
                         keyboardType='defult'
                         //maxLength={10}
-                        placeholder='Pan Number' />
+                        placeholder='Pan Number'
+                        value={panNum} />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="money-check" size={15} />
                     </View>
 
@@ -634,6 +635,7 @@ function Register({ navigation }) {
                         keyboardType='email-address' // This sets the keyboard to the email address format
                         maxLength={50} // Adjust the maximum length as needed
                         placeholder='Email'
+                        value={email}
                       />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
                     </View>
@@ -646,6 +648,7 @@ function Register({ navigation }) {
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
                         placeholder='Password'
+                        value={password}
                       />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
                     </View>
@@ -656,7 +659,8 @@ function Register({ navigation }) {
                         onChangeText={(value) => setAadharNum(value)}
                         keyboardType='defult'
                         //maxLength={12}
-                        placeholder='Aadhar Number' />
+                        placeholder='Aadhar Number'
+                        value={aadharNum}/>
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="address-card" size={15} />
                     </View>
 
@@ -665,7 +669,8 @@ function Register({ navigation }) {
                         onChangeText={(value) => setGstNum(value)}
                         keyboardType='defult'
                         //maxLength={10}
-                        placeholder='Gst Number' />
+                        placeholder='Gst Number' 
+                        value={gstNum}/>
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="id-card-alt" size={15} />
                     </View>
 
@@ -781,6 +786,7 @@ function Register({ navigation }) {
                         keyboardType='email-address' // This sets the keyboard to the email address format
                         maxLength={50} // Adjust the maximum length as needed
                         placeholder='Email'
+                        value={email}
                       />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
                     </View>
@@ -793,6 +799,7 @@ function Register({ navigation }) {
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
                         placeholder='Password'
+                        value={password}
                       />
                       <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
                     </View>
@@ -803,6 +810,7 @@ function Register({ navigation }) {
                         keyboardType='default'
                         style={styles.commonField}
                         placeholder='Address'
+                        value={address}
                         onChangeText={(value) => setAddress(value.replace(/[^a-zA-Z0-9 ,.-]/g, ''))}
                       />
                       <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
