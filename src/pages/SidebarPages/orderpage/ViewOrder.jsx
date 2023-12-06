@@ -134,6 +134,12 @@ const headCells = [
     label: "Quantity By",
   },
   {
+    id: "Option",
+    numeric: true,
+    disablePadding: false,
+    label: "update order price",
+  },
+  {
     id: "status",
     numeric: true,
     disablePadding: false,
@@ -733,14 +739,14 @@ function ViewOrder({ handleClose, orderId }) {
   //############################# INVOICE PREVIEW SIDE BAR DRAWER FUNCTION #############################
 
   const updateOrderPrice = async function (data) {
-    if(!data?.order_price) {
+    if (!data?.order_price) {
       setSnackbarOpen(true);
-        setMessage((prev) => ({
-          ...prev,
-          type: "error",
-          message: "Please provide a valid order price",
-        }));
-        return;
+      setMessage((prev) => ({
+        ...prev,
+        type: "error",
+        message: "Please provide a valid order price",
+      }));
+      return;
     }
     setLoading(true);
     axios
@@ -749,7 +755,7 @@ function ViewOrder({ handleClose, orderId }) {
         data
       )
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setSnackbarOpen(true);
         setLoading(false);
         setMessage((prev) => ({
@@ -857,62 +863,22 @@ function ViewOrder({ handleClose, orderId }) {
                 </div>
                 <div>
                   <div className="flex">
-                <h4>Total order price</h4>
-                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs {orderDetail?.total_amount}</p>
-                </div>
-                <div className="flex">
-                <h4>Billing price</h4>
-                <p style={{marginLeft: '1rem', fontSize: 12}}>Rs {orderDetail?.billing_amount}</p>
-                </div>
+                    <h4>Total order price</h4>
+                    <p style={{ marginLeft: "1rem", fontSize: 12 }}>
+                      Rs {orderDetail?.total_amount}
+                    </p>
                   </div>
+                  <div className="flex">
+                    <h4>Billing price</h4>
+                    <p style={{ marginLeft: "1rem", fontSize: 12 }}>
+                      Rs {orderDetail?.totalPrice}
+                    </p>
+                  </div>
+                </div>
                 <div className="flex" style={{ gap: 15 }}>
                   {/* {orderDetail?.order_status} */}
 
                   {/* <label htmlFor=""> Select Category  </label> */}
-                  {orderDetail?.user_type === 'B2BUsers' ? <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          "& > :not(style)": { m: 1, width: "25ch" },
-                        }}
-                        autoComplete="off"
-                      >
-                        <TextField
-                          label="Order price"
-                          variant="outlined"
-                          type="number"
-                          defaultValue={orderDetail?.order_price}
-                          onChange={(event) => {
-                            orderDetail.order_price = event.target.value;
-                          }}
-                          inputProps={{
-                            min: 0,
-                            step: 0.0001,
-                          }}
-                        />
-                      </Box>
-                      <Button
-                        variant="contained"
-                        sx={{ mx: 0, height: 54, px: 5 }}
-                        onClick={() =>
-                          updateOrderPrice({
-                            _id: orderDetail?._id,
-                            customer_id: orderDetail?.customer_id,
-                            order_id: orderDetail?.order_id,
-                            order_price: +orderDetail?.order_price,
-                          })
-                        }
-                      >
-                        Update order price
-                      </Button>
-                    </div>
-                  </div> : null}
                   <div className="flex">
                     <TextField
                       style={{
@@ -1037,7 +1003,10 @@ function ViewOrder({ handleClose, orderId }) {
                   />
                   <TableContainer>
                     <Table
-                      sx={{ minWidth: 800 }}
+                      sx={{
+                        minWidth: 800,
+                        overflow: "scroll",
+                      }}
                       aria-labelledby="tableTitle"
                       size={dense ? "small" : "medium"}
                     >
@@ -1150,6 +1119,61 @@ function ViewOrder({ handleClose, orderId }) {
                                   >
                                     {row?.product_quantity_by}
                                   </p>
+                                </TableCell>
+                                <TableCell>
+                                  {orderDetail?.user_type === "B2BUsers" ? (
+                                    <div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Box
+                                          sx={{
+                                            "& > :not(style)": {
+                                              m: 1,
+                                              width: 170,
+                                            },
+                                          }}
+                                          autoComplete="off"
+                                        >
+                                          <TextField
+                                            size="small"
+                                            label="Order price"
+                                            variant="outlined"
+                                            type="number"
+                                            defaultValue={row?.product_price}
+                                            onChange={(event) => {
+                                              orderDetail.order_price =
+                                                event.target.value;
+                                            }}
+                                            inputProps={{
+                                              min: 0,
+                                              step: 0.01,
+                                            }}
+                                          />
+                                        </Box>
+                                        <Button
+                                          size="small"
+                                          variant="contained"
+                                          onClick={() =>
+                                            updateOrderPrice({
+                                              _id: orderDetail?._id,
+                                              customer_id:
+                                                orderDetail?.customer_id,
+                                              order_id: orderDetail?.order_id,
+                                              order_price:
+                                                +orderDetail?.order_price,
+                                              productId: row?._id,
+                                            })
+                                          }
+                                        >
+                                          Update
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  ) : null}
                                 </TableCell>
                                 {row?.product_delivery_status ? (
                                   <TableCell
