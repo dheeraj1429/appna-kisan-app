@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, RefreshControl, StyleSheet, TextInput, Text, TouchableOpacity, ActivityIndicator, Dimensions, ScrollView } from "react-native";
+import { View, RefreshControl, StyleSheet, TextInput, Text, TouchableOpacity, ActivityIndicator, Dimensions, ScrollView ,Linking} from "react-native";
 import Header from "../../components/Header";
 import { config } from "../../config";
 import BrandCard from "../../components/BrandCard";
@@ -15,6 +15,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { UseContextState } from "../../global/GlobalContext.jsx";
 // import { useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
+import strings from '../../Constants/strings';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useFocusEffect } from "@react-navigation/native";
