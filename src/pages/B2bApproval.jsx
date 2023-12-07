@@ -100,8 +100,7 @@ function B2bApproval() {
                 )}
               </p>
             </div>
-            {userInformation?.aadhaar?.images &&
-            userInformation.aadhaar.images.length ? (
+            {userInformation?.aadhaar?.number ? (
               <div>
                 <h1 className={classes["heading"]}>Aadhaar</h1>
                 <div className={classes["box"]}>
@@ -109,7 +108,7 @@ function B2bApproval() {
                     <h5>Number</h5>
                   </div>
                   <Stack spacing={2} direction="row" alignItems={"center"}>
-                    <p>{userInformation?.aadhaar?.number}</p>
+                    <p>{userInformation.aadhaar.number}</p>
                     {/* <Link
                                     to={userInformation?.aadhaar?.images?.[0]?.image_url}
                                     download="document_1"
@@ -122,8 +121,7 @@ function B2bApproval() {
                 </div>
               </div>
             ) : null}
-            {userInformation?.gstNo?.images &&
-            userInformation.gstNo.images.length ? (
+            {userInformation?.gstNo?.number ? (
               <div>
                 <h1 className={classes["heading"]}>GST</h1>
                 <div className={classes["box"]}>
@@ -131,7 +129,7 @@ function B2bApproval() {
                     <h5>Number</h5>
                   </div>
                   <Stack spacing={2} direction="row" alignItems={"center"}>
-                    <p>{userInformation?.gstNo?.number}</p>
+                    <p>{userInformation.gstNo.number}</p>
                     {/* <Link
                                     to={userInformation.gstNo.images?.[0]?.image_url}
                                     download="document_1"
@@ -144,8 +142,7 @@ function B2bApproval() {
                 </div>
               </div>
             ) : null}
-            {userInformation?.pan?.images &&
-            userInformation.pan.images.length ? (
+            {userInformation?.pan?.number ? (
               <div>
                 <h1 className={classes["heading"]}>PAN</h1>
                 <div className={classes["box"]}>
@@ -153,7 +150,7 @@ function B2bApproval() {
                     <h5>Number</h5>
                   </div>
                   <Stack spacing={2} direction="row" alignItems={"center"}>
-                    <p>{userInformation?.pan?.number}</p>
+                    <p>{userInformation.pan.number}</p>
                     {/* <Link
                                     to={userInformation.pan.images?.[0]?.image_url}
                                     download="document_2"
