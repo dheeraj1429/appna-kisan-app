@@ -1,35 +1,34 @@
 // scroll bar
-import 'simplebar/src/simplebar.css';
-import "./index.css"
+import "simplebar/src/simplebar.css";
+import "./index.css";
 
 // import ReactDOM from 'react-dom/client';
-import  ReactDOM  from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import GlobalContext from './global/GlobalContext/GlobalContext';
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import GlobalContext from "./global/GlobalContext/GlobalContext";
 //
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import reportWebVitals from './reportWebVitals';
-
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import reportWebVitals from "./reportWebVitals";
+import "react-toastify/dist/ReactToastify.css";
 
 // ----------------------------------------------------------------------
 //=========== PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT==============
 // console.log = function() {}
 //========= PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT============
 
-
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 
 ReactDOM.render(
   <GlobalContext>
     <BrowserRouter>
-  <HelmetProvider>
-      <App />
-  </HelmetProvider>
-  </BrowserRouter>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </BrowserRouter>
   </GlobalContext>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to enable client cache, register instead.
