@@ -3,18 +3,19 @@ import { useParams } from "react-router-dom";
 import {
   approveUserInformation,
   getSingleB2bAccountDetails,
+  setDealerCodeHandler,
 } from "src/api/b2bApproval";
 import LoadingSpinner from "src/components/Spinner";
 import classes from "./B2bApproval.module.css";
-import { FormControlLabel, Stack } from "@mui/material";
+import { Box, Button, FormControlLabel, Stack, TextField } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import dayjs from "dayjs";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function B2bApproval() {
   const [isLoading, setIsLoading] = useState(false);
   const [userInformation, setUserInformation] = useState();
+  const [dealerCode, setDealerCode] = useState("");
   const params = useParams();
 
   const getUserAccountInfo = async function () {
@@ -38,8 +39,21 @@ function B2bApproval() {
     }
   };
 
-  const downloadHandler = function (url) {
-    console.log(url);
+  const updateDealerCodeHandler = async function () {
+    try {
+      setIsLoading(true);
+      const response = await setDealerCodeHandler({
+        userId: params?.id,
+        code: dealerCode,
+      });
+      setIsLoading(false);
+      if (response?.data?.success) {
+        toast(response.data?.message);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      toast.error(err.response?.data?.message);
+    }
   };
 
   useEffect(() => {
@@ -164,6 +178,20 @@ function B2bApproval() {
               </div>
             ) : null}
             <Stack margin={1} width={100}>
+              <Box width={500} gap={2} display={"flex"} alignItems={"center"}>
+                <TextField
+                  label="Dealer code"
+                  sx={{ width: "60%" }}
+                  variant="outlined"
+                  type="text"
+                  size="small"
+                  value={dealerCode}
+                  onChange={(e) => setDealerCode(e.target.value)}
+                />
+                <Button onClick={updateDealerCodeHandler} variant="contained">
+                  Set Dealer code
+                </Button>
+              </Box>
               <FormControlLabel
                 onChange={(event) => approveHandler(event.target.checked)}
                 control={
