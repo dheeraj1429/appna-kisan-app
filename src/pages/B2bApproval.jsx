@@ -26,6 +26,7 @@ function B2bApproval() {
       if (response && response?.data?.success) {
         const { data } = response.data;
         setUserInformation(data);
+        setDealerCode(data?.dealerCode);
       }
     } catch (err) {
       setIsLoading(false);
