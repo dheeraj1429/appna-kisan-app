@@ -7,7 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -25,12 +25,12 @@ import navigationString from "../../Constants/navigationString";
 import strings from "../../Constants/strings";
 import ProductCard from "../../components/ProductCard";
 import { config } from "../../config";
+import { UseContextState } from "../../global/GlobalContext";
 
 function SearchResult({ route, navigation }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchResult, setSearchResult] = useState([]);
   const [totalPagesCount, setTotalPagesCount] = useState(1);
-  const [brandSuggestion, setBrandSuggestion] = useState([]);
   const [productFilters, setProductFilters] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
@@ -39,6 +39,8 @@ function SearchResult({ route, navigation }) {
   const [productCount, setProductCount] = useState(0);
   const [loadMore, setLoadmore] = useState(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const flatListRef = useRef(null);
+  const { scrollIndex } = UseContextState();
 
   const {
     searchValue,
@@ -122,6 +124,13 @@ function SearchResult({ route, navigation }) {
     }, [])
   );
 
+  // useEffect(() => {
+  //   if (flatListRef.current && scrollIndex) {
+  //     console.log("scroll index", scrollIndex);
+  //     flatListRef.current.scrollToIndex({ index: 4, animated: true });
+  //   }
+  // }, [scrollIndex]);
+
   const onRefresh = async () => {
     setRefreshing(true);
   };
@@ -170,34 +179,6 @@ function SearchResult({ route, navigation }) {
     navigation.goBack();
   };
 
-  const searchWithBrandSuggestion = (item) => {
-    navigation.navigate(navigationString.SEARCH_RESULT, {
-      searchThroughCategory: item._id,
-    });
-    // setCurrentPage(1);
-  };
-
-  const renderbrandSuggestion = useCallback(
-    ({ item, index }) => {
-      return (
-        <TouchableOpacity
-          onPress={() => searchWithBrandSuggestion(item)}
-          activeOpacity={0.6}
-        >
-          <Text
-            style={
-              searchThroughCategory != item._id
-                ? { ...styles.brandSuggestion }
-                : { ...styles.brandSuggestion, color: config.primaryColor }
-            }
-          >
-            {item._id}
-          </Text>
-        </TouchableOpacity>
-      );
-    },
-    [searchThroughCategory]
-  );
   // SET EMPTY PRODUCT FOR GRID ALIGNMENT
   let emptyArr = [{ empty: true, product_images: [] }];
   searchResult?.length % 2 != 0 &&
@@ -222,6 +203,7 @@ function SearchResult({ route, navigation }) {
           ></View>
         ) : (
           <ProductCard
+            index={index}
             product_id={item._id}
             product_code={item.product_code}
             product_name={item?.product_name}
@@ -446,6 +428,8 @@ function SearchResult({ route, navigation }) {
                 </View>
               ) : (
                 <FlatList
+                  ref={flatListRef}
+                  enableemptysections={true}
                   refreshControl={
                     <RefreshControl
                       refreshing={refreshing}
@@ -476,9 +460,8 @@ function SearchResult({ route, navigation }) {
                   }
                   showsVerticalScrollIndicator={false}
                   renderItem={renderProducts}
-                  keyExtractor={(item, index) => index}
+                  keyExtractor={(index) => index._id}
                   onEndReached={loadMoreItems}
-                  // onEndReachedThreshold={0.2}
                 />
               )}
 

@@ -1,0 +1,86 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:India Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Anugya Gautam:mailto:anugya@exiliensoft.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Raman Kuma
+ r:mailto:raman@exiliensoft.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=dheerajsin
+ gh1429@gmail.com:mailto:dheerajsingh1429@gmail.com
+DESCRIPTION;LANGUAGE=en-US:\n______________________________________________
+ __________________________________\nMicrosoft Teams meeting\nJoin on your 
+ computer\, mobile app or room device\nClick here to join the meeting<https
+ ://teams.microsoft.com/l/meetup-join/19%3ameeting_MmZhMGVjODUtN2FhNy00NDIx
+ LWFmZGItM2Q5NjZmMmFlNzJh%40thread.v2/0?context=%7b%22Tid%22%3a%22ab01d770-
+ 17d8-4143-8e98-df40e49f9500%22%2c%22Oid%22%3a%224aea953b-ff04-4619-9c39-a4
+ f8dba80bb9%22%7d>\nMeeting ID: 419 835 624 078\nPasscode: Snesw8\nDownload
+  Teams<https://www.microsoft.com/en-us/microsoft-teams/download-app> | Joi
+ n on the web<https://www.microsoft.com/microsoft-teams/join-a-meeting>\nLe
+ arn More<https://aka.ms/JoinTeamsMeeting> | Meeting options<https://teams.
+ microsoft.com/meetingOptions/?organizerId=4aea953b-ff04-4619-9c39-a4f8dba8
+ 0bb9&tenantId=ab01d770-17d8-4143-8e98-df40e49f9500&threadId=19_meeting_MmZ
+ hMGVjODUtN2FhNy00NDIxLWFmZGItM2Q5NjZmMmFlNzJh@thread.v2&messageId=0&langua
+ ge=en-US>\n_______________________________________________________________
+ _________________\n
+UID:040000008200E00074C5B7101A82E00800000000F80CF5B1252CDA01000000000000000
+ 01000000090350551B780034C8B339A04BBA07786
+SUMMARY;LANGUAGE=en-US:Dheeraj Interview ( FullStack Developer) 
+DTSTART;TZID=India Standard Time:20231212T110000
+DTEND;TZID=India Standard Time:20231212T113000
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20231211T113219Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:0
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-OWNERAPPTID:2122078712
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-ONLINEMEETINGINFORMATION:{"OnlineMeetingChannelId":null\,"Onlin
+ eMeetingProvider":3}
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/
+ 19%3ameeting_MmZhMGVjODUtN2FhNy00NDIxLWFmZGItM2Q5NjZmMmFlNzJh%40thread.v2/
+ 0?context=%7b%22Tid%22%3a%22ab01d770-17d8-4143-8e98-df40e49f9500%22%2c%22O
+ id%22%3a%224aea953b-ff04-4619-9c39-a4f8dba80bb9%22%7d
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.microsof
+ t.com/teams/ab01d770-17d8-4143-8e98-df40e49f9500/4aea953b-ff04-4619-9c39-a
+ 4f8dba80bb9/19_meeting_MmZhMGVjODUtN2FhNy00NDIxLWFmZGItM2Q5NjZmMmFlNzJh@th
+ read.v2/0
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_MmZhMGVjODUtN2FhNy00NDI
+ xLWFmZGItM2Q5NjZmMmFlNzJh@thread.v2"\,"rid":0\,"mid":0\,"uid":null\,"priva
+ te":true\,"type":0}
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-LOCATIONDISPLAYNAME:Microsoft Teams Meeting
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"Microsoft Teams Meeting"\,"LocationA
+ nnotation":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"
+ LocationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"Locatio
+ nFullAddress":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

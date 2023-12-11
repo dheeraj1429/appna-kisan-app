@@ -2,9 +2,14 @@ import React, { useReducer, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { config } from "../config";
 import { AuthReducer } from "./reducer/AuthReducer";
-import { clearLocalStorage, getCartProductCount, getItemFromLocalStorage, setItemToLocalStorage } from "../Utils/localstorage";
+import {
+  clearLocalStorage,
+  getCartProductCount,
+  getItemFromLocalStorage,
+  setItemToLocalStorage,
+} from "../Utils/localstorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import auth from '@react-native-firebase/auth';
+import auth from "@react-native-firebase/auth";
 import navigationString from "../Constants/navigationString";
 
 const initialState = {
@@ -13,125 +18,123 @@ const initialState = {
   cartCount: null,
   isAuthenticated: false,
   loading: false,
-  homeBanner: null
-}
+  homeBanner: null,
+};
 
-// creating global context 
+// creating global context
 const Global = React.createContext(initialState);
 export const UseContextState = () => useContext(Global);
 
 function GlobalContext({ children }) {
-  const [authState, dispatch] = useReducer(AuthReducer, initialState)
+  const [authState, dispatch] = useReducer(AuthReducer, initialState);
   const [userL, setUserL] = useState(null);
   const [userData, setUserData] = useState([]);
+  const [scrollIndex, setScrollIndex] = useState(0);
+
   const saveCredentials = (userCredentials) => {
     setUserL(userCredentials);
-    AsyncStorage.setItem('isAuthenticated', 'true'); // Store the authentication state
+    AsyncStorage.setItem("isAuthenticated", "true"); // Store the authentication state
   };
   const saveUserData = (data) => {
     setUserData(data);
-    AsyncStorage.setItem('userData', JSON.stringify(data)); // Store userData in AsyncStorage
+    AsyncStorage.setItem("userData", JSON.stringify(data)); // Store userData in AsyncStorage
   };
   const clearCredentials = () => {
     setUserL(null);
     setUserData(null);
-    AsyncStorage.removeItem('userData'); // Remove userData from AsyncStorage
+    AsyncStorage.removeItem("userData"); // Remove userData from AsyncStorage
   };
   const setUser = (userData) => {
-    dispatch({ type: 'LOG_IN', payload: userData });
+    dispatch({ type: "LOG_IN", payload: userData });
   };
 
-  console.log("AuthState ", authState)
+  console.log("AuthState ", authState);
   // getting authenticated user
   const fetchAuthuser = async () => {
     try {
-      const user = await getItemFromLocalStorage('user');
+      const user = await getItemFromLocalStorage("user");
       if (user != null) {
-        dispatch({ type: 'LOG_IN', payload: user })
-        console.log("LOG IN SUCCESS")
+        dispatch({ type: "LOG_IN", payload: user });
+        console.log("LOG IN SUCCESS");
+      } else {
+        dispatch({ type: "ERROR", payload: "error" });
       }
-      else {
-        dispatch({ type: "ERROR", payload: 'error' })
-      }
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  };
 
   // logout user
   const logoutAuthUser = async () => {
     try {
-      await AsyncStorage.removeItem('user')
-      await AsyncStorage.removeItem('userData')
-      await AsyncStorage.setItem('isAuthenticated', 'false'); // Store the authentication state
+      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem("userData");
+      await AsyncStorage.setItem("isAuthenticated", "false"); // Store the authentication state
 
-       //auth().signOut();
+      //auth().signOut();
       // dispatch({ type: 'LOG_OUT' })
-      console.log("LOG OUT SUCCESS")
+      console.log("LOG OUT SUCCESS");
       //Updates.reload();
-      
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  };
 
   // get cart state
   const cartState = async () => {
     try {
       const count = await getCartProductCount();
-      dispatch({ type: 'CART_STATE', payload: count });
-    }
-    catch (err) {
+      dispatch({ type: "CART_STATE", payload: count });
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   // get home screen banners
   const getHomeScreenBanner = async () => {
     try {
-      await axios.get(`${config.BACKEND_URI}/api/app/get/all/home/screen/banner`, { withCredentials: true })
-        .then(res => {
+      await axios
+        .get(`${config.BACKEND_URI}/api/app/get/all/home/screen/banner`, {
+          withCredentials: true,
+        })
+        .then((res) => {
           // console.log(res?.data);
-          dispatch({ type: 'HOME_SCREEN_BANNER', payload: res?.data });
+          dispatch({ type: "HOME_SCREEN_BANNER", payload: res?.data });
         })
-        .catch(err => {
-          console.log(err)
-        })
-
-    }
-    catch (err) {
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     fetchAuthuser();
     cartState();
     getHomeScreenBanner();
-  }, [])
+  }, []);
 
   const value = {
-    authState, fetchAuthuser, logoutAuthUser, cartState,
+    authState,
+    fetchAuthuser,
+    logoutAuthUser,
+    cartState,
     userL,
     userData,
     saveCredentials,
     saveUserData,
     clearCredentials,
     setUser,
-    setUserData
-  }
+    setUserData,
+    setScrollIndex,
+    scrollIndex,
+  };
 
-  return <Global.Provider value={value} >{children}</Global.Provider>
-
-
+  return <Global.Provider value={value}>{children}</Global.Provider>;
 }
 
-export default GlobalContext
-
-
-
+export default GlobalContext;
 
 // import React, { useReducer, useEffect, useContext, useState } from "react";
 // import axios from "axios";
@@ -151,7 +154,7 @@ export default GlobalContext
 
 // }
 
-// // creating global context 
+// // creating global context
 // const Global = React.createContext(initialState);
 // export const UseContextState = () => useContext(Global);
 
@@ -248,7 +251,6 @@ export default GlobalContext
 //   //     navigation.navigate(navigationString.LOGIN);
 //   //     console.log("console.log5");
 
-
 //   //   } catch (err) {
 //   //     console.log(err);
 //   //   }
@@ -333,8 +335,6 @@ export default GlobalContext
 
 //   return <Global.Provider value={value}>{children}</Global.Provider>;
 
-
 // }
 
 // export default GlobalContext
-

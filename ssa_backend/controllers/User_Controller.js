@@ -1,14 +1,14 @@
-const catchAsync = require('../middlewares/catchAsync');
-const Users_Schema = require('../modals/Users');
-const Utils = require('../utils/Utils');
-const { v4: uuidv4 } = require('uuid');
-const httpStatus = require('../utils/configs/httpStatus');
-const CaptureError = require('../utils/CaptureError');
-const { verifyB2BAUpdateData } = require('../validations/b2bUser');
-const B2BUser = require('../modals/B2BUser');
-const { verifyB2CAUpdateData } = require('../validations/b2cUser');
-const B2CUser = require('../modals/B2CUser');
-const { verifyUserUpdateData } = require('../validations/user');
+const catchAsync = require("../middlewares/catchAsync");
+const Users_Schema = require("../modals/Users");
+const Utils = require("../utils/Utils");
+const { v4: uuidv4 } = require("uuid");
+const httpStatus = require("../utils/configs/httpStatus");
+const CaptureError = require("../utils/CaptureError");
+const { verifyB2BAUpdateData } = require("../validations/b2bUser");
+const B2BUser = require("../modals/B2BUser");
+const { verifyB2CAUpdateData } = require("../validations/b2cUser");
+const B2CUser = require("../modals/B2CUser");
+const { verifyUserUpdateData } = require("../validations/user");
 
 // creating new user
 const createUser = async (req, res) => {
@@ -33,17 +33,16 @@ const createUser = async (req, res) => {
       phone_number: phone_number,
     });
     if (findUserPhone) {
-      return res.send('User Already Exists !!');
+      return res.send("User Already Exists !!");
     }
     const findUser = await Users_Schema.findOne({ email: email });
     if (findUser) {
-      return res.send('User Already Exists !!');
+      return res.send("User Already Exists !!");
     }
     // creating user id
     // const getUserCount = await Users_Schema.find({}).count();
     // const getUserId = "user00"+(getUserCount+1);
     const getUserId = uuidv4();
-    console.log(getUserId);
     // const currentDate = new Date().toUTCString()
     // const hashedPassword = await Utils.Hashing_Password(password)
     const create = new Users_Schema({
@@ -66,10 +65,9 @@ const createUser = async (req, res) => {
     const result = await create.save();
     res
       .status(200)
-      .send({ result: result, message: 'created user successfully !!' });
+      .send({ result: result, message: "created user successfully !!" });
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong');
+    res.status(500).send("Something went wrong");
   }
 };
 
@@ -84,7 +82,7 @@ const loginUser = async (req, res) => {
         phone_number: phone_number,
       });
       if (!findUserPhone) {
-        return res.send('Invalid Username or password !!');
+        return res.send("Invalid Username or password !!");
       }
     }
 
@@ -96,22 +94,21 @@ const loginUser = async (req, res) => {
           findUserEmail.password
         );
       } catch (err) {
-        console.log(err);
-        res.send('Something went wrong !!');
+        res.send("Something went wrong !!");
       }
       if (!isValidPassword) {
-        return res.send('Invalid Username or password !!');
+        return res.send("Invalid Username or password !!");
       }
       if (isValidPassword) {
         const token = await Utils.create_Jwt(
           { id: findUserEmail._id, user_type: findUserEmail.user_type },
           process.env.JWT_TOKEN_SECRET
         );
-        res.cookie('jwt', token, {
+        res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000, //5 hrs
         });
-        return res.status(200).send('Logged in Success !!');
+        return res.status(200).send("Logged in Success !!");
       }
     }
     if (findUserPhone) {
@@ -121,34 +118,32 @@ const loginUser = async (req, res) => {
           findUserPhone.password
         );
       } catch (err) {
-        console.log(err);
-        res.send('Something went wrong !!');
+        res.send("Something went wrong !!");
       }
       if (!isValidPassword) {
-        return res.send('Invalid Username or password !!');
+        return res.send("Invalid Username or password !!");
       }
       if (isValidPassword) {
         const token = await Utils.create_Jwt(
           { id: findUserPhone._id, user_type: findUserPhone.user_type },
           process.env.JWT_TOKEN_SECRET
         );
-        res.cookie('jwt', token, {
+        res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000, //5 hrs
         });
-        return res.status(200).send('Logged in Success !!');
+        return res.status(200).send("Logged in Success !!");
       }
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong !!');
+    res.status(500).send("Something went wrong !!");
   }
 };
 
 // logout user
 const logoutUser = async (req, res) => {
-  res.cookie('jwt', '', { maxAge: 0 });
-  res.status(200).send('Logout Success !!');
+  res.cookie("jwt", "", { maxAge: 0 });
+  res.status(200).send("Logout Success !!");
 };
 
 //getting all users
@@ -158,33 +153,31 @@ const getAllUser = async (req, res) => {
     const alluser = await Users_Schema.find({}).sort({ createdAt: -1 });
     res.status(200).json({ alluser: alluser, user_count: getAllUserCount });
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong !!');
+    res.status(500).send("Something went wrong !!");
   }
 };
 
 // get user by id (who's logged in)
 const getUserById = async (req, res) => {
-  const cookie = req.cookies['jwt'];
+  const cookie = req.cookies["jwt"];
   try {
     if (!cookie) {
-      return res.send('Unauthenticated !!');
+      return res.send("Unauthenticated !!");
     }
     const verifyJwt = await Utils.verifying_Jwt(
       cookie,
       process.env.JWT_TOKEN_SECRET
     );
     if (!verifyJwt) {
-      return res.send('Unauthenticated !!');
+      return res.send("Unauthenticated !!");
     }
-    const findUser = await Users_Schema.findById(verifyJwt.id, '-password');
+    const findUser = await Users_Schema.findById(verifyJwt.id, "-password");
     if (!findUser) {
-      return res.send('Unauthenticated !!');
+      return res.send("Unauthenticated !!");
     }
     res.status(200).send(findUser);
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong !!');
+    res.status(500).send("Something went wrong !!");
   }
 };
 
@@ -195,16 +188,15 @@ const getUser = async (req, res) => {
     if (!userId)
       return res
         .status(404)
-        .send({ status: false, message: 'user not found !!' });
+        .send({ status: false, message: "user not found !!" });
     const findUser = await Users_Schema.findById(userId);
     if (!findUser)
       return res
         .status(404)
-        .send({ status: false, message: 'user not found !!' });
+        .send({ status: false, message: "user not found !!" });
     res.status(200).send(findUser);
   } catch (err) {
-    console.log(err);
-    res.status(500).send('something went wrong !!');
+    res.status(500).send("something went wrong !!");
   }
 };
 
@@ -213,7 +205,7 @@ const editUserByID = async (req, res) => {
   const userId = req.params.user_id;
   try {
     if (!userId) {
-      return res.send('please provide a user id');
+      return res.send("please provide a user id");
     }
     if (req.body.password) {
       const hashedNewPassword = await Utils.Hashing_Password(req.body.password);
@@ -221,20 +213,19 @@ const editUserByID = async (req, res) => {
         password: hashedNewPassword,
       });
       if (!find) {
-        return res.send('User not found');
+        return res.send("User not found");
       }
-      return res.status(200).send('Password Updated success');
+      return res.status(200).send("Password Updated success");
     }
     const findUser = await Users_Schema.findByIdAndUpdate(userId, {
       $set: req.body,
     });
     if (!findUser) {
-      return res.send('user not found');
+      return res.send("user not found");
     }
-    res.status(200).send('user updated successfully !!');
+    res.status(200).send("user updated successfully !!");
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong !!');
+    res.status(500).send("Something went wrong !!");
   }
 };
 
@@ -243,11 +234,7 @@ const searchInUsers = async (req, res) => {
   const searchValue = req.query.search;
   const searchRegex = Utils.createRegex(searchValue);
   let result;
-  // console.log("SEARCH===",searchValue)
   try {
-    // result = await Users_Schema.find({user_id:{$regex:searchRegex}})
-
-    // if(!result.length > 0){
     result = await Users_Schema.find({
       username: { $regex: searchRegex },
     }).sort({ createdAt: -1 });
@@ -258,9 +245,7 @@ const searchInUsers = async (req, res) => {
     }
     // }
     const numberField = parseInt(searchValue);
-    // console.log(numberField)
     if (numberField) {
-      // console.log(numberField)
       result = await Users_Schema.find({
         phone_number: numberField,
       }).sort({ createdAt: -1 });
@@ -269,8 +254,7 @@ const searchInUsers = async (req, res) => {
 
     res.status(200).send(result);
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong');
+    res.status(500).send("Something went wrong");
   }
 };
 
@@ -278,26 +262,15 @@ const searchInUsers = async (req, res) => {
 const filterForUsers = async (req, res) => {
   const { by_status, date_from, date_to, recentDays } = req.query;
   let result;
-  console.log(
-    'by_status,date_from,date_to,recentDays',
-    by_status,
-    date_from,
-    date_to,
-    recentDays
-  );
   try {
-    // console.log("date====",Utils.convertDate(date_from),"-----",Utils.convertDate(date_to))
     const endDate = new Date(`${date_to}`);
     // seconds * minutes * hours * milliseconds = 1 day
     const dayTime = 60 * 60 * 24 * 1000;
     let increaseEndDateByOne = new Date(endDate.getTime() + dayTime);
-    // console.log("INCREASED DATE",increaseEndDateByOne)
-
-    // filter users by todays date and by their status
     let user_status;
     if (date_from && date_to && by_status) {
-      if (by_status != 'all') {
-        user_status = by_status == 'verified' ? true : false;
+      if (by_status != "all") {
+        user_status = by_status == "verified" ? true : false;
         result = await Users_Schema.aggregate([
           {
             $match: {
@@ -315,7 +288,7 @@ const filterForUsers = async (req, res) => {
     } else {
       result = await Users_Schema.find(
         { verified: user_status },
-        '-password'
+        "-password"
       ).sort({ createdAt: -1 });
       // return res.status(200).send(result)
     }
@@ -332,27 +305,23 @@ const filterForUsers = async (req, res) => {
         },
         { $project: { password: 0 } },
       ]).sort({ createdAt: -1 });
-      console.log('RESULT NEW----', result);
       return res.status(200).send(result);
     }
-    if (by_status != 'all') {
-      let user_status = by_status === 'verified' ? true : false;
+    if (by_status != "all") {
+      let user_status = by_status === "verified" ? true : false;
       result = await Users_Schema.find(
         { verified: user_status },
-        '-password'
+        "-password"
       ).sort({ createdAt: -1 });
       return res.status(200).send(result);
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wrong !!');
+    res.status(500).send("Something went wrong !!");
   }
 };
 
 // delete Users
 const deleteUsers = async (req, res) => {
-  // console.log("body=>",req.body)
-  // console.log("body=>",req.body?.length)
   try {
     if (req.body?.length) {
       const deleteSelected = await Users_Schema.deleteMany({
@@ -363,16 +332,15 @@ const deleteUsers = async (req, res) => {
       if (!deleteSelected) {
         return res
           .status(200)
-          .send({ message: 'image not deleted', status: false });
+          .send({ message: "image not deleted", status: false });
       }
       return res
         .status(200)
-        .send({ message: 'image delete success', status: true });
+        .send({ message: "image delete success", status: true });
     }
-    res.status(200).send({ message: 'image not deleted', status: false });
+    res.status(200).send({ message: "image not deleted", status: false });
   } catch (err) {
-    console.log(err);
-    res.status(200).send({ message: 'image not deleted', status: false });
+    res.status(200).send({ message: "image not deleted", status: false });
   }
 };
 
@@ -390,7 +358,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
   let userData = null;
 
   switch (userType) {
-    case 'b2b': {
+    case "b2b": {
       userData = {
         _id: user._id,
         name: user.owner_name,
@@ -404,7 +372,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
       break;
     }
 
-    case 'b2c': {
+    case "b2c": {
       userData = {
         _id: user._id,
         name: user.name,
@@ -417,7 +385,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
       break;
     }
 
-    case 'basic': {
+    case "basic": {
       userData = {
         _id: user._id,
         user_id: user.user_id,
@@ -433,7 +401,7 @@ const getUserInfo = catchAsync(async (req, res, next) => {
 
     default: {
       throw new CaptureError(
-        'Something went wrong',
+        "Something went wrong",
         httpStatus.INTERNAL_SERVER_ERROR
       );
     }
@@ -460,7 +428,7 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
   const userData = req.body;
 
   switch (userType) {
-    case 'b2b': {
+    case "b2b": {
       const { data: updateUserData, error } = await verifyB2BAUpdateData(
         userData
       );
@@ -481,7 +449,7 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
       break;
     }
 
-    case 'b2c': {
+    case "b2c": {
       const { data: updateUserData, error } = await verifyB2CAUpdateData(
         userData
       );
@@ -503,7 +471,7 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
       break;
     }
 
-    case 'basic': {
+    case "basic": {
       const { data: updateUserData, error } = await verifyUserUpdateData(
         userData
       );
@@ -527,7 +495,7 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
 
     default: {
       throw new CaptureError(
-        'Something went wrong',
+        "Something went wrong",
         httpStatus.INTERNAL_SERVER_ERROR
       );
     }
@@ -536,7 +504,7 @@ const updateUserInfo = catchAsync(async (req, res, next) => {
   return res.json({
     success: true,
     statusCode: httpStatus.OK,
-    message: 'User information updated successfully!',
+    message: "User information updated successfully!",
   });
 });
 

@@ -26,9 +26,10 @@ function ProductCard({
   new_arrival,
   product_variant,
   navigation,
+  index,
 }) {
   const [viewCart, setViewCart] = useState(false);
-  const { cartState } = UseContextState();
+  const { cartState, setScrollIndex } = UseContextState();
 
   const checkProductInCart = async (product_id) => {
     const result = await findProductInCart(product_id);
@@ -57,7 +58,9 @@ function ProductCard({
       <View style={styles.productBox}>
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => goToProductInfoScreen(product_id)}
+          onPress={() => {
+            goToProductInfoScreen(product_id);
+          }}
         >
           {new_arrival == true && (
             <View style={{ position: "absolute" }}>
@@ -76,7 +79,12 @@ function ProductCard({
         <TouchableOpacity
           activeOpacity={0.6}
           style={styles.imageBox}
-          onPress={() => goToProductInfoScreen(product_id)}
+          onPress={() => {
+            if (index) {
+              setScrollIndex(index);
+            }
+            goToProductInfoScreen(product_id);
+          }}
         >
           <Image
             style={{ width: 100, height: 100 }}
@@ -90,7 +98,12 @@ function ProductCard({
         <TouchableOpacity
           style={styles.priceTextBox}
           activeOpacity={0.7}
-          onPress={() => goToProductInfoScreen(product_id)}
+          onPress={() => {
+            if (index) {
+              setScrollIndex(index);
+            }
+            goToProductInfoScreen(product_id);
+          }}
         >
           <Text style={styles.priceText}>Add To Cart ➝</Text>
         </TouchableOpacity>

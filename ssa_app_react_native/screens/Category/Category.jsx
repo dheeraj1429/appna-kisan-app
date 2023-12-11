@@ -1,60 +1,59 @@
-import React,{useEffect,useState} from "react";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   FlatList,
+  Image,
+  Linking,
   RefreshControl,
   StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Linking
+  Text,
+  View,
 } from "react-native";
-import axios from "axios";
+import { Surface } from "react-native-paper";
+import imageImport from "../../Constants/imageImport";
 import strings from "../../Constants/strings";
 import { config } from "../../config";
-import { Surface, Avatar,ActivityIndicator } from "react-native-paper";
-import { FontAwesome } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import CategoryCard from "./CategoryCard";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import imageImport from "../../Constants/imageImport";
-import { Ionicons } from "@expo/vector-icons";
 
-function Category({navigation}) {
-  const [data , setData ] = useState([]);
-  const [render , setRender ] = useState(false);
-  const [loading , setLoading ] = useState(false);
+function Category({ navigation }) {
+  const [data, setData] = useState([]);
+  const [render, setRender] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  useEffect(()=>{
-    setLoading(true)
-    axios.get(`${config.BACKEND_URI}/api/get/all/brands`,{withCredentials:true})
-    .then(res=>{
-      // console.log(res?.data);
-      setData(res?.data)
-      setLoading(false)
-      setRefreshing(false)
-    })
-    .catch(err=>{
-      console.log(err);
-      setRefreshing(false)
-    })
-  },[render,refreshing])
-  
-  const onRefresh = async()=>{
-    setRefreshing(true)
-  }
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${config.BACKEND_URI}/api/get/all/brands`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res?.data);
+        setData(res?.data);
+        setLoading(false);
+        setRefreshing(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setRefreshing(false);
+      });
+  }, [render, refreshing]);
 
-  const DATA = data
+  const onRefresh = async () => {
+    setRefreshing(true);
+  };
 
-
-  
+  const DATA = data;
 
   const renderCategoryItem = ({ item }) => {
     return (
-      <CategoryCard itemImage={item.brandImage?.image_url} category_id={item.category_id} navigation={navigation} itemName={item.brandName} />
+      <CategoryCard
+        itemImage={item.brandImage?.image_url}
+        category_id={item.category_id}
+        navigation={navigation}
+        itemName={item.brandName}
+      />
     );
   };
 
@@ -67,53 +66,62 @@ function Category({navigation}) {
         </TouchableOpacity> */}
         <View style={styles.headerIconsContainer}>
           <MaterialIcons
-            onPress={()=>Linking.openURL(strings.CALLUS)}
+            onPress={() => Linking.openURL(strings.CALLUS)}
             style={styles.headerIcon1}
             name="support-agent"
             size={24}
             color={config.primaryColor}
           />
-          <FontAwesome name="whatsapp" onPress={()=>Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={24} color={config.primaryColor} />
-
+          <FontAwesome
+            name="whatsapp"
+            onPress={() => Linking.openURL(strings.WHATSAPP)}
+            style={styles.headerIcon2}
+            size={24}
+            color={config.primaryColor}
+          />
         </View>
       </Surface>
-     {loading ? 
-    //  <View style={{flex:1,justifyContent:'center',alignItems:'center'}} >
-    //   <ActivityIndicator size='large' animating={true} color={config.primaryColor} />
-    //  </View> 
-    <View style={{justifyContent:'center',alignItems: "center",height:'70%'}} >
-    <Image
-    source={imageImport.LoaderGif}
-    style={{width:100,height:100,}}
-    />
-
-  </View>
-      :
-      <FlatList
-      refreshControl={
-        <RefreshControl   refreshing={refreshing} onRefresh={onRefresh} />
-      }
-        
-      showsVerticalScrollIndicator={false}
-        data={DATA}
-        renderItem={({ item }) => (
-          <View style={styles.brandContainer}>
-            <FlatList
-              ListHeaderComponent={
-                <Text style={styles.brandText}>{item._id}</Text>
-              }
-              showsVerticalScrollIndicator={false}
-              numColumns={4}
-              data={item.categories}
-              renderItem={renderCategoryItem}
-              keyExtractor={(item) => item.brandName}
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item._id}
-        ListFooterComponent={<View style={{ height: 70 }}></View>  }
-      />     
-     }
+      {loading ? (
+        //  <View style={{flex:1,justifyContent:'center',alignItems:'center'}} >
+        //   <ActivityIndicator size='large' animating={true} color={config.primaryColor} />
+        //  </View>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            height: "70%",
+          }}
+        >
+          <Image
+            source={imageImport.LoaderGif}
+            style={{ width: 100, height: 100 }}
+          />
+        </View>
+      ) : (
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          showsVerticalScrollIndicator={false}
+          data={DATA}
+          renderItem={({ item }) => (
+            <View style={styles.brandContainer}>
+              <FlatList
+                ListHeaderComponent={
+                  <Text style={styles.brandText}>{item._id}</Text>
+                }
+                showsVerticalScrollIndicator={false}
+                numColumns={4}
+                data={item.categories}
+                renderItem={renderCategoryItem}
+                keyExtractor={(item) => item.brandName}
+              />
+            </View>
+          )}
+          keyExtractor={(item) => item._id}
+          ListFooterComponent={<View style={{ height: 70 }}></View>}
+        />
+      )}
     </View>
   );
 }
@@ -140,8 +148,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: config.primaryColor,
   },
-  headerIconsContainer:{
-    flexDirection:'row'
+  headerIconsContainer: {
+    flexDirection: "row",
   },
   headerIcon1: {
     borderColor: "lightgray",
@@ -158,22 +166,21 @@ const styles = StyleSheet.create({
       shadowRadius: 3,
     },
   },
-  headerIcon2:{
-    borderColor:'lightgray',
-    borderWidth:1,
-    backgroundColor:'white',
-    paddingLeft:12.5,
-    paddingRight:11,
-    paddingVertical:10,
-    borderRadius:40,
-    marginLeft:14,
+  headerIcon2: {
+    borderColor: "lightgray",
+    borderWidth: 1,
+    backgroundColor: "white",
+    paddingLeft: 12.5,
+    paddingRight: 11,
+    paddingVertical: 10,
+    borderRadius: 40,
+    marginLeft: 14,
     shadowProp: {
-      shadowColor: '#171717',
-      shadowOffset: {width: 12, height: 4},
+      shadowColor: "#171717",
+      shadowOffset: { width: 12, height: 4 },
       shadowOpacity: 0.49,
       shadowRadius: 3,
     },
-  
   },
   brandContainer: {
     paddingBottom: 0,
