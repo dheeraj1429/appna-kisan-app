@@ -368,11 +368,11 @@ function Login({ navigation }) {
                 <TouchableOpacity onPress={handleSignup} activeOpacity={0.8} style={styles.signUpBtn}>
                   <Text style={styles.signInText}>Sign in</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() =>{
+                {/* <TouchableOpacity onPress={() =>{
                   navigation.navigate(navigationString.LOGIN_WITH_OTP);
                 }} activeOpacity={0.8} style={styles.signUpBtn}>
                   <Text style={styles.signInText}>Login with OTP</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={{ marginVertical: "5%" }}>
 
                   <Text onPress={() => setModalVisible1(true)}

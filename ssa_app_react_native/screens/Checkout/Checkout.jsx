@@ -41,6 +41,7 @@ function Checkout({ route, navigation }) {
   const { authState, cartState, userData } = UseContextState();
   console.log("formError", formError)
   const userType = userData?.user?.type;
+  console.log(userData,"userData");
   //const userType = 'b2c';
 console.log("userType", userData);
 console.log(checkoutProducts,"checkoutProducts");
@@ -65,19 +66,24 @@ console.log(checkoutProducts,"checkoutProducts");
 
   useFocusEffect(
     useCallback(() => {
-      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${authState?.user?.user_id || userData?.user?._id}`, { withCredentials: true })
+      axios.get(`${config.BACKEND_URI}/api/app/get/user/by/userid/${userData?.user?._id}`, { withCredentials: true,
+      headers: { 
+        'Content-Type': 'application/json',
+        userType: userType,
+    }})
         .then(res => {
-          // console.log("RESPONSE=>",res?.data?.user);
+          console.log("RESPONSE=>",res?.data?.user);
           setCheckoutDetail((prev) => ({
             ...prev,
-            customer_name: res?.data?.user?.username,
+            customer_name: res?.data?.user?.owner_name || res?.data?.user?.name,
+            customer_phone_number: res?.data?.user?.mobile,
             customer_email: res?.data?.user?.email,
-            customer_gst: res?.data?.user?.gst_number,
+            customer_gst: res?.data?.user?.gstNo?.number || "",
             shipping_address: res?.data?.user?.address,
-            customer_business: res?.data?.user?.user_business,
+            customer_business: res?.data?.user?.company_name || "",
             state: res?.data?.user?.state,
-            pincode: `${res?.data?.user?.pincode}`,
-            transport_detail: `${res?.data?.user?.transport_detail}`
+            pincode: res?.data?.user?.pincode || "",
+            transport_detail: res?.data?.user?.transport_detail || ""
           }))
         })
         .catch(err => {

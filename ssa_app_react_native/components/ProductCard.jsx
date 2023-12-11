@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from "react";
-import { View, StyleSheet,Image ,Text, TouchableOpacity } from "react-native";
+import React,{useEffect,useState, useRef,useCallback} from "react";
+import { View, StyleSheet,Image ,Text, TouchableOpacity, ScrollView } from "react-native";
 import { config } from "../config";
 import { Entypo } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
@@ -9,12 +9,47 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { UseContextState } from "../global/GlobalContext";
 import { getCartProductCount,clearLocalStorage,findProductInCart,addToCart } from "../Utils/localstorage";
-
+import { useFocusEffect } from '@react-navigation/native';
 
 function ProductCard({item,product_name,product_id,product_images,product_code,product_main_category,product_category,product_subcategory,new_arrival,product_variant,navigation}) {
   const [ viewCart , setViewCart] = useState(false);
   const [ updateCart , setUpdateCart] = useState(false);
   const {authState,cartState} = UseContextState();
+  const scrollViewRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(2000);
+  const [ref, setRef] = useState();
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Restore scroll position when the screen comes into focus
+  //     console.log('Restoring scroll position:', scrollPosition);
+  //     // You may need to use a ref for the ScrollView and set the scroll position here
+  //      scrollViewRef.current.scrollTo({ y: scrollPosition, animated: false });
+  //   }, [scrollPosition])
+  // );
+  // const handleScroll = (event) => {
+  //   // Save the current scroll position
+  //   const scrollY = event.nativeEvent.contentOffset.y;
+  //   // Save the scroll position to the state or any other storage mechanism
+  //   // For simplicity, I'll use a global variable here
+  //   window.productCardScrollY = scrollY;
+  // };
+  // useScrollToTop(
+  //   React.useRef({
+  //     scrollToTop: () => scrollViewRef.current?.scrollTo({ y: 1000 }),
+  //   })
+  // );
+   useEffect(() => {
+    console.log('Restoring scroll position:', scrollPosition);
+   setTimeout(() => {
+    //ref.scrollTo({ y: scrollPosition, x : 0, animated: false });
+//console.log("refinuseeffect",ref);
+   }
+   ,3000)
+    //You may need to use a ref for the ScrollView and set the scroll position here
+
+    // Set the scroll position when the component mounts or updates
+  }, [scrollPosition]);
+
 
   const checkProductInCart=async(product_id)=>{
     const result =  await findProductInCart(product_id);
@@ -51,7 +86,17 @@ function ProductCard({item,product_name,product_id,product_images,product_code,p
     navigation.navigate(navigationString.PRODUCT_INFO,{product_id:productId})
   }
   return (
-    <View>
+   // <View>
+      <ScrollView
+      ref={(ref) => {setRef(ref);
+      console.log(ref,"ref");}}
+        scrollToOverflowEnabled={true}
+        //onScroll={handleScroll}
+        //scrollEventThrottle={16} // Adjust as needed
+      >
+                <Text>hgjhnkjnhlkhnklhnl,</Text>
+
+
       <View style={styles.productBox}  >
       <TouchableOpacity activeOpacity={0.6}  onPress={()=>goToProductInfoScreen(product_id)} >
         { new_arrival == true && <View style={{position:'absolute'}} >
@@ -100,7 +145,9 @@ function ProductCard({item,product_name,product_id,product_images,product_code,p
         }
       
       </View>
-    </View>
+
+      </ScrollView>
+   // </View>
   );
 }
 

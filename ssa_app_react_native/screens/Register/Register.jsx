@@ -741,11 +741,11 @@ function Register({ navigation }) {
                       Create and Verify
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {
+                  {/* <TouchableOpacity onPress={() => {
                     navigation.navigate(navigationString.SIGNUP_WITH_OTP);
                   }} activeOpacity={0.8} style={styles.signUpBtn}>
                     <Text style={styles.signInText}>Sign up with OTP</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <Text style={styles.orText} >or</Text>
                   <View style={styles.dontHaveAccountBox} >
                     <Text style={{ color: 'gray' }} >Already have an account? </Text>
@@ -843,11 +843,11 @@ function Register({ navigation }) {
                       Create and Verify
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {
+                  {/* <TouchableOpacity onPress={() => {
                     navigation.navigate(navigationString.SIGNUP_WITH_OTP);
                   }} activeOpacity={0.8} style={styles.signUpBtn}>
                     <Text style={styles.signInText}>Sign up with OTP</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <Text style={styles.orText} >or</Text>
                   <View style={styles.dontHaveAccountBox} >
                     <Text style={{ color: 'gray' }} >Already have an account? </Text>

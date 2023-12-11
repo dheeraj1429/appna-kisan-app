@@ -390,22 +390,22 @@ function RewardsScreen({ route, navigation }) {
             <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
             <Text style={styles.headingText} >Reward Points</Text>
             {/* <MaterialIcons name="keyboard-arrow-left" size={27} color='white' /> */}
-       
 
-              <View style={{
-                flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
-                borderRadius: 16,
-                borderWidth: 0.5,
-                borderColor: 'lightgray',
 
-                paddingHorizontal: "2%",
-                paddingVertical: 5,
-              }}
-              >
-                <FontAwesome5 name="coins" size={20} color={config.primaryColor} style={{ marginRight: 8 }} />
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{rewardPoints}</Text>
+            <View style={{
+              flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
+              borderRadius: 16,
+              borderWidth: 0.5,
+              borderColor: 'lightgray',
 
-                {/* {userData ?
+              paddingHorizontal: "2%",
+              paddingVertical: 5,
+            }}
+            >
+              <FontAwesome5 name="coins" size={20} color={config.primaryColor} style={{ marginRight: 8 }} />
+              <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{rewardPoints}</Text>
+
+              {/* {userData ?
                   <>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{userData.user.reward_points ? rewardPoints : 0}</Text>
 
@@ -416,7 +416,7 @@ function RewardsScreen({ route, navigation }) {
 
                   </>
                 } */}
-              </View>
+            </View>
 
           </View>
 

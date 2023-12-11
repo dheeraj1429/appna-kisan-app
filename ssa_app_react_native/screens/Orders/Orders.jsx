@@ -22,6 +22,9 @@ import navigationString from "../../Constants/navigationString";
 import { UseContextState } from "../../global/GlobalContext";
 import { logger } from "react-native-logs";
 import { addToCart } from "../../Utils/localstorage";
+import Toast from 'react-native-toast-message';
+import { printToFileAsync } from 'expo-print';
+import {shareAsync} from 'expo-sharing';
 
 function Orders({ navigation }) {
   const [allOrders, setAllOrders] = React.useState([]);
@@ -35,6 +38,8 @@ function Orders({ navigation }) {
   const log = logger.createLogger();
   console.log(userData, "userData");
   console.log(allOrders, "allordersa");
+  const accessToken = userData?.accessToken;
+  const userType = userData?.user?.type;
 
   const goToViewOrder = (orderId, clickedOrder) => {
     navigation.navigate(navigationString.VIEW_ORDER, { order_id: orderId, order: [clickedOrder] })
@@ -89,9 +94,9 @@ function Orders({ navigation }) {
   // }
   const addToCartButton = async (product) => {
     //const products = product.map(item => item.product_quantity_by = "Piece");
-    const products = product.map(product => ({...product, _id:product?.product_unique_id}) )
+    const products = product.map(product => ({ ...product, _id: product?.product_unique_id }))
     await addToCart(...products);
-    console.log('PRODUCT ADDED TO Cart ',product);
+    console.log('PRODUCT ADDED TO Cart ', product);
     // setUpdateCart(prev=>!prev)
     await cartState()
     setViewCart(true)
@@ -109,6 +114,119 @@ function Orders({ navigation }) {
       </View>
     );
   };
+
+  const DownloadInvoice = async (order_id) => {
+    try {
+      const response = await axios.get(`https://whale-app-88bu8.ondigitalocean.app/api/get-order-invoice?orderId=6372034efa432186e778c88c`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken,
+          'x-user-type': userType,
+        },
+        params: {
+          orderId: order_id,
+        },
+      });
+
+      console.log("response of invoice download", response);
+
+      if (response.status === 200) {
+        console.log("Invoice is downloaded", response.data);
+
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: 'Success',
+          text2: response.data.message,
+          visibilityTime: 4000, // 4 seconds
+          autoHide: true,
+        });
+        const lines = response?.data?.data.split('\n');
+        const header = lines[0].split(',');
+        const rows = lines.slice(1);
+        const html = `
+        <html>
+          <head>
+            <style>
+              table {
+                font-family: Arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+              }
+        
+              th, td {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+              }
+        
+              th {
+                background-color: #f2f2f2;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Invoice Download</h1>
+            <table>
+              <tr>
+                ${header.map((item) => `<th>${item}</th>`).join('')}
+              </tr>
+              ${rows.map((row) => `<tr>${row.split(',').map((item) => `<td>${item}</td>`).join('')}</tr>`).join('')}
+            </table>
+          </body>
+        </html>`;
+        // const html = `
+        // <html>
+        //   <body>
+        //     <h1>Invoice Download</h1>
+        //   </body>
+
+        // </html>`
+        // ;
+
+        // const htmlFilePath = `${cacheDirectory}invoice.html`;
+        // await writeAsStringAsync(htmlFilePath, htmlContent);
+    
+        // Print the HTML file to PDF
+        const file = await printToFileAsync({
+          html: html,
+          base64: false,
+        });
+    
+        // Share the PDF file
+        await shareAsync(file.uri);
+    
+        console.log("Invoice is downloaded");
+    
+        // Delete the temporary HTML file
+        // await deleteAsync(htmlFilePath);
+       
+      } else {
+        console.log('Failed to Download Invoice:', response.status);
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Error',
+          text2: response.data.message,
+          visibilityTime: 4000, // 4 seconds
+          autoHide: true,
+        });
+      }
+    } catch (error) {
+      console.log('Error Failed to Download Invoice:', error.message);
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Error',
+        text2: error.data,
+        visibilityTime: 4000, // 4 seconds
+        autoHide: true,
+      });
+    }
+  };
+
+
+
   return (
     <Provider>
       <Portal>
@@ -199,7 +317,7 @@ function Orders({ navigation }) {
                           <View>
                             {item?.order_status != 'cancelled' &&
                               <TouchableOpacity onPress={() => navigation.navigate(navigationString.SEND_ENQUIRY, { order_id: item?.order_id })} activeOpacity={0.6} style={styles.sendEnquiry} >
-                                <Text style={{ fontSize: 12, fontWeight: "600", color: "#222", }}>
+                                <Text style={{ fontSize: 12, fontWeight: "600", color: "#222", textAlign: "center" }}>
                                   Send Enquiry
                                 </Text>
                               </TouchableOpacity>
@@ -212,18 +330,27 @@ function Orders({ navigation }) {
                                 :
                                 <>
                                   <TouchableOpacity onPress={() => setModalVisible((prev) => ({ ...prev, state: true, order_id: item?._id }))} activeOpacity={0.6} style={styles.cancelOrder} >
-                                    <Text style={{ fontSize: 12, fontWeight: "600", color: "#e24243", }}>
+                                    <Text style={{ fontSize: 12, fontWeight: "600", color: "#e24243", textAlign: "center" }}>
                                       Cancel Order
                                     </Text>
                                   </TouchableOpacity>
                                   <TouchableOpacity
-                                  style={[styles.sendEnquiry, {marginTop:"5%"}]}
-                                  //onPress={() => navigation.navigate(navigationString.SEND_ENQUIRY, { order_id: item?.order_id })} 
-                                  onPress={()=>addToCartButton(item.products)}
-                                    activeOpacity={0.6} 
+                                    style={[styles.sendEnquiry, { marginTop: "5%" }]}
+                                    //onPress={() => navigation.navigate(navigationString.SEND_ENQUIRY, { order_id: item?.order_id })} 
+                                    onPress={() => addToCartButton(item.products)}
+                                    activeOpacity={0.6}
                                   >
-                                    <Text style={{ fontSize: 12, fontWeight: "600", color: config.primaryColor,textAlign:"center" }}>
+                                    <Text style={{ fontSize: 12, fontWeight: "600", color: config.primaryColor, textAlign: "center" }}>
                                       Re Order
+                                    </Text>
+                                  </TouchableOpacity>
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      DownloadInvoice(item.products.order_id);
+                                    }}
+                                    activeOpacity={0.6} style={styles.sendEnquiry} >
+                                    <Text style={{ fontSize: 12, fontWeight: "600", color: "#222", textAlign: "center" }}>
+                                      Invoice  Download
                                     </Text>
                                   </TouchableOpacity>
                                 </>
