@@ -12,13 +12,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
-
-// ----------------------------------------------------------------------
-//=========== PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT==============
-// console.log = function() {}
-//========= PLEASE REMOVE THIS CONSOLE.LOG STATEMENT WHEN YOU ARE IN DEVELOPMENT============
-
-
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 
 ReactDOM.render(

@@ -1,226 +1,234 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  ActivityIndicator,
-  Image,
-  ImageBackground,
-  Alert
-
-} from "react-native";
-import { config } from "../../config";
-import statelist from "../../Constants/statelist";
-import { Checkbox, Portal, Provider, Modal } from 'react-native-paper';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { StatusBar } from "expo-status-bar";
-import { Entypo } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import navigationString from "../../Constants/navigationString";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
-import { clearLocalStorage, setItemToLocalStorage } from "../../Utils/localstorage";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
-import { UseContextState } from "../../global/GlobalContext";
-import imageImport from "../../Constants/imageImport";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import customer_review from "../../Constants/customer_review";
-import ProductCard from "../../components/ProductCard";
-import Toast from 'react-native-toast-message';
+import { Portal, Provider, Searchbar } from "react-native-paper";
+import Toast from "react-native-toast-message";
+import { config } from "../../config";
+import { UseContextState } from "../../global/GlobalContext";
 
-
-function RedeemProd({ route, navigation }) {
+function RedeemProd({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
-  const [productData, setProductData] = useState(null);
-  const [apiResponse1, setApiResponse1] = useState([]);
-  const { fetchAuthuser, authState, userData } = UseContextState();
-  const  userType = userData?.user?.type;
-  console.log(userType,"usertype");
+  const { userData } = UseContextState();
+  const userType = userData?.user?.type;
   const [accessToken, setAccessToken] = useState(null);
+  const [filterProducts, setFilterProducts] = useState([]);
 
   useEffect(() => {
     if (userData && userData.accessToken) {
       setAccessToken(userData.accessToken);
     }
   }, [userData]);
-  // console.log(authState,"authState")
 
   const prodList = async () => {
+    setLoading(true);
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products', {
-        method: 'GET',
-      });
-
-      // console.log('Response:', response);
+      const response = await fetch(
+        `https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products`,
+        { method: "GET" }
+      );
 
       if (response.status === 200) {
+        setLoading(false);
         const data = await response.json();
-        console.log(data, "sdfdfbfgb");
         if (data.success) {
           return data.products;
         } else {
-          Alert.alert('API returned an error:', data.error);
+          Alert.alert("API returned an error:", data.error);
         }
       } else {
-        Alert.alert('Prod list HTTP request failed with status:', response.status);
+        Alert.alert(
+          "Prod list HTTP request failed with status:",
+          response.status
+        );
       }
     } catch (error) {
-      Alert.alert('Error fetching Prod List:', error.message);
+      setLoading(false);
+      Alert.alert("Error fetching Prod List:", error.message);
     }
   };
-
-
 
   useEffect(() => {
     const fetchList = async () => {
       try {
         const response = await prodList();
-        setApiResponse(response); // Assuming response is an array
-        console.log('api response', response);
+        setApiResponse(response);
+        console.log("api response", response);
       } catch (error) {
-        Alert.alert('Error fetching prod list:', error);
+        Alert.alert("Error fetching prod list:", error);
       }
     };
 
-
     fetchList();
-
   }, []);
 
-  const productsData = [
-    { id: '1', name: 'Product 1', points: 50, image: require('../../assets/tractor.png') },
-    { id: '2', name: 'Product 2', points: 75, image: require('../../assets/tractor.png') },
-    { id: '3', name: 'Product 3', points: 100, image: require('../../assets/tractor.png') },
-    // Add more products as needed
-  ];
+  const onChangeHandler = function (query) {
+    console.log(query);
+    const filterProducts = apiResponse.filter((item) =>
+      item.product_name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilterProducts(filterProducts);
+  };
 
   const addToCartApi = async (product_id) => {
     setLoading(true);
     try {
-      const response = await axios.post(`https://whale-app-88bu8.ondigitalocean.app/api/app/cart/checkout/for/rewards/products`, {
-        productId: product_id,
-      },{
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken,
-          'x-user-type':userType,
+      const response = await axios.post(
+        `https://whale-app-88bu8.ondigitalocean.app/api/app/cart/checkout/for/rewards/products`,
+        {
+          productId: product_id,
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+            "x-user-type": userType,
+          },
+        }
+      );
       console.log("response of add to cart", response);
       if (response.status === 201) {
-        //console.log(response.order, "vdfhbsfgnmkfmgbkfg");
-        //const data = await response.json();
-        // Extract relevant information for the alert
-        //const alertMessage = data.success ? 'Product added to cart successfully' : data.error;
-        // Display alert with extracted information
         Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: 'Success',
+          type: "success",
+          position: "top",
+          text1: "Success",
           text2: response.data.message,
-          visibilityTime: 4000, // 4 seconds
+          visibilityTime: 4000,
           autoHide: true,
         });
         setLoading(false);
-
-        //Alert.alert('Add to Cart', alertMessage);
       } else {
-        console.log('Failed to add product to cart:', response.status);
+        console.log("Failed to add product to cart:", response.status);
       }
     } catch (error) {
-      console.log('Error adding product to cart:', error.message);
+      console.log("Error adding product to cart:", error.message);
       Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Error',
+        type: "error",
+        position: "top",
+        text1: "Error",
         text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
       });
       setLoading(false);
-
     }
   };
-
-
 
   const goBack = () => {
     navigation.goBack();
   };
-  // console.log("checkout-> ",editUserDetails)
-
-  const handleOrderPress = (product) => {
-    // Implement your logic for handling order press
-    const product_id = product.product_id;
-    Alert.alert('Product added to cart:', product);
-
-    // Call the API function
-    //addToCartApi(product_id);
-  };
 
   const ProductCard = ({ product }) => (
     <View style={styles.cardContainer}>
-      <Image source={{ uri: product.product_images[0].image_url }} style={styles.productImage} />
-      <Text style={styles.productName}>{product.product_name}</Text>
-      <Text style={styles.productPoints}>{`Points: ${product.product_collected_points}`}</Text>
-      <TouchableOpacity style={styles.orderButton}
-       onPress={() => {
-        // Implement your logic for handling order press directly inside the onPress
-        //const productId = product.product_id;
-
-        // Call the API function
-        addToCartApi(product._id);
-
-        // Show alert directly inside onPress
-        //Alert.alert('Product added to cart:', `Product: ${product.product_name}`);
-      }}>
+      <View>
+        <Image source={require("../../assets/tag.png")} style={styles.tag} />
+      </View>
+      <View style={styles.cardInnerView}>
+        <Image
+          source={{ uri: product.product_images[0].image_url }}
+          style={styles.productImage}
+        />
+        <Text style={styles.productName}>
+          {product.product_name.slice(0, 60)}...
+        </Text>
+        <Text
+          style={styles.productPoints}
+        >{`Points: ${product.product_collected_points}`}</Text>
+        <TouchableOpacity
+          style={styles.orderButton}
+          onPress={() => {
+            addToCartApi(product._id);
+          }}
+        >
           <Text style={styles.orderButtonText}>Redeem Product</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   return (
     <Provider>
       <Portal>
-
-      {loading && <View style={{ position: 'absolute', top: '0%', bottom: '0%', left: '0%', right: '0%', zIndex: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.3)', padding: 14, borderRadius: 8 }} >
-        <View style={{ paddingTop: 190 }} >
-          <ActivityIndicator color={config.primaryColor} size='large' />
-        </View>
-      </View>
-      }
-        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}>
+        {loading && (
+          <View
+            style={{
+              position: "absolute",
+              top: "0%",
+              bottom: "0%",
+              left: "0%",
+              right: "0%",
+              zIndex: 2,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(52, 52, 52, 0.3)",
+              padding: 14,
+              borderRadius: 8,
+            }}
+          >
+            <View style={{ paddingTop: 190 }}>
+              <ActivityIndicator color={config.primaryColor} size="large" />
+            </View>
+          </View>
+        )}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "white" }}
+        >
           <View style={styles.screenContainer}>
             <StatusBar backgroundColor="#fff" />
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
-              <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
-              <Text style={styles.headingText} >Products</Text>
-              <MaterialIcons name="keyboard-arrow-left" size={27} color='white' />
-
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 10,
+                paddingTop: 50,
+                paddingBottom: 10,
+              }}
+            >
+              <MaterialIcons
+                onPress={goBack}
+                name="keyboard-arrow-left"
+                size={27}
+                color={config.primaryColor}
+              />
+              <Text style={styles.headingText}>Products</Text>
+              <MaterialIcons
+                name="keyboard-arrow-left"
+                size={27}
+                color="white"
+              />
             </View>
-
-
-
           </View>
-          <View>
-            <FlatList data={apiResponse}
-              renderItem={({ item }) => <ProductCard product={item} />}
-              keyExtractor={(item) => item._id}
+          <View style={{ paddingLeft: 10, paddingRight: 10 }}>
+            <Searchbar
+              style={styles.searchBar}
+              placeholder="Search"
+              onChangeText={onChangeHandler}
             />
-
           </View>
+          <FlatList
+            data={filterProducts.length ? filterProducts : apiResponse}
+            renderItem={({ item }) => <ProductCard product={item} />}
+            keyExtractor={(item) => item._id}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+          />
         </ScrollView>
       </Portal>
     </Provider>
-
-
   );
 }
 
@@ -235,49 +243,47 @@ const styles = StyleSheet.create({
     color: config.primaryColor,
     fontSize: 17,
     letterSpacing: 1,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   commonFieldMainBox: {
     marginTop: 12,
-    width: '100%',
+    width: "100%",
     height: "100%",
     paddingHorizontal: 20,
   },
   commonField: {
-    width: '20%',
+    width: "20%",
     marginTop: 5,
     marginLeft: "75%",
     paddingHorizontal: "5%",
     paddingVertical: 9,
     //fontSize: 14,
     //textTransform: 'capitalize',
-    backgroundColor: '#f5f5f6',
+    backgroundColor: "#f5f5f6",
     // letterSpacing: 1.5,
     borderRadius: 16,
     borderWidth: 0.5,
-    borderColor: 'lightgray'
+    borderColor: "lightgray",
   },
   brandContainer: {
     // paddingHorizontal: 15,
     paddingBottom: 90,
-
   },
   brandHeadingBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 5
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 5,
   },
   brandText: {
     fontSize: 16,
     fontWeight: "600",
-    textTransform: 'capitalize',
-    color: config.primaryColor
-
+    textTransform: "capitalize",
+    color: config.primaryColor,
   },
   reviewBox: {
     borderWidth: 1,
-    borderColor: '#f1f1f1',
+    borderColor: "#f1f1f1",
     width: 220,
     // height: 160,
     borderRadius: 20,
@@ -286,49 +292,80 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardContainer: {
-    backgroundColor: '#f5f5f',
-    borderRadius: 16,
+    width: "50%",
+    backgroundColor: "#f5f5f",
+    marginVertical: "1%",
+    alignItems: "center",
+    paddingRight: 5,
+    paddingLeft: 5,
+    position: "relative",
+  },
+  tag: {
+    position: "absolute",
+    zIndex: 100,
+    marginTop: -12,
+    right: 39,
+    top: 0,
+  },
+  cardInnerView: {
+    width: "100%",
+    margin: "auto",
+    borderColor: "#e1e1e1",
     borderWidth: 1,
-    borderColor: '#e1e1e1',
-    padding: 16,
-    //marginBottom: 16,
-    marginVertical: "5%",
-    alignItems: 'center',
-    marginHorizontal: "5%"
+    alignItems: "center",
+    borderRadius: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
   productImage: {
-    width: 150,
-    height: 150,
+    width: 90,
+    height: 90,
     borderRadius: 8,
     marginBottom: 10,
   },
   productName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    fontSize: 13,
+    marginBottom: 3,
   },
   productPoints: {
-    fontSize: 16,
-    color: '#777',
-    marginBottom: 12,
+    fontSize: 13,
+    color: "#777",
+    marginBottom: 5,
   },
   orderButton: {
-    width: 280,
-    marginTop: 10,
-    alignItems: 'center',
-    paddingVertical: 12,
+    width: "90%",
+    marginTop: 6,
+    marginBottom: 6,
+    alignItems: "center",
+    paddingVertical: 8,
     paddingHorizontal: 10,
     backgroundColor: config.primaryColor,
-    borderRadius: 16,
+    borderRadius: 8,
     shadowColor: config.primaryColor,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 90,
-    elevation: 9
+    elevation: 9,
   },
   orderButtonText: {
-    color: '#fff',
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  searchBar: {
+    backgroundColor: "#f5f5f6",
+    borderRadius: 12,
+    fontSize: 12,
+    marginBottom: 10,
+    borderColor: "lightgray",
+    fontWeight: "400",
+    flexDirection: "row",
+    alignItems: "center",
+    height: 45,
+  },
+  searchBarText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    color: "#999",
+    fontWeight: "500",
   },
 });

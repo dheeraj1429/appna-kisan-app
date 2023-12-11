@@ -17,30 +17,10 @@ export const UseContextState = ()=>useContext(Global);
 function GlobalContext({children}) {
     const [authState , dispatch ] = useReducer(AuthReducer,initialState)
 
-
-
-
-
-
-// --===========================
-    console.log("singh")
-
-// --===========================
-
-
-
-
-
-
-
-
-
-    console.log("AuthState ",authState)
     // getting authenticated user
     const fetchAuthuser = async()=>{
         await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/admin/get/user`,{withCredentials:true})
         .then(res=>{
-            console.log(res)
             if(res?.data?.status === true){
                 dispatch({type:"LOG_IN",payload:res.data})
             }
@@ -50,18 +30,15 @@ function GlobalContext({children}) {
             
         })
         .catch(err=>{
-            console.log(err)
             dispatch({type:"ERROR",payload:"Not Authenticated"})
         })
     }
     const logoutAuthUser = async()=>{
         await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/admin/logout`,{withCredentials:true})
         .then(res=>{
-            console.log(res)
             dispatch({type:"LOG_OUT"})
         })
         .catch(err=>{
-            console.log(err)
             dispatch({type:"ERROR",error:err})
         })
 

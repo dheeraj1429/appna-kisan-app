@@ -1,10 +1,15 @@
+import { Button, IconButton, MenuItem, TextField, Toolbar, Tooltip, Typography } from '@mui/material';
 import * as React from 'react';
-import { useState,useRef } from 'react';
-import { Toolbar, Tooltip,Menu, MenuItem,TextField,InputLabel,Select,FormControl, IconButton, Typography,Button,ListItemIcon, ListItemText, OutlinedInput, InputAdornment } from '@mui/material';
+import { useRef, useState } from 'react';
 
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Paper from '@mui/material/Paper';
+import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,26 +18,18 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import Backdrop from '@mui/material/Backdrop';
+import { alpha } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
-import { Link } from 'react-router-dom';
-import { deleteImageFromFirebase, returnFileName, splitString, uploadFileToFirebase } from 'src/global/globalFunctions';
-import Iconify from '../components/Iconify';
-import CircularProgress from '@mui/material/CircularProgress';
-import CustomizedSnackbars from '../global/Snackbar/CustomSnackbar';
-import ConfimModal from "../global/Modals/ConfimModal"
-import { convertDate ,getGapBetweenDates} from '../global/globalFunctions';
-import { useEffect } from 'react';
 import axios from 'axios';
-import searchNotFound from "../assests/searchnotfound.gif"
-import noImage from '../assests/No_image.svg'
+import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import { deleteImageFromFirebase, returnFileName, uploadFileToFirebase } from 'src/global/globalFunctions';
+import noImage from '../assests/No_image.svg';
+import searchNotFound from "../assests/searchnotfound.gif";
+import Iconify from '../components/Iconify';
+import ConfimModal from "../global/Modals/ConfimModal";
+import CustomizedSnackbars from '../global/Snackbar/CustomSnackbar';
+import { convertDate } from '../global/globalFunctions';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -333,9 +330,7 @@ export default function Banners() {
   const [ loading, setLoading  ] =useState(false);
   const [ addBannerFileUpload , setaddBannerFileUpload ] = useState()
   const open = Boolean(anchorEl);
-  // console.log("all Banners===",data)
-  // console.log("CATEGORY  BANNER ===",selectedBannerCategory)
-  // console.log("CATEGORY  UPDATE ===",updateCategoryBtn)
+
 
 
   // ================== GET ALL Banners ==============
@@ -343,14 +338,12 @@ export default function Banners() {
     setLoading(true)
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/get/all/banners`,{withCredentials:true})
     .then(res=>{
-      console.log("BANNERS DATA",res?.data);
       setData(res?.data?.allbanners);
       setCategoryForLinkBanner(res?.data?.category);
       setCountVendor(res?.data?.allbanners?.length)
       setLoading(false)
     })
     .catch(err=>{
-      console.log(err)
       setLoading(false)
     })
   },[render])
@@ -426,14 +419,12 @@ const handleCloseSnackbar = (event, reason) => {
   // ##################### SNACK BAR FUNCTIONs ##################
 
   const handleCloseSubCateConfirmModal=(i)=>{
-  console.log("CLOSE MODAL",i)
   let closeModalState=[...openRemoveImageModal]
   closeModalState[i] = false
   setOpenRemoveImageModal(closeModalState)
 }
 
 const handleOpenRemoveImageModal=(i,value)=>{
-    console.log("openModal ==",i ,"-==",value)
     let newModalState=[...openRemoveImageModal]
     newModalState[i] = value 
     setOpenRemoveImageModal(newModalState)
@@ -441,14 +432,12 @@ const handleOpenRemoveImageModal=(i,value)=>{
   }
 // REMOVE BANNER IMAGE
 const handleRemoveBannerImage=async(i,bannerId,image_name,image_path)=>{
-    console.log(" DELETE BANNER ==",bannerId,image_name,image_path)
       let closeModalState=[...openRemoveImageModal]
       closeModalState[i] = false
       setOpenRemoveImageModal(closeModalState);
       deleteImageFromFirebase(image_path,image_name)
       await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/delete/banner/by/id/${bannerId}`,{withCredentials:true})
       .then(res=>{
-        console.log(res)
        if(res?.data?.status === true){
         setMessage((prev)=>({...prev,type:"success",message:"Banner Deleted Successfully !"}))
         setSnackbarOpen(true)
@@ -467,31 +456,25 @@ const handleRemoveBannerImage=async(i,bannerId,image_name,image_path)=>{
         closeModalState[i] = false
         setOpenRemoveImageModal(closeModalState);
         setMessage((prev)=>({...prev,type:"error",message:"Banner Deleted Failed !"}))
-        console.log(err)
       })    
   }
 
 // add new banner
 const addNewBanner = async(e)=>{
-    // console.log(e)
     setLoading(true)
     if(e.target.files?.length > 1) return alert("You can only select 1 images");
-    // console.log(e.target.files[0])
     let allImages = [...e.target.files]
     setaddBannerFileUpload(allImages)
    const bannersToFirebase = await uploadFileToFirebase(`/ssastore/banners/${e.target?.files[0]?.name}/`,e.target.files[0]);
-//    console.log("IMAGES AFTER FIREBASE",bannersToFirebase);
     if(bannersToFirebase.image_url){
      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/add/new/banner`,{...bannersToFirebase},{withCredential:true})
         .then(res=>{
-            console.log(res?.data);
             setMessage((prev)=>({...prev,type:"success",message:"Banner Added Successfully !"}))
             setSnackbarOpen(true)
             setRender(prev=>!prev);
             setLoading(false)
         })
         .catch(err=>{
-            console.log(err);
             setMessage((prev)=>({...prev,type:"error",message:"Banner Not Uploaded !"}))
             setSnackbarOpen(true)
             setRender(prev=>!prev);
@@ -503,18 +486,14 @@ const addNewBanner = async(e)=>{
 
 // chnage banner 
 const handleFileUpload =async(bannerId,e)=>{
-    // console.log(e)
     setLoading(true)
     if(e.target.files?.length > 1) return alert("You can only select 1 images");
-    // console.log(e.target.files[0])
     let allImages = [...e.target.files]
     setaddBannerFileUpload(allImages)
    const bannersToFirebase = await uploadFileToFirebase(`/ssastore/banners/${e.target?.files[0]?.name}/`,e.target.files[0]);
-//    console.log("IMAGES AFTER FIREBASE",bannersToFirebase);
     if(bannersToFirebase.image_url){
      await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/change/banner/by/id/${bannerId}`,{...bannersToFirebase},{withCredential:true})
         .then(res=>{
-            console.log(res?.data);
             if(res?.data?.status){
                 deleteImageFromFirebase(res?.data?.previous?.path,res?.data?.previous?.image_name)
                 setMessage((prev)=>({...prev,type:"success",message:"Banner Change Successfully !"}))
@@ -524,7 +503,6 @@ const handleFileUpload =async(bannerId,e)=>{
             }
         })
         .catch(err=>{
-            console.log(err);
             setMessage((prev)=>({...prev,type:"error",message:"Banner Not Changed !!"}))
             setSnackbarOpen(true)
             setRender(prev=>!prev);
@@ -534,7 +512,6 @@ const handleFileUpload =async(bannerId,e)=>{
 
 
   }
-  // console.log(fileUpload)
 
   // ===== HANDLE CHANGE BANNER BANNER CATEGORY ========
   const handleChangeBannerCategory = (_id,value,index)=>{
@@ -551,7 +528,6 @@ const handleFileUpload =async(bannerId,e)=>{
   // ===== HANDLE CHANGE BANNER BANNER CATEGORY ========
 
   const handleUpdateBannerCategory = async(banner_id,category)=>{
-    console.log("handleUpdateBannerCategory adlashdlkahslkdhlaskhdlsakhdlashdklhasjldhasjlhdjkash =",banner_id,category)
     setLoading(true)
     const linkCategoryData ={
       selected_category:category,
@@ -564,11 +540,9 @@ const handleFileUpload =async(bannerId,e)=>{
       }
     }
 
-    console.log("linkCategoryData ======>>>>>>>",linkCategoryData)
 await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/category/by/id/${banner_id}`,{...linkCategoryData},{withCredential:true})
 // await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/category/by/id/${banner_id}`,{selected_category:category},{withCredential:true})
 .then(res=>{
-    console.log(res?.data);
     if(res?.data?.status){
         setMessage((prev)=>({...prev,type:"success",message:"Banner Change Successfully !"}))
         setSnackbarOpen(true)
@@ -577,7 +551,6 @@ await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/categ
     }
 })
 .catch(err=>{
-    console.log(err);
     setMessage((prev)=>({...prev,type:"error",message:"Banner Not Changed !!"}))
     setSnackbarOpen(true)
     setRender(prev=>!prev);
@@ -586,7 +559,6 @@ await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/api/link/banner/to/categ
 
   }
 
-  console.log("selectedBannerCategory==>",selectedBannerCategory);
 
   return (
     <>

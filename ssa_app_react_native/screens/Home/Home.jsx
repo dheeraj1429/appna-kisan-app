@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { View, RefreshControl, StyleSheet, TextInput, Text, TouchableOpacity, ActivityIndicator, Dimensions, ScrollView ,Linking} from "react-native";
-import Header from "../../components/Header";
-import { config } from "../../config";
-import BrandCard from "../../components/BrandCard";
-import HomeBanner from "../../components/HomeBanner";
-import { Octicons } from '@expo/vector-icons';
-import navigationString from "../../Constants/navigationString";
+import { FontAwesome, Octicons } from "@expo/vector-icons";
 import axios from "axios";
-import { setItemToLocalStorage } from "../../Utils/localstorage.js";
-import Toast from 'react-native-toast-message';
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Dimensions,
+  Linking,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import customer_review from "../../Constants/customer_review";
-import { FontAwesome } from '@expo/vector-icons';
+import Toast from "react-native-toast-message";
+import navigationString from "../../Constants/navigationString";
+import BrandCard from "../../components/BrandCard";
+import Header from "../../components/Header";
+import HomeBanner from "../../components/HomeBanner";
+import { config } from "../../config";
 import { UseContextState } from "../../global/GlobalContext.jsx";
 // import { useRoute } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'; 
-import strings from '../../Constants/strings';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import strings from "../../Constants/strings";
 
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -27,30 +34,29 @@ function Home({ navigation }) {
   const [render, setRender] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [apiResponse, setApiResponse] = useState([]);
-  const { fetchAuthuser, authState, userData ,setUserData } = UseContextState();
+  const { fetchAuthuser, authState, userData, setUserData } = UseContextState();
   const [reviewsData, setReviewsData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
-  const  userType = userData?.user?.type;
-  console.log(userType,"usertype");
+  const userType = userData?.user?.type;
+  console.log(userType, "usertype");
   useEffect(() => {
     if (userData && userData.accessToken) {
       setAccessToken(userData.accessToken);
       console.log(userData, "userdat from home page");
-
     }
   }, [userData]);
   console.log(userData, "userdat from home page");
   const setAsyncUserData = async () => {
-    const  userData1 = await AsyncStorage.getItem('userData');
+    const userData1 = await AsyncStorage.getItem("userData");
     if (userData1) {
       setUserData(JSON.parse(userData1));
     }
-    console.log(userData1,"userdata1")
-  }
-useEffect(() => {
-console.log("welcome to home screen");
-setAsyncUserData()
-}, [])
+    console.log(userData1, "userdata1");
+  };
+  useEffect(() => {
+    console.log("welcome to home screen");
+    setAsyncUserData();
+  }, []);
 
   // useEffect(() => {
   //   // Call fetchAuthuser to update the user data in the global context
@@ -124,26 +130,27 @@ setAsyncUserData()
   //   }, [accessToken])
   // );
 
-
   const showToast = () => {
     Toast.show({
-      type: 'success',
-      text1: 'Login Successfully ✅',
+      type: "success",
+      text1: "Login Successfully ✅",
       // text2: 'This is some something 👋'
     });
-  }
-
+  };
 
   const reviewlist = async () => {
     try {
-      const response = await axios.get('https://whale-app-88bu8.ondigitalocean.app/api/reviews', {
-        headers: {
-          'x-user-type': userType,
-          'Authorization': 'Bearer ' + accessToken,
-        },
-      });
+      const response = await axios.get(
+        "https://whale-app-88bu8.ondigitalocean.app/api/reviews",
+        {
+          headers: {
+            "x-user-type": userType,
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
 
-      console.log('Response of review:', response);
+      console.log("Response of review:", response);
 
       if (response.status === 200) {
         // const data = response.data; // Axios automatically parses JSON
@@ -156,87 +163,128 @@ setAsyncUserData()
         //   console.log('API returned an error:', data.error);
         // }
       } else {
-        console.log('review list HTTP request failed with status:', response.status);
+        console.log(
+          "review list HTTP request failed with status:",
+          response.status
+        );
       }
     } catch (error) {
-      console.log('Error fetching review List:', error.message);
+      console.log("Error fetching review List:", error.message);
     }
   };
 
   useFocusEffect(
     React.useCallback(() => {
-
       // Your code here
-      if (accessToken) { //code
+      if (accessToken) {
+        //code
         const fetchList1 = async () => {
           try {
             const response = await reviewlist();
             //setApiResponse(response.reviews); // Assuming response is an array
-            console.log('api response review', reviewsData);
+            console.log("api response review", reviewsData);
           } catch (error) {
-            console.log('Error fetching review list:', error);
+            console.log("Error fetching review list:", error);
           }
         };
-    
-    
-        fetchList1();
-  
-      }
 
-    }, [accessToken,render])
+        fetchList1();
+      }
+    }, [accessToken, render])
   );
 
-
-
-
   useEffect(() => {
-    setLoading(true)
-    axios.get(`${config.BACKEND_URI}/api/get/home/screen/brands`, { withCredentials: true })
-      .then(res => {
+    setLoading(true);
+    axios
+      .get(`${config.BACKEND_URI}/api/get/home/screen/brands`, {
+        withCredentials: true,
+      })
+      .then((res) => {
         // console.log(res?.data);
-        setbrands(res?.data)
-        setLoading(false)
-        setRefreshing(false)
-
+        setbrands(res?.data);
+        setLoading(false);
+        setRefreshing(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-        setRefreshing(false)
-
-      })
-  }, [render, refreshing])
-
+        setRefreshing(false);
+      });
+  }, [render, refreshing]);
 
   const onRefresh = async () => {
-    setRefreshing(true)
-  }
+    setRefreshing(true);
+  };
 
   const goToSearch = () => {
-    navigation.navigate(navigationString.SEARCH_SCREEN)
-  }
+    navigation.navigate(navigationString.SEARCH_SCREEN);
+  };
 
   const renderReviewItem = ({ item }) => {
     return (
       <View style={styles?.reviewBox}>
         <View>
-          <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignContent: "center",
+            }}
+          >
             <View>
-              <Ionicons name="md-person-circle-sharp" size={35} color={config.primaryColor} style={{ marginRight: 8 }} />
+              <Ionicons
+                name="md-person-circle-sharp"
+                size={35}
+                color={config.primaryColor}
+                style={{ marginRight: 8 }}
+              />
             </View>
             <View>
-              <Text style={{ fontWeight: '500', fontSize: 13, textTransform: 'capitalize', paddingTop: 3 }}>{item?.user.name}</Text>
-              <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
+              <Text
+                style={{
+                  fontWeight: "500",
+                  fontSize: 13,
+                  textTransform: "capitalize",
+                  paddingTop: 3,
+                }}
+              >
+                {item?.user.name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignContent: "center",
+                }}
+              >
                 {/* Adjust the star icons based on the rating */}
-                {Array.from({ length: Math.floor(item?.rating) }, (_, index) => (
-                  <Ionicons key={index} name="ios-star" size={15} color="gold" style={{ marginRight: 8 }} />
-                ))}
+                {Array.from(
+                  { length: Math.floor(item?.rating) },
+                  (_, index) => (
+                    <Ionicons
+                      key={index}
+                      name="ios-star"
+                      size={15}
+                      color="gold"
+                      style={{ marginRight: 8 }}
+                    />
+                  )
+                )}
                 {item?.rating % 1 !== 0 && (
-                  <Ionicons name="ios-star-half" size={15} color="gold" style={{ marginRight: 8 }} />
+                  <Ionicons
+                    name="ios-star-half"
+                    size={15}
+                    color="gold"
+                    style={{ marginRight: 8 }}
+                  />
                 )}
               </View>
             </View>
           </View>
-          <Text style={{ fontSize: 13, color: '#222', textTransform: 'capitalize' }}>{item?.message}</Text>
+          <Text
+            style={{ fontSize: 13, color: "#222", textTransform: "capitalize" }}
+          >
+            {item?.message}
+          </Text>
         </View>
       </View>
     );
@@ -244,17 +292,23 @@ setAsyncUserData()
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-
       <ScrollView
-
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: 'white', marginTop: 0 }}
+        style={{ backgroundColor: "white", marginTop: 0 }}
         refreshControl={
-          <RefreshControl progressViewOffset={40} refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl
+            progressViewOffset={40}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }
       >
         <Header />
-        <TouchableOpacity activeOpacity={0.8} onPress={goToSearch} style={styles.searchBox}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={goToSearch}
+          style={styles.searchBox}
+        >
           {/* <TextInput
             
              style={styles.searchBar}
@@ -264,12 +318,11 @@ setAsyncUserData()
            />
            <Octicons  style={styles.serachIcon} name="search" size={20}  /> */}
 
-          <View style={styles.searchBar} >
+          <View style={styles.searchBar}>
             <Octicons style={styles.serachIcon} name="search" size={20} />
-            <Text style={styles.searchBarText} >What are you looking for?</Text>
+            <Text style={styles.searchBarText}>What are you looking for?</Text>
           </View>
         </TouchableOpacity>
-
 
         <HomeBanner navigation={navigation} />
         {/* <TouchableOpacity onPress={showToast} >
@@ -277,27 +330,44 @@ setAsyncUserData()
       </TouchableOpacity> */}
         {/* <Text onPress={()=>navigation.navigate(navigationString.LOGIN)}
        style={{fontSize:20,fontWeight:'700',textAlign:'center'}} >Login</Text> */}
-        {loading ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-          <ActivityIndicator size='large' animating={true} color={config.primaryColor} />
-        </View>
-          :
+        {loading ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator
+              size="large"
+              animating={true}
+              color={config.primaryColor}
+            />
+          </View>
+        ) : (
           brands?.map((value, index) => (
-            <BrandCard key={index} navigation={navigation} title={value?._id} brandsData={value?.brands} />
-
+            <BrandCard
+              key={index}
+              navigation={navigation}
+              title={value?._id}
+              brandsData={value?.brands}
+            />
           ))
-        }
-        { }
+        )}
+        {}
         {/* <BrandCard navigation={navigation} title="ev categories" brandsData={Data}/>
       <BrandCard navigation={navigation} title="agriculture categories" brandsData={Data2}/> */}
 
         {/*============ CUSTOMER REVIEW======== */}
-        <View style={styles.brandContainer} >
-          <View style={styles.brandHeadingBox} >
-            <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 15 }} >
+        <View style={styles.brandContainer}>
+          <View style={styles.brandHeadingBox}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingHorizontal: 15,
+              }}
+            >
               <Text style={styles.brandText}>Customer Reviews</Text>
             </View>
           </View>
-          <View style={{ alignItems: "center", paddingTop: 10 }} >
+          <View style={{ alignItems: "center", paddingTop: 10 }}>
             {/* <FlatList
               data={customer_review?.reviews}
               renderItem={renderAllReviews}
@@ -313,7 +383,7 @@ setAsyncUserData()
               horizontal={true} // Set to true for horizontal scrolling
               showsHorizontalScrollIndicator={false} // Optional: hide the horizontal scrollbar
               // Add any additional FlatList props as needed
-            // Add any additional FlatList props as needed
+              // Add any additional FlatList props as needed
             />
           </View>
         </View>
@@ -325,8 +395,22 @@ setAsyncUserData()
         </View>
       ))} */}
       </ScrollView>
-      <View style={{ backgroundColor: "white", flexDirection: "row", justifyContent: "flex-end", marginRight: "2%", marginBottom: "19%" }}>
-        <FontAwesome name="whatsapp" onPress={() => Linking.openURL(strings.WHATSAPP)} style={styles.headerIcon2} size={25} color={config.primaryColor} />
+      <View
+        style={{
+          backgroundColor: "white",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          marginRight: "2%",
+          marginBottom: "19%",
+        }}
+      >
+        <FontAwesome
+          name="whatsapp"
+          onPress={() => Linking.openURL(strings.WHATSAPP)}
+          style={styles.headerIcon2}
+          size={25}
+          color={config.primaryColor}
+        />
       </View>
     </View>
   );
@@ -344,24 +428,22 @@ const styles = StyleSheet.create({
   brandContainer: {
     // paddingHorizontal: 15,
     paddingBottom: 90,
-
   },
   brandHeadingBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 5
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 5,
   },
   brandText: {
     fontSize: 16,
     fontWeight: "600",
-    textTransform: 'capitalize',
-    color: config.primaryColor
-
+    textTransform: "capitalize",
+    color: config.primaryColor,
   },
   reviewBox: {
     borderWidth: 1,
-    borderColor: '#f1f1f1',
+    borderColor: "#f1f1f1",
     width: 220,
     // height: 160,
     borderRadius: 20,
@@ -376,38 +458,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 14,
     marginBottom: 10,
-    borderColor: 'lightgray',
+    borderColor: "lightgray",
     borderWidth: 0.5,
-    fontWeight: '600',
-    flexDirection: 'row',
-    alignItems: 'center',
-
+    fontWeight: "600",
+    flexDirection: "row",
+    alignItems: "center",
   },
   searchBarText: {
     fontSize: 16,
-    color: '#999',
-    fontWeight: '500'
+    color: "#999",
+    fontWeight: "500",
   },
   serachIcon: {
     color: config.primaryColor,
-    paddingRight: 10
-
+    paddingRight: 10,
   },
   headerIcon2: {
-    borderColor: 'lightgray',
+    borderColor: "lightgray",
     //width:"100%",
     borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingHorizontal: "3%",
     paddingVertical: 10,
     borderRadius: 40,
     marginLeft: 14,
     shadowProp: {
-      shadowColor: '#171717',
+      shadowColor: "#171717",
       shadowOffset: { width: 12, height: 4 },
       shadowOpacity: 0.49,
       shadowRadius: 3,
     },
-
   },
 });

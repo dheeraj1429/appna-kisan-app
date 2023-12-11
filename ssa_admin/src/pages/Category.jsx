@@ -323,17 +323,10 @@ export default function EnhancedTable() {
   const [message ,setMessage] = useState({type:"",message:""})
 
 
-  console.log("SELECTED-->",selected)
-
-
-
-  // console.log("MAIN CATEGORY ERROR ===",categoryIdForEdit)
-  // GET ALL CATEGORIES 
   useEffect(()=>{
     setLoading(true)
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/get/all/category`,{withCredentials:true})
     .then(res=>{
-      console.log(res)
       setData(res.data?.all_categories)
       setCountCategory(res.data?.countCategory || 0)
       setMainCategoryForFilter(res.data?.categoryForFilter);
@@ -378,7 +371,6 @@ export default function EnhancedTable() {
     setLoading(true)
    await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/filter/category?main_category=${e.target.value}`,{withCredentials:true})
     .then(res=>{
-      console.log(res)
       setData(res.data)
       setCountCategory(res.data?.length || 0)
       setLoading(false)
@@ -387,10 +379,6 @@ export default function EnhancedTable() {
       console.log(err)
     })
   }
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
  
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -493,7 +481,6 @@ const handleCloseConfimModal=()=>{
 
 //############################# HANDLE DELETE CATEGORIES FUNCTION #############################
 const handleDleteCategories = async(value)=>{
-  console.log("VALUE FOR DELETE=>",value)
   await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/delete/category`,{data: value},{withCredentials:true})
   .then(res=>{
     console.log(res)

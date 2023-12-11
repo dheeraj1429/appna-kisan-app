@@ -1,92 +1,73 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-  ActivityIndicator,
-  Image,
-  ImageBackground,
-  Alert,
-  Dimensions
-} from "react-native";
-import { config } from "../../config";
-import statelist from "../../Constants/statelist";
-import { Checkbox, Portal, Provider, Modal } from 'react-native-paper';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { StatusBar } from "expo-status-bar";
-import { Entypo } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import navigationString from "../../Constants/navigationString";
-import axios from "axios";
-import { clearLocalStorage, setItemToLocalStorage } from "../../Utils/localstorage";
+import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Portal, Provider } from "react-native-paper";
+import navigationString from "../../Constants/navigationString";
+import { config } from "../../config";
 import { UseContextState } from "../../global/GlobalContext";
-import imageImport from "../../Constants/imageImport";
-import { FlatList } from "react-native-gesture-handler";
-import customer_review from "../../Constants/customer_review";
-import Toast from 'react-native-toast-message';
+import { DataTable } from "react-native-paper";
 
 function RewardsScreen({ route, navigation }) {
-  const [loading, setLoading] = useState(false)
-  const { authState, fetchAuthuser, userData } = UseContextState();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [password, setPassword] = useState('');
-  const [apiData, setApiData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { userData } = UseContextState();
   const [banners, setBanners] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [rewardHistory, setRewardHistory] = useState(null);
 
   const [accessToken, setAccessToken] = useState(null);
-  const [name, setName] = useState(null);
   const [rewardPoints, setRewardPoints] = useState(null);
   const [orderHistory, setOrderHistory] = useState([]);
   const userType = userData?.user?.type;
   console.log(userType, "usertype");
+
   const userInfo = async () => {
     console.log(accessToken, "access");
 
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': userType,
-        },
-      });
+      const response = await fetch(
+        "https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+            "x-user-type": userType,
+          },
+        }
+      );
 
-      console.log('Response in update profile:', response);
-
+      console.log("Response in update profile:", response);
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data, "sdfsv");
         if (data && data.success) {
-          // Toast.show({
-          //   type: 'success',
-          //   position: 'top',
-          //   text1: 'Success',
-          //   text2: data.success,
-          //   visibilityTime: 4000, // 4 seconds
-          //   autoHide: true,
-          // });
           return data;
         } else {
-          console.log('API returned an error:', data ? data.error : 'No data received');
+          console.log(
+            "API returned an error:",
+            data ? data.error : "No data received"
+          );
         }
       } else {
-        console.log('UserInfo HTTP request failed with status:', response.status);
+        console.log(
+          "UserInfo HTTP request failed with status:",
+          response.status
+        );
       }
     } catch (error) {
-      console.log('Error fetching Details:', error.message);
+      console.log("Error fetching Details:", error.message);
       // Toast.show({
       //   type: 'error',
       //   position: 'top',
@@ -104,25 +85,25 @@ function RewardsScreen({ route, navigation }) {
       //setRewardPoints(userData.user.reward_points);
       console.log("rewardpoint", rewardPoints);
       console.log("userdata === ", userData);
-
     }
   }, [userData]);
 
   const rewardOrderHistory = async () => {
-    console.log({ "sdfghjkl": accessToken });
     try {
       //const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + accessToken,
-          'x-user-type': userType,
-          'x': "Dheeraj"
-        },
-      });
+      const response = await fetch(
+        "https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+            "x-user-type": userType,
+          },
+        }
+      );
 
-      console.log('Response of product:', response);
+      console.log("Response of product:", response);
 
       if (response.status === 200) {
         const data = await response.json();
@@ -130,31 +111,18 @@ function RewardsScreen({ route, navigation }) {
         if (data.success) {
           console.log("data product", data.orders);
           setOrderHistory(data.orders);
-          // Toast.show({
-          //   type: 'success',
-          //   position: 'top',
-          //   text1: 'Success',
-          //   text2: data.success,
-          //   visibilityTime: 4000, // 4 seconds
-          //   autoHide: true,
-          // });
           return data.products;
         } else {
-          console.log('API returned an error:', data.error);
+          console.log("API returned an error:", data.error);
         }
       } else {
-        console.log('Reward order list HTTP request failed with status:', response.status);
+        console.log(
+          "Reward order list HTTP request failed with status:",
+          response.status
+        );
       }
     } catch (error) {
-      console.log('Error fetching Reward Order List:', error.message);
-      // Toast.show({
-      //   type: 'error',
-      //   position: 'top',
-      //   text1: 'Error',
-      //   text2: error.message,
-      //   visibilityTime: 4000, // 4 seconds
-      //   autoHide: true,
-      // });
+      console.log("Error fetching Reward Order List:", error.message);
     }
   };
   useFocusEffect(
@@ -163,10 +131,10 @@ function RewardsScreen({ route, navigation }) {
         const fetchList1 = async () => {
           try {
             const response = await rewardOrderHistory();
-            setApiResponse(response); // Assuming response is an array
-            console.log('api response', response);
+            setApiResponse(response);
+            console.log("api response", response);
           } catch (error) {
-            console.log('Error fetching Reward Order list:', error);
+            console.log("Error fetching Reward Order list:", error);
           }
         };
 
@@ -175,13 +143,12 @@ function RewardsScreen({ route, navigation }) {
         const fetchList = async () => {
           try {
             const response = await userInfo();
-            // setApiResponse(response);
             console.log("UserInfo", response);
             setRewardPoints(response.user.reward_points);
             console.log({ rdp: response.user.reward_points });
-            return response; // Add this line if you want to return the response
+            return response;
           } catch (error) {
-            Alert.alert('Error fetching UserInfo:', error);
+            Alert.alert("Error fetching UserInfo:", error);
           }
         };
 
@@ -190,74 +157,27 @@ function RewardsScreen({ route, navigation }) {
     }, [accessToken])
   );
 
-
-  // console.log(authState,"authState")
-
-  // const banners = [
-  //   { image: require('../../assets/banner-green.png'), text: 'Banner 1' },
-  //   { image: require('../../assets/banner-green.png'), text: 'Banner 2' },
-  //   { image: require('../../assets/banner-green.png'), text: 'Banner 3' },
-  //   { image: require('../../assets/banner-green.png'), text: 'Banner 4' },
-  //   { image: require('../../assets/banner-green.png'), text: 'Banner 5' },
-
-  // ];
-
-  // const scrollViewRef = useRef();
-  // const loopedBanners = [...banners, ...banners, ...banners];
-
-  // useEffect(() => {
-  //   // Define a function to fetch data from the API
-  //   console.log("useEffect");
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`${config.BASE_URL}/get/rewards/banners`);
-  //       console.log("response", response);
-
-  //       // Log the response body
-  //       const responseBody = await response.text();
-  //       //console.log("response body", responseBody);
-  //       console.log("response.data", response.data);
-
-  //       if (response.ok) {
-  //         // Handle the response text as needed
-  //         //console.log("data", responseBody);
-  //         // If you need to parse the response as JSON, you can do it here
-  //         //const data = JSON.parse(responseBody);
-  //         //setApiData(data);
-  //       } else {
-  //         console.error('Error fetching data from the API');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-
-
-  //   // Call the fetchData function when the component mounts
-  //   fetchData();
-  // }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
   const bannerlist = async () => {
     try {
-      const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/get/rewards/banners', {
-        method: 'GET',
-      });
-
-      //console.log('Response:', response);
+      const response = await fetch(
+        "https://whale-app-88bu8.ondigitalocean.app/api/get/rewards/banners",
+        {
+          method: "GET",
+        }
+      );
 
       if (response.status === 200) {
         const data = await response.json();
         if (data.success) {
           return data.banners;
         } else {
-          //console.log('API returned an error:', data.error);
-          Alert.alert('API returned an error:', data.error);
+          Alert.alert("API returned an error:", data.error);
         }
       } else {
-        Alert.alert('Banner HTTP request failed with status:', response.status);
+        Alert.alert("Banner HTTP request failed with status:", response.status);
       }
     } catch (error) {
-      Alert.alert('Error fetching banner:', error.message);
+      Alert.alert("Error fetching banner:", error.message);
     }
   };
 
@@ -270,7 +190,7 @@ function RewardsScreen({ route, navigation }) {
 
         console.log("banners", banners);
       } catch (error) {
-        Alert.alert('Error fetching banner list:', error);
+        Alert.alert("Error fetching banner list:", error);
       }
     };
 
@@ -280,9 +200,7 @@ function RewardsScreen({ route, navigation }) {
   const startAutoSlide = () => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-    }, 2000); // Change the interval as needed (in milliseconds)
-
-    // Save the interval ID to clear it when the component unmounts
+    }, 2000);
     return intervalId;
   };
 
@@ -290,95 +208,61 @@ function RewardsScreen({ route, navigation }) {
     const intervalId = startAutoSlide();
 
     return () => {
-      clearInterval(intervalId); // Clear the interval when the component is unmounted
+      clearInterval(intervalId);
     };
   }, []);
-  // useEffect(() => {
-  //   const bannerWidth = Dimensions.get('window').width;
-  //   let currentIndex = 0;
-
-  //   const interval = setInterval(() => {
-  //     if (scrollViewRef.current) {
-  //       currentIndex = (currentIndex + 1) % loopedBanners.length;
-  //       const offsetX = currentIndex * bannerWidth;
-  //       scrollViewRef.current.scrollTo({ x: offsetX, animated: true });
-  //     }
-  //   }, 2000); // Adjust the interval as needed (in milliseconds)
-
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const goBack = () => {
     navigation.goBack();
   };
-  // console.log("checkout-> ",editUserDetails)
 
-  const userCollectedProducts = [
-    { id: '1', name: 'Product Name 1', quantity: 2, points: 5, image: require('../../assets/tractor.png') },
-    { id: '2', name: 'Product Name 2', quantity: 1, points: 10, image: require('../../assets/tractor.png') },
-    { id: '3', name: 'Product Name 3', quantity: 3, points: 8, image: require('../../assets/tractor.png') },
-    // Add more products as needed
-  ];
-
-  const ProductItem = ({ item }) => (
-    <View style={styles.productItem}>
-      <Image source={{ uri: item.product.product_images?.[0]?.image_url }} style={styles.productImage} />
-      <View style={styles.productDetails}>
-        <Text style={styles.productName}>{item.product.product_name}</Text>
-        <Text style={styles.productName}>{`Quantity: ${item.product.quantityBought}`}</Text>
-        <Text style={styles.productName}>{`Points: ${item.reward_point_price}`}</Text>
-      </View>
-    </View>
-  );
-
-  // const renderAllReviews = (({ item, index }) => {
-  //   console.log(item)
-  //   return (
-  //     <View style={styles?.reviewBox} >
-  //       <View>
-  //         <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
-  //           <View>
-  //             <Ionicons name="md-person-circle-sharp" size={35} color={config.primaryColor} style={{ marginRight: 8 }} />
-
-  //           </View>
-  //           <View>
-  //             <Text style={{ fontWeight: '500', fontSize: 13, textTransform: 'capitalize', paddingTop: 3 }} >{item?.name}</Text>
-  //             <View style={{ flexDirection: "row", justifyContent: "flex-start", alignContent: "center" }}>
-  //               <Ionicons name="ios-star" size={15} color="gold" style={{ marginRight: 8 }} />
-  //               <Ionicons name="ios-star" size={15} color="gold" style={{ marginRight: 8 }} />
-  //               <Ionicons name="ios-star-half" size={15} color="gold" style={{ marginRight: 8 }} />
-  //             </View>
-  //           </View>
-  //         </View>
-  //         <Text style={{ fontSize: 13, color: '#222', textTransform: 'capitalize' }} >{item?.content}</Text>
-
-  //       </View>
-  //     </View>
-  //   )
-  // })
   const renderOrderHistory = () => {
     if (orderHistory.length > 0) {
-      // If there are items in orderHistory, render the view with the orders
       return (
-        <ScrollView>
-          <View style={{ padding: 10 }}>
-            {orderHistory.map((item, index) => (
-              <ProductItem key={index} item={item} />
-            ))}
-          </View>
-        </ScrollView>
+        <>
+          {orderHistory.map((item, index) => (
+            <DataTable.Row>
+              {/* <DataTable.Cell>
+                <View>
+                  <Image
+                    source={{
+                      uri: item.product.product_images?.[0]?.image_url,
+                    }}
+                    style={styles.productImage}
+                  />
+                </View>
+              </DataTable.Cell> */}
+              <DataTable.Cell>
+                <Text style={styles.productName}>
+                  {item.product.product_name}
+                </Text>
+              </DataTable.Cell>
+              <DataTable.Cell numeric>
+                <Text style={styles.productName}>
+                  {item.product.quantityBought}
+                </Text>
+              </DataTable.Cell>
+              <DataTable.Cell numeric>
+                <Text style={styles.productName}>
+                  {item.reward_point_price}
+                </Text>
+              </DataTable.Cell>
+            </DataTable.Row>
+          ))}
+        </>
       );
     } else {
-      // If orderHistory is empty, render a message indicating no orders
       return (
         <View>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}>
-            You haven't redeemed any products</Text>
+          <Text
+            style={{ fontSize: 18, fontWeight: "bold", textAlign: "center" }}
+          >
+            You haven't redeemed any products
+          </Text>
         </View>
       );
     }
   };
-
 
   return (
     <Provider>
@@ -386,79 +270,102 @@ function RewardsScreen({ route, navigation }) {
         {/* <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: "white" }}> */}
         <View style={styles.screenContainer}>
           <StatusBar backgroundColor="#fff" />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
-            <MaterialIcons onPress={goBack} name="keyboard-arrow-left" size={27} color={config.primaryColor} />
-            <Text style={styles.headingText} >Reward Points</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 10,
+              paddingTop: 50,
+              paddingBottom: 10,
+            }}
+          >
+            <MaterialIcons
+              onPress={goBack}
+              name="keyboard-arrow-left"
+              size={27}
+              color={config.primaryColor}
+            />
+            <Text style={styles.headingText}>Reward Points</Text>
             {/* <MaterialIcons name="keyboard-arrow-left" size={27} color='white' /> */}
 
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                backgroundColor: "#f5f5f6",
+                borderRadius: 16,
+                borderWidth: 0.5,
+                borderColor: "lightgray",
 
-            <View style={{
-              flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#f5f5f6',
-              borderRadius: 16,
-              borderWidth: 0.5,
-              borderColor: 'lightgray',
-
-              paddingHorizontal: "2%",
-              paddingVertical: 5,
-            }}
+                paddingHorizontal: "2%",
+                paddingVertical: 5,
+              }}
             >
-              <FontAwesome5 name="coins" size={20} color={config.primaryColor} style={{ marginRight: 8 }} />
-              <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{rewardPoints}</Text>
-
-              {/* {userData ?
-                  <>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>{userData.user.reward_points ? rewardPoints : 0}</Text>
-
-                  </>
-                  :
-                  <>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginRight: 8 }}>0</Text>
-
-                  </>
-                } */}
+              <FontAwesome5
+                name="coins"
+                size={20}
+                color={config.primaryColor}
+                style={{ marginRight: 8 }}
+              />
+              <Text
+                style={{ fontSize: 18, fontWeight: "bold", marginRight: 8 }}
+              >
+                {rewardPoints}
+              </Text>
             </View>
-
           </View>
 
-          {loading && <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-            <ActivityIndicator color={config.primaryColor} size='large' />
-          </View>
-          }
+          {loading && (
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator color={config.primaryColor} size="large" />
+            </View>
+          )}
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(navigationString.REDEEM_PROD)
-            }}>
-            <View style={{
-              backgroundColor: '#f5f5f6',
-              borderRadius: 16,
-              borderWidth: 0.5,
-              borderColor: 'lightgray',
-              paddingVertical: "2%",
-              marginHorizontal: "5%",
-              marginVertical: "5%"
+              navigation.navigate(navigationString.REDEEM_PROD);
             }}
+          >
+            <View
+              style={{
+                backgroundColor: "#f5f5f6",
+                borderRadius: 16,
+                borderWidth: 0.5,
+                borderColor: "lightgray",
+                paddingVertical: "2%",
+                marginHorizontal: "5%",
+                marginVertical: "5%",
+              }}
             >
-              <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
                 Collect Redeem Products
               </Text>
             </View>
           </TouchableOpacity>
-          <Text></Text>
           <View>
             <ScrollView
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={(event) => {
-                const newIndex = Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width);
+                const newIndex = Math.round(
+                  event.nativeEvent.contentOffset.x /
+                    Dimensions.get("window").width
+                );
                 setCurrentIndex(newIndex);
               }}
-              style={{ flexDirection: 'row' }}
+              style={{ flexDirection: "row" }}
             >
               {banners.map((banner, index) => (
                 <View key={banner._id} style={styles.bannerContainer}>
                   <Image
-                    style={{ width: '100%', height: 200 }}
+                    style={{ width: "100%", height: 200 }}
                     source={{ uri: banner.image_url }}
                     resizeMode="cover"
                   />
@@ -466,56 +373,19 @@ function RewardsScreen({ route, navigation }) {
               ))}
             </ScrollView>
           </View>
-          {/* <ScrollView
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              ref={scrollViewRef}
-            >
-              {loopedBanners.map((banner, index) => (
-                <View key={index} style={{ width: Dimensions.get('window').width }}>
-                  <ImageBackground source={banner.image} style={{ width: '100%', height: 200 }} >
-                    <Text style={{ color: 'white', textAlign: 'center', marginTop: "5%",fontSize:20 }}>{banner.text}</Text>
-                  </ImageBackground>
-                </View>
-              ))}
-            </ScrollView> */}
-          {/* 
-          <View style={styles.brandContainer} >
-            <View style={styles.brandHeadingBox} >
-              <View style={{ flexDirection: 'row', justifyContent: 'center', paddingHorizontal: 15 }} >
-                <Text style={styles.brandText}>Customer Reviews</Text>
-
-              </View>
-            </View>
-            <View style={{ alignItems: "center", paddingTop: 10 }} >
-              <FlatList
-                data={customer_review?.reviews}
-                renderItem={renderAllReviews}
-                contentContainerStyle={{ paddingHorizontal: 15 }}
-                keyExtractor={(item) => item.name}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
-          </View> */}
-          {/* <View style={styles.userProductsContainer}>
-            <FlatList
-              data={userCollectedProducts}
-              renderItem={({ item }) => <ProductItem item={item} />}
-              keyExtractor={(item) => item.id}
-            />
-          </View> */}
-          {renderOrderHistory()}
-
-
+          <ScrollView>
+            <DataTable>
+              <DataTable.Header>
+                <DataTable.Title>Name</DataTable.Title>
+                <DataTable.Title numeric>Qty</DataTable.Title>
+                <DataTable.Title numeric>Points</DataTable.Title>
+              </DataTable.Header>
+              {renderOrderHistory()}
+            </DataTable>
+          </ScrollView>
         </View>
-
-        {/* </ScrollView> */}
       </Portal>
     </Provider>
-
-
   );
 }
 
@@ -527,7 +397,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bannerContainer: {
-    width: Dimensions.get('window').width,
+    width: Dimensions.get("window").width,
     height: 200,
     marginBottom: 20,
   },
@@ -535,49 +405,47 @@ const styles = StyleSheet.create({
     color: config.primaryColor,
     fontSize: 17,
     letterSpacing: 1,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   commonFieldMainBox: {
     marginTop: 12,
-    width: '100%',
+    width: "100%",
     height: "100%",
     paddingHorizontal: 20,
   },
   commonField: {
-    width: '20%',
+    width: "20%",
     marginTop: 5,
     marginLeft: "75%",
     paddingHorizontal: "5%",
     paddingVertical: 9,
     //fontSize: 14,
     //textTransform: 'capitalize',
-    backgroundColor: '#f5f5f6',
+    backgroundColor: "#f5f5f6",
     // letterSpacing: 1.5,
     borderRadius: 16,
     borderWidth: 0.5,
-    borderColor: 'lightgray'
+    borderColor: "lightgray",
   },
   brandContainer: {
     // paddingHorizontal: 15,
     paddingBottom: 90,
-
   },
   brandHeadingBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 5
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 5,
   },
   brandText: {
     fontSize: 16,
     fontWeight: "600",
-    textTransform: 'capitalize',
-    color: config.primaryColor
-
+    textTransform: "capitalize",
+    color: config.primaryColor,
   },
   reviewBox: {
     borderWidth: 1,
-    borderColor: '#f1f1f1',
+    borderColor: "#f1f1f1",
     width: 220,
     // height: 160,
     borderRadius: 20,
@@ -586,21 +454,19 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   productItem: {
-    backgroundColor: '#f5f5f6',
+    backgroundColor: "#f5f5f6",
     borderRadius: 16,
     borderWidth: 0.5,
-    borderColor: 'lightgray',
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderColor: "lightgray",
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
     marginBottom: "5%",
   },
 
   productImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 8,
-    marginRight: 10,
+    width: 40,
+    height: 40,
   },
 
   productDetails: {
@@ -609,11 +475,9 @@ const styles = StyleSheet.create({
   userProductsContainer: {
     marginHorizontal: "2%",
     marginTop: "5%",
-
   },
   productName: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 12,
     marginBottom: 5,
   },
 });

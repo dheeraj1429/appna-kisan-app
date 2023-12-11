@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { useState,useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { Toolbar, Tooltip,Menu, MenuItem,TextField,InputLabel,Select,FormControl, IconButton, Typography,Button,ListItemIcon, ListItemText, OutlinedInput, InputAdornment } from '@mui/material';
+import { IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Paper from '@mui/material/Paper';
+import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,26 +19,14 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import Backdrop from '@mui/material/Backdrop';
+import { alpha } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
-import { Link } from 'react-router-dom';
-import { deleteImageFromFirebase, returnFileName, splitString, uploadFileToFirebase } from 'src/global/globalFunctions';
-import Iconify from '../components/Iconify';
-import CircularProgress from '@mui/material/CircularProgress';
-import CustomizedSnackbars from '../global/Snackbar/CustomSnackbar';
-import ConfimModal from "../global/Modals/ConfimModal"
-import { convertDate ,getGapBetweenDates} from '../global/globalFunctions';
-import { useEffect } from 'react';
 import axios from 'axios';
-import searchNotFound from "../assests/searchnotfound.gif"
-import noImage from '../assests/No_image.svg'
+import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import searchNotFound from "../assests/searchnotfound.gif";
+import CustomizedSnackbars from '../global/Snackbar/CustomSnackbar';
+import { convertDate } from '../global/globalFunctions';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -334,7 +327,6 @@ export default function Enquiry() {
     setLoading(true)
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/get/all/order/enquiries`,{withCredentials:true})
     .then(res=>{
-      console.log(res?.data);
       setData(res?.data);
       setCountVendor(res?.data?.length)
       setLoading(false)
@@ -417,7 +409,6 @@ const handleCloseSnackbar = (event, reason) => {
   // ##################### SNACK BAR FUNCTIONs ##################
 
   const handleCloseSubCateConfirmModal=(i)=>{
-  console.log("CLOSE MODAL",i)
   let closeModalState=[...openRemoveImageModal]
   closeModalState[i] = false
   setOpenRemoveImageModal(closeModalState)

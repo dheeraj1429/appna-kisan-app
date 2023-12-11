@@ -27,15 +27,11 @@ export default function DashboardApp() {
 
   // user data
   const [allusers,setAllusers]=useState([])
-  console.log("usestate kai through",allusers)
-
   const [allproduct,setAllproduct]=useState([])
-  console.log("product by usestate",allproduct)
 
   useEffect(()=>{
     axios.get(`http://localhost:5000/api/get/all/alltheusers`,{ withCredentials: true })
     .then((res)=>{
-      console.log(res)
       setAllusers(res.data)
     })
     .catch((err)=>{
@@ -46,7 +42,6 @@ export default function DashboardApp() {
   useEffect(()=>{
     axios.get(`http://localhost:5000/api/get/product/productdata`,{withCredentials: true})
     .then((res)=>{
-      console.log("product data",res)
       setAllproduct(res.data)
     })
     .catch((err)=>{

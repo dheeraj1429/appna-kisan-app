@@ -1,45 +1,38 @@
-import React,{useState,useEffect} from 'react';
-import { StatusBar, } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import {MD3LightTheme as DefaultTheme,Provider as PaperProvider} from "react-native-paper"
-import { WithSplashScreen } from './components/SplashScreen';
-import GlobalContext from './global/GlobalContext';
-import Route from './Navigations/Route';
-import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import {
+  MD3LightTheme as DefaultTheme,
+  Provider as PaperProvider,
+} from "react-native-paper";
+import Toast from "react-native-toast-message";
+import Route from "./Navigations/Route";
+import { WithSplashScreen } from "./components/SplashScreen";
+import GlobalContext from "./global/GlobalContext";
 
-
-const theme={
+const theme = {
   colors: {
     ...DefaultTheme.colors,
-    primary:'#fff',
-    secondary: 'black',
-    tertiary: 'black'
+    primary: "#fff",
+    secondary: "black",
+    tertiary: "black",
   },
-}
+};
 
 export default function App() {
   const [isAppReady, setIsAppReady] = useState(false);
   useEffect(() => {
-
-      setIsAppReady(true);
-    
+    setIsAppReady(true);
   }, []);
 
-  //=========== PLEASE REMOVE THIS AT THE TIME OF DEVELOPMENT ===============
-   //console.log=()=>{}
-  //=========== PLEASE REMOVE THIS AT THE TIME OF DEVELOPMENT ===============
-
-  return (<WithSplashScreen isAppReady={isAppReady} >
-    <PaperProvider theme={theme} >  
-      <StatusBar  backgroundColor='#fff' style="auto" />
-      <GlobalContext>
-      <Route />
-      <Toast />
-      </GlobalContext>
-    </PaperProvider>
+  return (
+    <WithSplashScreen isAppReady={isAppReady}>
+      <PaperProvider theme={theme}>
+        <StatusBar backgroundColor="#fff" style="auto" />
+        <GlobalContext>
+          <Route />
+          <Toast />
+        </GlobalContext>
+      </PaperProvider>
     </WithSplashScreen>
-
   );
 }
-

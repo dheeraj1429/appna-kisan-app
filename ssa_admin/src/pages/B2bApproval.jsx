@@ -35,9 +35,6 @@ function B2bApproval() {
         }
     }
 
-    const downloadHandler = function(url) {
-        console.log(url)
-    }
 
     useEffect(() => {
         if(params && params?.id) {
