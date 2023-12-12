@@ -361,7 +361,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     flexDirection: "row",
     alignItems: "center",
-    height: 45,
   },
   searchBarText: {
     fontSize: 16,

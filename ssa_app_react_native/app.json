@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "supremesalesagency"
@@ -34,6 +32,11 @@
     },
     "androidNavigationBar": {
       "backgroundColor": "#FFFFFF"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2a759d6a-1359-4ccb-a5d2-806965f37456"
+      }
     }
   }
 }

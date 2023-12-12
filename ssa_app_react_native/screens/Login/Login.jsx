@@ -1,32 +1,27 @@
-import React, { useState, useEffect } from "react";
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { CommonActions } from '@react-navigation/native';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Button,
   ActivityIndicator,
+  Alert,
+  BackHandler,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
   ToastAndroid,
   TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  BackHandler,
-  Pressable
+  View
 } from "react-native";
-import { config } from "../../config";
+import { logger } from "react-native-logs";
 import { Modal, Portal, Provider, RadioButton } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
-import { StatusBar } from "expo-status-bar";
+import Toast from 'react-native-toast-message';
 import navigationString from "../../Constants/navigationString";
 import { setItemToLocalStorage } from "../../Utils/localstorage";
-import axios from "axios";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { config } from "../../config";
 import { UseContextState } from "../../global/GlobalContext";
-import Toast from 'react-native-toast-message';
-import { logger } from "react-native-logs";
-import auth from '@react-native-firebase/auth';
-import { CommonActions } from '@react-navigation/native';
 
 function Login({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('')
