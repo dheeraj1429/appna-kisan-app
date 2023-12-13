@@ -25,6 +25,28 @@ function RedeemProd({ navigation }) {
   const userType = userData?.user?.type;
   const [accessToken, setAccessToken] = useState(null);
   const [filterProducts, setFilterProducts] = useState([]);
+  const [filterProductsBtn, setFilterProductsBtn] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  console.log(apiResponse, "filterProductsfor");
+
+  const categories = [
+    "oils",
+    "Festivity",
+    "Home & Kitchen",
+    "Electronics",
+    "D2C Products",
+    "Evouchers",
+    "Health & Beauty",
+    "Travel & Luggage",
+    "Fashion & Lifestyle",
+  ];
+
+  const filterByCategory = (category) => {
+    const filteredProductsBtn = apiResponse.filter((item) =>
+      item.product_category === category
+    );
+    setFilterProductsBtn(filteredProductsBtn);
+  };
 
   useEffect(() => {
     if (userData && userData.accessToken) {
@@ -76,6 +98,7 @@ function RedeemProd({ navigation }) {
 
   const onChangeHandler = function (query) {
     console.log(query);
+    setSelectedCategory(null); // Clear selected category
     const filterProducts = apiResponse.filter((item) =>
       item.product_name.toLowerCase().includes(query.toLowerCase())
     );
@@ -219,13 +242,72 @@ function RedeemProd({ navigation }) {
               onChangeText={onChangeHandler}
             />
           </View>
-          <FlatList
+          {/**horigontal scroll view of categories in format of button */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.categoriesContainer}
+          >
+            {categories.map((category, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.categoryButton,
+                  selectedCategory === category && styles.selectedCategoryButton,
+                ]}
+                onPress={() => {
+                  setSelectedCategory(category);
+                  filterByCategory(category);
+                }}
+              // onPress={onChangeHandlerForBtn}
+              >
+                <Text
+                  style={[
+                    styles.categoryButtonText,
+                    selectedCategory === category && styles.selectedcategoryButtonText,
+                  ]}>{category}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          {/* <FlatList
             data={filterProducts.length ? filterProducts : apiResponse}
             renderItem={({ item }) => <ProductCard product={item} />}
             keyExtractor={(item) => item._id}
             showsVerticalScrollIndicator={false}
             numColumns={2}
+          /> */}
+         {selectedCategory ? (
+          <FlatList
+            data={filterProductsBtn.length ? filterProductsBtn : []}
+            renderItem={({ item }) => <ProductCard product={item} />}
+            keyExtractor={(item) => item._id}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            ListEmptyComponent={
+              <View style={{alignSelf:"center"}}>
+                <Text style={{fontSize:18,color:"black"}}>
+                  No products available for the {selectedCategory} category
+                </Text>
+              </View>
+            }
           />
+        ) : (
+          <FlatList
+          data={filterProducts.length ? filterProducts : apiResponse}
+          renderItem={({ item }) => <ProductCard product={item} />}
+          keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+            ListEmptyComponent={
+              <View style={{alignSelf:"center"}}>
+                <Text style={{fontSize:18,color:"black"}}>No products available</Text>
+              </View>
+            }
+          />
+        )}
+
+
+
         </ScrollView>
       </Portal>
     </Provider>
@@ -235,6 +317,30 @@ function RedeemProd({ navigation }) {
 export default RedeemProd;
 
 const styles = StyleSheet.create({
+  categoriesContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  categoryButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginRight: 10,
+    backgroundColor: "#f5f5f6",
+  },
+  selectedCategoryButton: {
+    backgroundColor: config.primaryColor,
+  },
+  selectedcategoryButtonText: {
+    color: "white",
+  },
+  categoryButtonText: {
+    fontSize: 14,
+    color: "#333",
+    fontWeight: "500",
+  },
   screenContainer: {
     backgroundColor: "white",
     flex: 1,

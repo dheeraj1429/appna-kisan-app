@@ -215,6 +215,16 @@ function RewardsScreen({ route, navigation }) {
   const goBack = () => {
     navigation.goBack();
   };
+console.log(orderHistory,"orderHistory");
+console.log(orderHistory.updatedAt,"orderHistory.updatedAt");
+
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-based
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
   const renderOrderHistory = () => {
     if (orderHistory.length > 0) {
@@ -245,6 +255,16 @@ function RewardsScreen({ route, navigation }) {
               <DataTable.Cell numeric>
                 <Text style={styles.productName}>
                   {item.reward_point_price}
+                </Text>
+              </DataTable.Cell>
+              <DataTable.Cell numeric>
+                {/* <Text style={styles.productName}>
+                  {item.reward_point_price}
+                </Text> */}
+              </DataTable.Cell>
+              <DataTable.Cell numeric>
+                <Text style={styles.productName}>
+                {formatDate(item.updatedAt)}
                 </Text>
               </DataTable.Cell>
             </DataTable.Row>
@@ -379,6 +399,8 @@ function RewardsScreen({ route, navigation }) {
                 <DataTable.Title>Name</DataTable.Title>
                 <DataTable.Title numeric>Qty</DataTable.Title>
                 <DataTable.Title numeric>Points</DataTable.Title>
+                <DataTable.Title numeric>     </DataTable.Title>
+                <DataTable.Title date>     Date</DataTable.Title>
               </DataTable.Header>
               {renderOrderHistory()}
             </DataTable>

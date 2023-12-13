@@ -104,7 +104,8 @@ console.log(cartProducts,"cartproduct");
  }
 
   const goToCheckout = ()=>{
-    navigation.navigate(navigationString.CHECKOUT,{checkoutProducts:cartProducts})
+    navigation.navigate(navigationString.CHECKOUT,{checkoutProducts:cartProducts});
+    console.log(cartProducts,"place order details");
   }
 
   return (
