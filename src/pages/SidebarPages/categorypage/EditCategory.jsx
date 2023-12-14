@@ -543,7 +543,7 @@ function EditCategory({ handleClose, mainCategoryId }) {
                         variant="outlined"
                         sx={{ width: "40%" }}
                         type={"number"}
-                        inputProps={{ min: 0, step: 1 }}
+                        inputProps={{ min: 0, step: 0.1 }}
                         value={element.rewardPercentage || ""}
                         autoComplete="off"
                         name="rewardPercentage"
