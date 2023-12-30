@@ -28,9 +28,9 @@ function CreateGiftCategories() {
     resolver: yupResolver(schema),
   });
   const [fileUpload, setFileUpload] = useState();
+  const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const params = useParams();
-  const [images, setImages] = useState([]);
   const categoryId = !!params && params?.id !== "create" ? params.id : null;
 
   const handleFileUpload = (e) => {

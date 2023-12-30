@@ -16,6 +16,8 @@ import Orders from "./pages/Orders";
 import Products from "./pages/Products";
 import User from "./pages/User";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import GiftProducts from "./pages/Gifts/GiftProducts/GiftProducts";
+import CreateGiftProduct from "./pages/Gifts/CreateGiftProduct/CreateGiftProduct";
 
 // ----------------------------------------------------------------------
 
@@ -121,6 +123,14 @@ export default function Router() {
         <Route
           path="/dashboard/create-gift-categories/:id"
           element={<DashboardLayout Component={<CreateGiftCategories />} />}
+        />
+        <Route
+          path="/dashboard/gift-products"
+          element={<DashboardLayout Component={<GiftProducts />} />}
+        />
+        <Route
+          path="/dashboard/create-gift-products/:id"
+          element={<DashboardLayout Component={<CreateGiftProduct />} />}
         />
       </Route>
       <Route

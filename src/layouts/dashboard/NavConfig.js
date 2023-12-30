@@ -2,6 +2,7 @@
 import Iconify from "../../components/Iconify";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ClassIcon from "@mui/icons-material/Class";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +59,11 @@ const navConfig = [
     title: "Gifts Categories",
     path: "/dashboard/gifts-categories",
     icon: <ClassIcon />,
+  },
+  {
+    title: "Gifts",
+    path: "/dashboard/gift-products",
+    icon: <CardGiftcardIcon />,
   },
 
   // {
