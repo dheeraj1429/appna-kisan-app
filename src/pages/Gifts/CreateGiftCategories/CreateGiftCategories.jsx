@@ -31,6 +31,7 @@ function CreateGiftCategories() {
   const [isLoading, setLoading] = useState(false);
   const params = useParams();
   const [images, setImages] = useState([]);
+  const categoryId = !!params && params?.id !== "create" ? params.id : null;
 
   const handleFileUpload = (e) => {
     if (e.target.files?.length > 4)
@@ -48,15 +49,10 @@ function CreateGiftCategories() {
   };
 
   const submitHandler = async (data) => {
-    if (!fileUpload) {
-      alert("Add At least 1 Product Image !!");
-      return;
-    }
-
     try {
       setLoading(true);
       let categoryImages = [];
-      if (fileUpload.length > 0) {
+      if (!!fileUpload && fileUpload.length > 0) {
         for (let i = 0; i < fileUpload?.length; i++) {
           categoryImages[i] = await uploadFileToFirebase(
             `/ssastore/products/gift-category/`,
@@ -65,19 +61,37 @@ function CreateGiftCategories() {
         }
       }
 
-      const response = await axiosInstance.post("/gift/create-gift-category", {
-        categoryImages,
-        name: data.name,
-      });
+      if (categoryId) {
+        const response = await axiosInstance.patch(
+          "/gift/update-gift-category",
+          {
+            categoryImages,
+            name: data.name,
+            categoryId,
+          }
+        );
+        if (response && response?.data?.message) {
+          toast.success(response.data.message);
+        }
+      } else {
+        const response = await axiosInstance.post(
+          "/gift/create-gift-category",
+          {
+            categoryImages,
+            name: data.name,
+          }
+        );
 
-      if (response && response?.data?.message) {
-        toast.success(response.data.message);
+        if (response && response?.data?.message) {
+          toast.success(response.data.message);
+        }
       }
 
       setLoading(false);
     } catch (err) {
       setLoading(false);
       console.log(err);
+      toast.error(err.response.data.message);
     }
   };
 
@@ -104,7 +118,9 @@ function CreateGiftCategories() {
   return (
     <div>
       <LoadingSpinner loading={isLoading} />
-      <h1 className={classes["heading"]}>Create Gift Category</h1>
+      <h1 className={classes["heading"]}>
+        {categoryId ? "Edit" : `Create`} Gift Category
+      </h1>
       <p className={classes["para"]}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut in ipsam
         asperiores, est iusto deserunt amet voluptatibus ipsum incidunt
@@ -169,7 +185,7 @@ function CreateGiftCategories() {
         </Box>
         <Box>
           <Button type="submit" variant="contained">
-            Add Category
+            {categoryId ? "Update" : `Add`} Category
           </Button>
         </Box>
       </Box>

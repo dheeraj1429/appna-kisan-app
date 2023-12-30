@@ -14,13 +14,16 @@ import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "src/components/Spinner";
 import { axiosInstance } from "src/services/axios.service";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { toast } from "react-toastify";
 
 function GiftsCategory() {
   const [giftCategories, setGiftCategories] = useState([]);
   const navigation = useNavigate();
+  const [isLoading, setLoading] = useState(false);
 
   const allCategories = async function () {
     try {
+      setLoading(true);
       const response = await axiosInstance.get(`/gift/get-gift-categories`);
       if (!!response && response?.data?.categories.length) {
         const rows = [];
@@ -36,13 +39,33 @@ function GiftsCategory() {
         }
 
         setGiftCategories(rows);
+        setLoading(false);
       }
     } catch (err) {
+      setLoading(false);
       console.log(err);
+      toast.error(err.response.data.message);
     }
   };
 
-  console.log(giftCategories);
+  const deleteHandler = async function (categoryId) {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.delete(
+        `/gift/delete-gift-category?categoryId=${categoryId}`
+      );
+      if (response && response?.data?.message) {
+        toast.success(response.data.message);
+        setGiftCategories(
+          giftCategories.filter((item) => item._id !== categoryId)
+        );
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      toast.error(err.response.data.message);
+    }
+  };
 
   useEffect(() => {
     allCategories();
@@ -50,7 +73,7 @@ function GiftsCategory() {
 
   return (
     <div>
-      <LoadingSpinner loading={false} />
+      <LoadingSpinner loading={isLoading} />
       <Stack
         marginBottom={2}
         spacing={2}
@@ -111,7 +134,7 @@ function GiftsCategory() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Delete">
-                        <IconButton>
+                        <IconButton onClick={() => deleteHandler(row._id)}>
                           <DeleteIcon />
                         </IconButton>
                       </Tooltip>
