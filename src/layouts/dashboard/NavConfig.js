@@ -1,6 +1,7 @@
 // component
-import Iconify from '../../components/Iconify';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import Iconify from "../../components/Iconify";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import ClassIcon from "@mui/icons-material/Class";
 
 // ----------------------------------------------------------------------
 
@@ -13,48 +14,52 @@ const navConfig = [
   //   icon: getIcon('eva:pie-chart-2-fill'),
   // },
   {
-    title: 'orders',
-    path: '/dashboard/orders',
-    icon: getIcon('bxs:box'),
+    title: "orders",
+    path: "/dashboard/orders",
+    icon: getIcon("bxs:box"),
   },
   {
-    title: 'Users',
-    path: '/dashboard/users',
-    icon: getIcon('eva:people-fill'),
+    title: "Users",
+    path: "/dashboard/users",
+    icon: getIcon("eva:people-fill"),
   },
   // {
   //   title: 'vendors',
   //   path: '/dashboard/vendor',
   //   icon: getIcon('entypo:shop'),
   // },
- 
+
   {
-    title: 'brands',
-    path: '/dashboard/brands',
-    icon: getIcon('material-symbols:category-rounded'),
+    title: "brands",
+    path: "/dashboard/brands",
+    icon: getIcon("material-symbols:category-rounded"),
   },
   {
-    title: 'products',
-    path: '/dashboard/products',
-    icon: getIcon('eva:shopping-bag-fill'),
+    title: "products",
+    path: "/dashboard/products",
+    icon: getIcon("eva:shopping-bag-fill"),
   },
   {
-    title: 'banners',
-    path: '/dashboard/banners',
-    icon: getIcon('eva:image-fill'),
+    title: "banners",
+    path: "/dashboard/banners",
+    icon: getIcon("eva:image-fill"),
   },
   {
-    title: 'Enquiries',
-    path: '/dashboard/enquiries',
-    icon: getIcon('mdi:message-bookmark'),
+    title: "Enquiries",
+    path: "/dashboard/enquiries",
+    icon: getIcon("mdi:message-bookmark"),
   },
   {
     title: "B2B account approval",
-    path: '/dashboard/b2b-approval-list',
-    icon: <BookmarkAddedIcon />
-  }
-  
-  
+    path: "/dashboard/b2b-approval-list",
+    icon: <BookmarkAddedIcon />,
+  },
+  {
+    title: "Gifts Categories",
+    path: "/dashboard/gifts-categories",
+    icon: <ClassIcon />,
+  },
+
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',
@@ -70,9 +75,7 @@ const navConfig = [
   //   path: '/register',
   //   icon: getIcon('eva:person-add-fill'),
   // },
-  
 
-  
   // {
   //   title: 'Not found',
   //   path: '/404',
