@@ -11,6 +11,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import FileUploadDesign from "src/components/common/FileUploadDesign";
 import { uploadFileToFirebase } from "src/global/globalFunctions";
 import LoadingSpinner from "src/components/Spinner";
+import { useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
   name: yup.string().required().typeError("Gift name is required"),
@@ -32,6 +33,9 @@ function CreateGiftProduct() {
   const [fileUpload, setFileUpload] = useState();
   const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const params = useParams();
+  const giftId =
+    !!params && params?.id && params.id !== "create" ? params?.id : null;
 
   const handleFileUpload = (e) => {
     if (e.target.files?.length > 4)
@@ -72,16 +76,27 @@ function CreateGiftProduct() {
         }
       }
 
-      const response = await axiosInstance.post("/gift/create-new-gift", {
-        ...data,
-        giftImages,
-      });
+      if (giftId) {
+        const response = await axiosInstance.patch("/gift/update-single-gift", {
+          ...data,
+          giftImages,
+          giftId,
+        });
+        if (response && response?.data?.message) {
+          toast.success(response.data.message);
+        }
+        setLoading(false);
+      } else {
+        const response = await axiosInstance.post("/gift/create-new-gift", {
+          ...data,
+          giftImages,
+        });
 
-      if (response && response?.data?.message) {
-        toast.success(response.data.message);
+        if (response && response?.data?.message) {
+          toast.success(response.data.message);
+        }
+        setLoading(false);
       }
-
-      setLoading(false);
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -89,9 +104,33 @@ function CreateGiftProduct() {
     }
   };
 
+  const getSingleGift = async function (giftId) {
+    try {
+      const response = await axiosInstance.get(
+        `/gift/get-single-gift?giftId=${giftId}`
+      );
+      if (!!response && response?.data?.gift) {
+        const { gift } = response.data;
+        setValue("giftCategory", gift?.giftCategory);
+        setValue("giftCollectedPoints", gift?.giftCollectedPoints);
+        setValue("name", gift?.name);
+        setValue("quantity", gift?.quantity);
+        setImages(gift?.giftImages);
+      }
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
   useEffect(() => {
     getGiftCategories();
   }, []);
+
+  useEffect(() => {
+    if (giftId) {
+      getSingleGift(giftId);
+    }
+  }, [giftId]);
 
   return (
     <div>
@@ -212,7 +251,7 @@ function CreateGiftProduct() {
         </Box>
         <Box>
           <Button type="submit" variant="contained">
-            Add Gift
+            {giftId ? "Edit" : "Add"} Gift
           </Button>
         </Box>
       </Box>

@@ -32,7 +32,19 @@ function GiftProducts() {
     }
   };
 
-  const deleteHandler = function (giftId) {};
+  const deleteHandler = async function (giftId) {
+    try {
+      const response = await axiosInstance.delete(
+        `/gift/delete-single-gift?giftId=${giftId}`
+      );
+      if (!!response && response?.data) {
+        toast.success(response?.data?.message);
+        setGiftProducts(giftProducts.filter((item) => item._id !== giftId));
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
 
   useEffect(() => {
     getAllGiftProducts();
@@ -97,7 +109,7 @@ function GiftProducts() {
                         <IconButton
                           onClick={() =>
                             navigation(
-                              `/dashboard/create-gift-categories/${row._id}`
+                              `/dashboard/create-gift-products/${row._id}`
                             )
                           }
                         >
