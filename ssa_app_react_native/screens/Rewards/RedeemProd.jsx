@@ -27,10 +27,10 @@ function RedeemProd({ navigation }) {
   const [filterProducts, setFilterProducts] = useState([]);
   const [filterProductsBtn, setFilterProductsBtn] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  console.log(apiResponse, "filterProductsfor");
 
   const categories = [
-    "oils",
+    "All",
+    "Oils",
     "Festivity",
     "Home & Kitchen",
     "Electronics",
@@ -42,10 +42,15 @@ function RedeemProd({ navigation }) {
   ];
 
   const filterByCategory = (category) => {
-    const filteredProductsBtn = apiResponse.filter((item) =>
-      item.product_category === category
-    );
-    setFilterProductsBtn(filteredProductsBtn);
+    if (category === "All") {
+      setFilterProductsBtn([]);
+    } else {
+      const filteredProductsBtn = apiResponse.filter(
+        (item) =>
+          item?.giftCategory?.name.toLowerCase() === category.toLowerCase()
+      );
+      setFilterProductsBtn(filteredProductsBtn);
+    }
   };
 
   useEffect(() => {
@@ -57,19 +62,14 @@ function RedeemProd({ navigation }) {
   const prodList = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products`,
-        { method: "GET" }
-      );
+      const response = await fetch(`${config.GIFT_URL}gift/get-all-gifts`, {
+        method: "GET",
+      });
 
       if (response.status === 200) {
         setLoading(false);
         const data = await response.json();
-        if (data.success) {
-          return data.products;
-        } else {
-          Alert.alert("API returned an error:", data.error);
-        }
+        return data;
       } else {
         Alert.alert(
           "Prod list HTTP request failed with status:",
@@ -86,7 +86,7 @@ function RedeemProd({ navigation }) {
     const fetchList = async () => {
       try {
         const response = await prodList();
-        setApiResponse(response);
+        setApiResponse(response?.gifts || []);
         console.log("api response", response);
       } catch (error) {
         Alert.alert("Error fetching prod list:", error);
@@ -109,7 +109,7 @@ function RedeemProd({ navigation }) {
     setLoading(true);
     try {
       const response = await axios.post(
-        `https://whale-app-88bu8.ondigitalocean.app/api/app/cart/checkout/for/rewards/products`,
+        `${config.BASE_URL}app/cart/checkout/for/rewards/products`,
         {
           productId: product_id,
         },
@@ -160,15 +160,13 @@ function RedeemProd({ navigation }) {
       </View>
       <View style={styles.cardInnerView}>
         <Image
-          source={{ uri: product.product_images[0].image_url }}
+          source={{ uri: product?.giftImages?.[0]?.image_url }}
           style={styles.productImage}
         />
-        <Text style={styles.productName}>
-          {product.product_name.slice(0, 60)}...
-        </Text>
+        <Text style={styles.productName}>{product.name.slice(0, 60)}...</Text>
         <Text
           style={styles.productPoints}
-        >{`Points: ${product.product_collected_points}`}</Text>
+        >{`Points: ${product.giftCollectedPoints}`}</Text>
         <TouchableOpacity
           style={styles.orderButton}
           onPress={() => {
@@ -253,19 +251,24 @@ function RedeemProd({ navigation }) {
                 key={index}
                 style={[
                   styles.categoryButton,
-                  selectedCategory === category && styles.selectedCategoryButton,
+                  selectedCategory === category &&
+                    styles.selectedCategoryButton,
                 ]}
                 onPress={() => {
                   setSelectedCategory(category);
                   filterByCategory(category);
                 }}
-              // onPress={onChangeHandlerForBtn}
+                // onPress={onChangeHandlerForBtn}
               >
                 <Text
                   style={[
                     styles.categoryButtonText,
-                    selectedCategory === category && styles.selectedcategoryButtonText,
-                  ]}>{category}</Text>
+                    selectedCategory === category &&
+                      styles.selectedcategoryButtonText,
+                  ]}
+                >
+                  {category}
+                </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -276,38 +279,37 @@ function RedeemProd({ navigation }) {
             showsVerticalScrollIndicator={false}
             numColumns={2}
           /> */}
-         {selectedCategory ? (
-          <FlatList
-            data={filterProductsBtn.length ? filterProductsBtn : []}
-            renderItem={({ item }) => <ProductCard product={item} />}
-            keyExtractor={(item) => item._id}
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            ListEmptyComponent={
-              <View style={{alignSelf:"center"}}>
-                <Text style={{fontSize:18,color:"black"}}>
-                  No products available for the {selectedCategory} category
-                </Text>
-              </View>
-            }
-          />
-        ) : (
-          <FlatList
-          data={filterProducts.length ? filterProducts : apiResponse}
-          renderItem={({ item }) => <ProductCard product={item} />}
-          keyExtractor={(item) => item._id}
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-            ListEmptyComponent={
-              <View style={{alignSelf:"center"}}>
-                <Text style={{fontSize:18,color:"black"}}>No products available</Text>
-              </View>
-            }
-          />
-        )}
-
-
-
+          {selectedCategory && selectedCategory !== "All" ? (
+            <FlatList
+              data={filterProductsBtn.length ? filterProductsBtn : []}
+              renderItem={({ item }) => <ProductCard product={item} />}
+              keyExtractor={(item) => item._id}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              ListEmptyComponent={
+                <View style={{ alignSelf: "center" }}>
+                  <Text style={{ fontSize: 18, color: "black" }}>
+                    No products available for the {selectedCategory} category
+                  </Text>
+                </View>
+              }
+            />
+          ) : (
+            <FlatList
+              data={filterProducts.length ? filterProducts : apiResponse}
+              renderItem={({ item }) => <ProductCard product={item} />}
+              keyExtractor={(item) => item._id}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              ListEmptyComponent={
+                <View style={{ alignSelf: "center" }}>
+                  <Text style={{ fontSize: 18, color: "black" }}>
+                    No products available
+                  </Text>
+                </View>
+              }
+            />
+          )}
         </ScrollView>
       </Portal>
     </Provider>

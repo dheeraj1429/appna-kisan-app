@@ -107,8 +107,10 @@ function Orders({ navigation }) {
       ...product,
       _id: product?.product_unique_id,
     }));
-    await addToCart(...products);
-    console.log("PRODUCT ADDED TO Cart ", product);
+
+    for (const product of products) {
+      await addToCart(product);
+    }
     // setUpdateCart(prev=>!prev)
     await cartState();
     setViewCart(true);

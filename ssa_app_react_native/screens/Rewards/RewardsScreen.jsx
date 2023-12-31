@@ -36,17 +36,14 @@ function RewardsScreen({ route, navigation }) {
     console.log(accessToken, "access");
 
     try {
-      const response = await fetch(
-        "https://whale-app-88bu8.ondigitalocean.app/api/user/get/user/info",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
-            "x-user-type": userType,
-          },
-        }
-      );
+      const response = await fetch(`${config.BASE_URL}user/get/user/info`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+          "x-user-type": userType,
+        },
+      });
 
       console.log("Response in update profile:", response);
 
@@ -92,7 +89,7 @@ function RewardsScreen({ route, navigation }) {
     try {
       //const response = await fetch('https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history?page=1', {
       const response = await fetch(
-        "https://whale-app-88bu8.ondigitalocean.app/api/all/reward/products/history",
+        `${config.BASE_URL}all/reward/products/history`,
         {
           method: "GET",
           headers: {
@@ -159,12 +156,9 @@ function RewardsScreen({ route, navigation }) {
 
   const bannerlist = async () => {
     try {
-      const response = await fetch(
-        "https://whale-app-88bu8.ondigitalocean.app/api/get/rewards/banners",
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`${config.BASE_URL}get/rewards/banners`, {
+        method: "GET",
+      });
 
       if (response.status === 200) {
         const data = await response.json();
@@ -215,16 +209,16 @@ function RewardsScreen({ route, navigation }) {
   const goBack = () => {
     navigation.goBack();
   };
-console.log(orderHistory,"orderHistory");
-console.log(orderHistory.updatedAt,"orderHistory.updatedAt");
+  console.log(orderHistory, "orderHistory");
+  console.log(orderHistory.updatedAt, "orderHistory.updatedAt");
 
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp);
-  const day = date.getDate();
-  const month = date.getMonth() + 1; // Months are zero-based
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-};
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   const renderOrderHistory = () => {
     if (orderHistory.length > 0) {
@@ -264,7 +258,7 @@ const formatDate = (timestamp) => {
               </DataTable.Cell>
               <DataTable.Cell numeric>
                 <Text style={styles.productName}>
-                {formatDate(item.updatedAt)}
+                  {formatDate(item.updatedAt)}
                 </Text>
               </DataTable.Cell>
             </DataTable.Row>
@@ -382,15 +376,17 @@ const formatDate = (timestamp) => {
               }}
               style={{ flexDirection: "row" }}
             >
-              {banners.map((banner, index) => (
-                <View key={banner._id} style={styles.bannerContainer}>
-                  <Image
-                    style={{ width: "100%", height: 200 }}
-                    source={{ uri: banner.image_url }}
-                    resizeMode="cover"
-                  />
-                </View>
-              ))}
+              {!!banners && banners.length
+                ? banners.map((banner, index) => (
+                    <View key={banner._id} style={styles.bannerContainer}>
+                      <Image
+                        style={{ width: "100%", height: 200 }}
+                        source={{ uri: banner.image_url }}
+                        resizeMode="cover"
+                      />
+                    </View>
+                  ))
+                : null}
             </ScrollView>
           </View>
           <ScrollView>
@@ -399,8 +395,8 @@ const formatDate = (timestamp) => {
                 <DataTable.Title>Name</DataTable.Title>
                 <DataTable.Title numeric>Qty</DataTable.Title>
                 <DataTable.Title numeric>Points</DataTable.Title>
-                <DataTable.Title numeric>     </DataTable.Title>
-                <DataTable.Title date>     Date</DataTable.Title>
+                <DataTable.Title numeric> </DataTable.Title>
+                <DataTable.Title date> Date</DataTable.Title>
               </DataTable.Header>
               {renderOrderHistory()}
             </DataTable>
