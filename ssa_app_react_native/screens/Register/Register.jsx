@@ -1,35 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ActivityIndicator, ToastAndroid, TextInput, ScrollView, TouchableOpacity, Alert, Image } from "react-native"
-import { config } from '../../config';
-import { Checkbox, Modal, Portal, Provider } from 'react-native-paper';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import navigationString from '../../Constants/navigationString';
-import axios from 'axios';
-import { UseContextState } from '../../global/GlobalContext';
-import { clearLocalStorage, setItemToLocalStorage } from '../../Utils/localstorage';
+import {
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import axios from "axios";
+import * as ImagePicker from "expo-image-picker";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { logger } from "react-native-logs";
-import Toast from 'react-native-toast-message';
-import { uploadFileToFirebase } from '../../Utils/helperFunctions';
+import { Checkbox, Modal, Portal, Provider } from "react-native-paper";
+import Toast from "react-native-toast-message";
+import navigationString from "../../Constants/navigationString";
+import { config } from "../../config";
+import { UseContextState } from "../../global/GlobalContext";
 
 function Register({ navigation }) {
   const [checked, setChecked] = useState(true);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [name, setName] = useState('');
-  const [ownerName, setOwnerName] = useState('');
-  const [panNum, setPanNum] = useState('');
-  const [aadharNum, setAadharNum] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [gstNum, setGstNum] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [panNum, setPanNum] = useState("");
+  const [aadharNum, setAadharNum] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gstNum, setGstNum] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('B2B');
+  const [selectedOption, setSelectedOption] = useState("B2B");
   const { authState, fetchAuthuser } = UseContextState();
   const [selectedImage, setSelectedImage] = useState(null);
   const { saveUserData } = UseContextState();
@@ -43,7 +51,6 @@ function Register({ navigation }) {
   const handleOptionClick = (option) => {
     setSelectedOption(option); // Update the selectedOption state when a TouchableOpacity is pressed
   };
-
 
   // useEffect(() => {
   //   // const xyz = axios.get("")
@@ -73,16 +80,16 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (!panNum.length > 0) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Please enter PAN number!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
-      return;
-    }
+    // if (!panNum.length > 0) {
+    //   ToastAndroid.showWithGravityAndOffset(
+    //     "Please enter PAN number!!",
+    //     ToastAndroid.LONG,
+    //     ToastAndroid.CENTER,
+    //     25,
+    //     50
+    //   );
+    //   return;
+    // }
     if (phoneNumber.length != 10) {
       ToastAndroid.showWithGravityAndOffset(
         "Enter a Valid Phone number!!",
@@ -123,16 +130,16 @@ function Register({ navigation }) {
       );
       return;
     }
-    if (aadharNum.length < 4) {
-      ToastAndroid.showWithGravityAndOffset(
-        "Please enter valid aadhar!!",
-        ToastAndroid.LONG,
-        ToastAndroid.CENTER,
-        25,
-        50
-      );
-      return;
-    }
+    // if (aadharNum.length < 4) {
+    //   ToastAndroid.showWithGravityAndOffset(
+    //     "Please enter valid aadhar!!",
+    //     ToastAndroid.LONG,
+    //     ToastAndroid.CENTER,
+    //     25,
+    //     50
+    //   );
+    //   return;
+    // }
     // if (!selectedImage.image_url) {
     //   ToastAndroid.showWithGravityAndOffset(
     //     "Please select an Image!!",
@@ -143,8 +150,15 @@ function Register({ navigation }) {
     //   );
     //   return;
     // }
-    if (phoneNumber.length >= 10 && name.length > 0 && ownerName.length > 0 && email.length > 0 && password.length > 0 && checked) {
-      setLoading(true)
+    if (
+      phoneNumber.length >= 10 &&
+      name.length > 0 &&
+      ownerName.length > 0 &&
+      email.length > 0 &&
+      password.length > 0 &&
+      checked
+    ) {
+      setLoading(true);
       // try {
       //   const response = await axios.post(
       //     `${config.BASE_URL}/app/create/user/b2b`,
@@ -213,25 +227,42 @@ function Register({ navigation }) {
           mobile: phoneNumber,
           password: password,
           address: address,
-          pan: {
-            number: panNum,
-            // images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
-          },
-          aadhaar: {
-            number: aadharNum,
-            //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
-          },
+          // pan: {
+          // number: panNum,
+          // images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
+          // },
+          // aadhaar: {
+          // number: aadharNum,
+          //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
+          // },
           // gstNo: {
           //   number: gstNum, // Replace with the GST number you want to send
           //   images: [{ image_url: selectedImage.image_url, image_name: "some_name", path: "some_path" }],
           // },
         };
-        if(gstNum) {userBody.gstNo = {
-          number: gstNum, // Replace with the GST number you want to send
-          //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
-        }}
-        if(selectedImage?.image_url) {
-          userBody.aadhaar.images = [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }];
+
+        if (panNum) {
+          userBody.pan.number = panNum;
+        }
+
+        if (aadharNum) {
+          userBody.aadhaar.number = aadharNum;
+        }
+
+        if (gstNum) {
+          userBody.gstNo = {
+            number: gstNum,
+            //images: [{ image_url: selectedImage?.image_url, image_name: "some_name", path: "some_path" }],
+          };
+        }
+        if (selectedImage?.image_url) {
+          userBody.aadhaar.images = [
+            {
+              image_url: selectedImage?.image_url,
+              image_name: "some_name",
+              path: "some_path",
+            },
+          ];
         }
         log.info("userData ", userBody);
         const response = await axios.post(
@@ -256,16 +287,20 @@ function Register({ navigation }) {
           const userData = response.data;
           saveUserData(userData); // Save userData to the context
           Toast.show({
-            type: 'success',
-            position: 'top',
-            text1: 'Success',
+            type: "success",
+            position: "top",
+            text1: "Success",
             text2: response.message,
             visibilityTime: 4000, // 4 seconds
             autoHide: true,
           });
-          navigation.navigate(navigationString.REGISTRATION_OTP,{ data:response.data, user_exists:true,phoneNumber:`+91 ${phoneNumber}`});
+          navigation.navigate(navigationString.REGISTRATION_OTP, {
+            data: response.data,
+            user_exists: true,
+            phoneNumber: `+91 ${phoneNumber}`,
+          });
 
-        //  navigation.navigate(navigationString.TAB_ROUTE);
+          //  navigation.navigate(navigationString.TAB_ROUTE);
           // Handle successful API response here
         } else if (response.status === 422) {
           setLoading(false);
@@ -282,9 +317,9 @@ function Register({ navigation }) {
         log.info("hjbkjbkjhError in API call:", error);
         console.log(error.response.data, "errorresponse");
         Toast.show({
-          type: 'error',
-          position: 'top',
-          text1: 'Error',
+          type: "error",
+          position: "top",
+          text1: "Error",
           text2: error.response.data.message,
           visibilityTime: 4000, // 4 seconds
           autoHide: true,
@@ -303,9 +338,8 @@ function Register({ navigation }) {
       log.info("address:", address);
       setLoading(false);
       console.log(image, "imageof blob");
-
     }
-  }
+  };
 
   // const handleCreateBtnB2C = async () => {
   //   log.info("function called");
@@ -380,13 +414,13 @@ function Register({ navigation }) {
   // };
 
   const handleCreateBtnB2C = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (!isFieldValid(name, "Name")) return;
     if (!isFieldValid(phoneNumber, "Phone Number", 10)) return;
     if (!isFieldValid(email, "Email", 5, "email")) return;
     if (!isFieldValid(password, "Password", 4)) return;
     if (selectedImage) {
-      log.info('Selected Image URL:', selectedImage.image_url);
+      log.info("Selected Image URL:", selectedImage.image_url);
       // Now you can send selectedImage.image_url to your API
     }
     setLoading(true);
@@ -423,7 +457,11 @@ function Register({ navigation }) {
         fetchAuthuser();
         const userData = response.data;
         saveUserData(userData); // Save userData to the context
-       navigation.navigate(navigationString.REGISTRATION_OTP,{ data:response.data, user_exists:true,phoneNumber:`+91 ${phoneNumber}`});
+        navigation.navigate(navigationString.REGISTRATION_OTP, {
+          data: response.data,
+          user_exists: true,
+          phoneNumber: `+91 ${phoneNumber}`,
+        });
         // Handle successful API response here
       } else if (response.status === 422) {
         setLoading(false);
@@ -439,9 +477,9 @@ function Register({ navigation }) {
       setLoading(false);
       log.info("Error in API call:", error.response);
       Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Error',
+        type: "error",
+        position: "top",
+        text1: "Error",
         text2: error.response.data.message,
         visibilityTime: 4000, // 4 seconds
         autoHide: true,
@@ -481,7 +519,6 @@ function Register({ navigation }) {
     );
   };
 
-
   const getBlobFroUri = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -500,7 +537,7 @@ function Register({ navigation }) {
   };
   const handleImageUpload = async () => {
     try {
-      const result = await selectImage('Select Image');
+      const result = await selectImage("Select Image");
       console.log(result, "result of image");
       // Update the state with the selected image and its URL
       if (!result.cancelled) {
@@ -511,7 +548,7 @@ function Register({ navigation }) {
       }
     } catch (error) {
       // Handle error
-      log.info('Error in image selection:', error);
+      log.info("Error in image selection:", error);
     }
   };
 
@@ -528,151 +565,239 @@ function Register({ navigation }) {
       if (!cancelled) {
         return { uri };
       } else {
-        throw new Error('User cancelled image selection');
+        throw new Error("User cancelled image selection");
       }
     } catch (error) {
-      throw new Error('Error in image selection: ' + error.message);
+      throw new Error("Error in image selection: " + error.message);
     }
   };
 
-
   const goToLogin = () => {
-    navigation.navigate(navigationString.LOGIN)
-  }
+    navigation.navigate(navigationString.LOGIN);
+  };
   return (
     <Provider>
       <Portal>
-
-        <View style={{ flex: 1, backgroundColor: '#fff' }}  >
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingTop: 50, paddingBottom: 10 }} >
-            <MaterialIcons onPress={goBack} name="" size={24} color={config.primaryColor} />
-            <Text style={styles.headingText} >Create an Account</Text>
-            <MaterialIcons name="" size={27} color='white' />
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 10,
+              paddingTop: 50,
+              paddingBottom: 10,
+            }}
+          >
+            <MaterialIcons
+              onPress={goBack}
+              name=""
+              size={24}
+              color={config.primaryColor}
+            />
+            <Text style={styles.headingText}>Create an Account</Text>
+            <MaterialIcons name="" size={27} color="white" />
           </View>
-          {loading ?
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: config.secondry }} >
-              <ActivityIndicator size='large' color={config.primaryColor} />
+          {loading ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: config.secondry,
+              }}
+            >
+              <ActivityIndicator size="large" color={config.primaryColor} />
             </View>
-            :
+          ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={[styles.buttonContainer, { flexDirection: "row", justifyContent: "space-evenly" }]}>
-
-                <TouchableOpacity onPress={() => handleOptionClick('B2B')}
-                  style={[styles.btnConrainer, {
-                    paddingVertical: "2%",
-                    paddingHorizontal: "15%",
-                    borderRadius: 16,
-                    backgroundColor: selectedOption === 'B2B' ? config.primaryColor : 'transparent',
-                  }]}>
-                  <Text style={[{ color: selectedOption === 'B2B' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
+              <View
+                style={[
+                  styles.buttonContainer,
+                  { flexDirection: "row", justifyContent: "space-evenly" },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={() => handleOptionClick("B2B")}
+                  style={[
+                    styles.btnConrainer,
+                    {
+                      paddingVertical: "2%",
+                      paddingHorizontal: "15%",
+                      borderRadius: 16,
+                      backgroundColor:
+                        selectedOption === "B2B"
+                          ? config.primaryColor
+                          : "transparent",
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      {
+                        color: selectedOption === "B2B" ? "white" : "black",
+                        fontWeight: "600",
+                        fontSize: 15,
+                      },
+                    ]}
+                  >
                     B2B
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleOptionClick('B2C')}
+                <TouchableOpacity
+                  onPress={() => handleOptionClick("B2C")}
                   style={{
                     paddingVertical: "2%",
                     paddingHorizontal: "15%",
                     borderRadius: 16,
-                    backgroundColor: selectedOption === 'B2C' ? config.primaryColor : 'transparent',
-                  }}>
-                  <Text style={[{ color: selectedOption === 'B2C' ? "white" : "black", fontWeight: "600", fontSize: 15 }]}>
+                    backgroundColor:
+                      selectedOption === "B2C"
+                        ? config.primaryColor
+                        : "transparent",
+                  }}
+                >
+                  <Text
+                    style={[
+                      {
+                        color: selectedOption === "B2C" ? "white" : "black",
+                        fontWeight: "600",
+                        fontSize: 15,
+                      },
+                    ]}
+                  >
                     B2C
                   </Text>
                 </TouchableOpacity>
-
               </View>
 
-              {selectedOption === 'B2B' && (
-                <View style={styles.registerContainer}  >
-                  <View style={styles.commonFieldMainBox} >
-                    <View style={styles.commonFieldContainer} >
+              {selectedOption === "B2B" && (
+                <View style={styles.registerContainer}>
+                  <View style={styles.commonFieldMainBox}>
+                    <View style={styles.commonFieldContainer}>
                       <TextInput
                         value={name}
-                        onChangeText={(value) => setName(value.replace(/[^a-zA-Z ]/g, ''))}
+                        onChangeText={(value) =>
+                          setName(value.replace(/[^a-zA-Z ]/g, ""))
+                        }
                         maxLength={20}
-                        style={styles.commonField} placeholder='Full Name' />
-                      <MaterialCommunityIcons style={styles.commonIcon} name="account" size={20} />
+                        style={styles.commonField}
+                        placeholder="Full Name"
+                      />
+                      <MaterialCommunityIcons
+                        style={styles.commonIcon}
+                        name="account"
+                        size={20}
+                      />
                     </View>
-                    <View style={styles.commonFieldContainer} >
+                    <View style={styles.commonFieldContainer}>
                       <TextInput
                         value={ownerName}
                         onChangeText={(value) => setOwnerName(value)}
                         maxLength={20}
-                        style={styles.commonField} placeholder='Company Name' />
-                      <MaterialCommunityIcons style={styles.commonIcon} name="account-circle" size={20} />
+                        style={styles.commonField}
+                        placeholder="Company Name"
+                      />
+                      <MaterialCommunityIcons
+                        style={styles.commonIcon}
+                        name="account-circle"
+                        size={20}
+                      />
                     </View>
 
-                    <View style={styles.phoneFieldContainer} >
+                    <View style={styles.phoneFieldContainer}>
                       <TextInput
                         maxLength={10}
                         keyboardType="numeric"
                         style={styles.phoneField}
                         placeholder="Phone Number"
                         value={phoneNumber}
-                        onChangeText={(value) => setPhoneNumber(value.replace(/[^0-9]/g, ''))}
+                        onChangeText={(value) =>
+                          setPhoneNumber(value.replace(/[^0-9]/g, ""))
+                        }
                       />
-                      <View style={styles.indiaIcon} >
-                        <Text style={styles.nineOneText}  >🇮🇳  + 9 1</Text>
+                      <View style={styles.indiaIcon}>
+                        <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
                       </View>
-                    </View>
-
-                    <View style={styles.commonFieldContainer} >
-                      <TextInput
-                        style={styles.commonField}
-                        //onChangeText={(value) => setPanNum(value)}
-                        onChangeText={(value) => setPanNum(value.toUpperCase())}
-                        keyboardType='defult'
-                        //maxLength={10}
-                        placeholder='Pan Number'
-                        value={panNum} />
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="money-check" size={15} />
                     </View>
 
                     <View style={styles.commonFieldContainer}>
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ''))}
-                        keyboardType='email-address' // This sets the keyboard to the email address format
+                        //onChangeText={(value) => setPanNum(value)}
+                        onChangeText={(value) => setPanNum(value.toUpperCase())}
+                        keyboardType="defult"
+                        //maxLength={10}
+                        placeholder="Pan Number Optional"
+                        value={panNum}
+                      />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="money-check"
+                        size={15}
+                      />
+                    </View>
+                    <View style={styles.commonFieldContainer}>
+                      <TextInput
+                        style={styles.commonField}
+                        onChangeText={(value) =>
+                          setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ""))
+                        }
+                        keyboardType="email-address" // This sets the keyboard to the email address format
                         maxLength={50} // Adjust the maximum length as needed
-                        placeholder='Email'
+                        placeholder="Email"
                         value={email}
                       />
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="envelope"
+                        size={15}
+                      />
                     </View>
-
-
                     <View style={styles.commonFieldContainer}>
                       <TextInput
                         style={styles.commonField}
                         onChangeText={(value) => setPassword(value)}
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
-                        placeholder='Password'
+                        placeholder="Password"
                         value={password}
                       />
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="lock"
+                        size={15}
+                      />
                     </View>
-
-
-                    <View style={styles.commonFieldContainer} >
-                      <TextInput style={styles.commonField}
+                    <View style={styles.commonFieldContainer}>
+                      <TextInput
+                        style={styles.commonField}
                         onChangeText={(value) => setAadharNum(value)}
-                        keyboardType='defult'
+                        keyboardType="defult"
                         //maxLength={12}
-                        placeholder='Aadhar Number(3456 3456 3456)'
-                        value={aadharNum}/>
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="address-card" size={15} />
+                        placeholder="Aadhar (3456 3456 3456) Opti.."
+                        value={aadharNum}
+                      />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="address-card"
+                        size={15}
+                      />
                     </View>
 
-                    <View style={styles.commonFieldContainer} >
-                      <TextInput style={styles.commonField}
+                    <View style={styles.commonFieldContainer}>
+                      <TextInput
+                        style={styles.commonField}
                         onChangeText={(value) => setGstNum(value)}
-                        keyboardType='defult'
+                        keyboardType="defult"
                         //maxLength={10}
-                        placeholder='Gst Number' 
-                        value={gstNum}/>
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="id-card-alt" size={15} />
+                        placeholder="Gst Number Optional"
+                        value={gstNum}
+                      />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="id-card-alt"
+                        size={15}
+                      />
                     </View>
 
                     {/* <View style={styles.commonFieldContainer} >
@@ -683,21 +808,32 @@ function Register({ navigation }) {
                     </View> */}
                     <View style={styles.commonFieldContainer}>
                       <TouchableOpacity onPress={handleImageUpload}>
-
                         <View style={styles.commonField}>
-                          <FontAwesome name="image" size={21} style={styles.commonIcon} />
+                          <FontAwesome
+                            name="image"
+                            size={21}
+                            style={styles.commonIcon}
+                          />
 
                           {selectedImage ? (
                             // <Image source={{ uri: selectedImage.image_url }} style={{ width: 50, height: 50 }} />
-                            <Text style={styles.imageText}>Image URL: {selectedImage.image_url}</Text>
-
+                            <Text style={styles.imageText}>
+                              Image URL: {selectedImage.image_url}
+                            </Text>
                           ) : (
-                            <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                              }}
+                            >
                               {/* <View>
                                 <FontAwesome name="image" size={21} style={styles.commonIcon} />
                               </View> */}
                               <View>
-                                <Text style={{ color: "gray" }}>Select Image</Text>
+                                <Text style={{ color: "gray" }}>
+                                  Select Image
+                                </Text>
                               </View>
                             </View>
                           )}
@@ -711,87 +847,113 @@ function Register({ navigation }) {
                       {/* Your other UI components... */}
                     </View>
 
-
-                    <View style={styles.commonFieldContainer} >
-                      <TextInput keyboardType='default'
+                    <View style={styles.commonFieldContainer}>
+                      <TextInput
+                        keyboardType="default"
                         value={address}
                         style={styles.commonField}
-                        placeholder='Address'
+                        placeholder="Address"
                         onChangeText={(value) => setAddress(value)}
                       />
-                      <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
+                      <FontAwesome
+                        name="address-card"
+                        size={21}
+                        style={styles.commonIcon}
+                      />
                     </View>
-
                   </View>
-                  <View style={styles.termsAndCondition} >
+                  <View style={styles.termsAndCondition}>
                     <Checkbox
                       color={config.primaryColor}
-                      status={checked ? 'checked' : 'unchecked'}
+                      status={checked ? "checked" : "unchecked"}
                       onPress={() => {
                         setChecked(!checked);
                       }}
                     />
-                    <Text style={{ fontSize: 12 }} >Accept Terms & Conditions</Text>
+                    <Text style={{ fontSize: 12 }}>
+                      Accept Terms & Conditions
+                    </Text>
                   </View>
 
                   <TouchableOpacity
                     onPress={handleCreateBtnB2B}
-                    activeOpacity={0.8} style={styles.signUpBtn} >
-                    <Text style={styles.signInText} >
-                      Create and Verify
-                    </Text>
+                    activeOpacity={0.8}
+                    style={styles.signUpBtn}
+                  >
+                    <Text style={styles.signInText}>Create and Verify</Text>
                   </TouchableOpacity>
                   {/* <TouchableOpacity onPress={() => {
                     navigation.navigate(navigationString.SIGNUP_WITH_OTP);
                   }} activeOpacity={0.8} style={styles.signUpBtn}>
                     <Text style={styles.signInText}>Sign up with OTP</Text>
                   </TouchableOpacity> */}
-                  <Text style={styles.orText} >or</Text>
-                  <View style={styles.dontHaveAccountBox} >
-                    <Text style={{ color: 'gray' }} >Already have an account? </Text>
-                    <Text onPress={goToLogin} style={{ color: config.primaryColor, fontWeight: '600' }} >Sign in </Text>
+                  <Text style={styles.orText}>or</Text>
+                  <View style={styles.dontHaveAccountBox}>
+                    <Text style={{ color: "gray" }}>
+                      Already have an account?{" "}
+                    </Text>
+                    <Text
+                      onPress={goToLogin}
+                      style={{ color: config.primaryColor, fontWeight: "600" }}
+                    >
+                      Sign in{" "}
+                    </Text>
                   </View>
                 </View>
-
               )}
-              {selectedOption === 'B2C' && (
-                <View style={styles.registerContainer}  >
-                  <View style={styles.commonFieldMainBox} >
-                    <View style={styles.commonFieldContainer} >
+              {selectedOption === "B2C" && (
+                <View style={styles.registerContainer}>
+                  <View style={styles.commonFieldMainBox}>
+                    <View style={styles.commonFieldContainer}>
                       <TextInput
                         value={name}
-                        onChangeText={(value) => setName(value.replace(/[^a-zA-Z ]/g, ''))}
+                        onChangeText={(value) =>
+                          setName(value.replace(/[^a-zA-Z ]/g, ""))
+                        }
                         maxLength={20}
-                        style={styles.commonField} placeholder='Full Name' />
-                      <MaterialCommunityIcons style={styles.commonIcon} name="account" size={20} />
+                        style={styles.commonField}
+                        placeholder="Full Name"
+                      />
+                      <MaterialCommunityIcons
+                        style={styles.commonIcon}
+                        name="account"
+                        size={20}
+                      />
                     </View>
 
-                    <View style={styles.phoneFieldContainer} >
+                    <View style={styles.phoneFieldContainer}>
                       <TextInput
                         maxLength={10}
                         keyboardType="numeric"
                         style={styles.phoneField}
                         placeholder="Phone Number"
                         value={phoneNumber}
-                        onChangeText={(value) => setPhoneNumber(value.replace(/[^0-9]/g, ''))}
+                        onChangeText={(value) =>
+                          setPhoneNumber(value.replace(/[^0-9]/g, ""))
+                        }
                       />
-                      <View style={styles.indiaIcon} >
-                        <Text style={styles.nineOneText}  >🇮🇳  + 9 1</Text>
+                      <View style={styles.indiaIcon}>
+                        <Text style={styles.nineOneText}>🇮🇳 + 9 1</Text>
                       </View>
                     </View>
 
                     <View style={styles.commonFieldContainer}>
                       <TextInput
                         style={styles.commonField}
-                        onChangeText={(value) => setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ''))}
-                        keyboardType='email-address' // This sets the keyboard to the email address format
+                        onChangeText={(value) =>
+                          setEmail(value.replace(/[^a-zA-Z0-9@._-]/g, ""))
+                        }
+                        keyboardType="email-address" // This sets the keyboard to the email address format
                         maxLength={50} // Adjust the maximum length as needed
-                        placeholder='Email'
+                        placeholder="Email"
                         value={email}
                       />
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="envelope" size={15} />
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="envelope"
+                        size={15}
+                      />
                     </View>
-
 
                     <View style={styles.commonFieldContainer}>
                       <TextInput
@@ -799,38 +961,46 @@ function Register({ navigation }) {
                         onChangeText={(value) => setPassword(value)}
                         secureTextEntry={true} // This hides the entered text for a password field
                         maxLength={20} // Adjust the maximum length as needed
-                        placeholder='Password'
+                        placeholder="Password"
                         value={password}
                       />
-                      <FontAwesome5 style={{ ...styles.commonIcon, bottom: 15 }} name="lock" size={15} />
-                    </View>
-
-
-                    <View style={styles.commonFieldContainer} >
-                      <TextInput
-                        keyboardType='default'
-                        style={styles.commonField}
-                        placeholder='Address'
-                        value={address}
-                        onChangeText={(value) => setAddress(value.replace(/[^a-zA-Z0-9 ,.-]/g, ''))}
+                      <FontAwesome5
+                        style={{ ...styles.commonIcon, bottom: 15 }}
+                        name="lock"
+                        size={15}
                       />
-                      <FontAwesome name="address-card" size={21} style={styles.commonIcon} />
                     </View>
 
+                    <View style={styles.commonFieldContainer}>
+                      <TextInput
+                        keyboardType="default"
+                        style={styles.commonField}
+                        placeholder="Address"
+                        value={address}
+                        onChangeText={(value) =>
+                          setAddress(value.replace(/[^a-zA-Z0-9 ,.-]/g, ""))
+                        }
+                      />
+                      <FontAwesome
+                        name="address-card"
+                        size={21}
+                        style={styles.commonIcon}
+                      />
+                    </View>
                   </View>
-                  <View style={{ height: 150 }}>
+                  <View style={{ height: 150 }}></View>
 
-                  </View>
-
-                  <View style={[styles.termsAndCondition,]} >
+                  <View style={[styles.termsAndCondition]}>
                     <Checkbox
                       color={config.primaryColor}
-                      status={checked ? 'checked' : 'unchecked'}
+                      status={checked ? "checked" : "unchecked"}
                       onPress={() => {
                         setChecked(!checked);
                       }}
                     />
-                    <Text style={{ fontSize: 12 }} >Accept Terms & Conditions</Text>
+                    <Text style={{ fontSize: 12 }}>
+                      Accept Terms & Conditions
+                    </Text>
                   </View>
 
                   <TouchableOpacity
@@ -838,39 +1008,81 @@ function Register({ navigation }) {
                       handleCreateBtnB2C(event);
                       log.info("button Clicked");
                     }}
-                    activeOpacity={0.8} style={styles.signUpBtn} >
-                    <Text style={styles.signInText} >
-                      Create and Verify
-                    </Text>
+                    activeOpacity={0.8}
+                    style={styles.signUpBtn}
+                  >
+                    <Text style={styles.signInText}>Create and Verify</Text>
                   </TouchableOpacity>
                   {/* <TouchableOpacity onPress={() => {
                     navigation.navigate(navigationString.SIGNUP_WITH_OTP);
                   }} activeOpacity={0.8} style={styles.signUpBtn}>
                     <Text style={styles.signInText}>Sign up with OTP</Text>
                   </TouchableOpacity> */}
-                  <Text style={styles.orText} >or</Text>
-                  <View style={styles.dontHaveAccountBox} >
-                    <Text style={{ color: 'gray' }} >Already have an account? </Text>
-                    <Text onPress={goToLogin} style={{ color: config.primaryColor, fontWeight: '600' }} >Sign in </Text>
+                  <Text style={styles.orText}>or</Text>
+                  <View style={styles.dontHaveAccountBox}>
+                    <Text style={{ color: "gray" }}>
+                      Already have an account?{" "}
+                    </Text>
+                    <Text
+                      onPress={goToLogin}
+                      style={{ color: config.primaryColor, fontWeight: "600" }}
+                    >
+                      Sign in{" "}
+                    </Text>
                   </View>
                 </View>
-
               )}
-
             </ScrollView>
-          }
+          )}
         </View>
-        <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.containerStyle}>
+        <Modal
+          visible={modalVisible}
+          onDismiss={() => setModalVisible(false)}
+          contentContainerStyle={styles.containerStyle}
+        >
           <View>
-            <Text style={{ fontSize: 16, fontWeight: '700', color: '#222', textAlign: 'center' }} > User Already Exists </Text>
-            <View  >
-              <View style={{ paddingTop: 8, paddingBottom: 13 }} >
-                <Text style={{ textAlign: 'center', color: 'gray' }} > Phone number you entered</Text>
-                <Text style={{ textAlign: 'center', color: 'gray' }}  >is already registered</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "700",
+                color: "#222",
+                textAlign: "center",
+              }}
+            >
+              {" "}
+              User Already Exists{" "}
+            </Text>
+            <View>
+              <View style={{ paddingTop: 8, paddingBottom: 13 }}>
+                <Text style={{ textAlign: "center", color: "gray" }}>
+                  {" "}
+                  Phone number you entered
+                </Text>
+                <Text style={{ textAlign: "center", color: "gray" }}>
+                  is already registered
+                </Text>
               </View>
-              <TouchableOpacity activeOpacity={0.5} onPress={() => setModalVisible(false)} >
-                <View style={{ paddingTop: 6, borderTopColor: '#f2f2f2', borderTopWidth: 1 }} >
-                  <Text style={{ color: config.primaryColor, textAlign: 'center', fontSize: 14, fontWeight: '700' }} >OK</Text>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => setModalVisible(false)}
+              >
+                <View
+                  style={{
+                    paddingTop: 6,
+                    borderTopColor: "#f2f2f2",
+                    borderTopWidth: 1,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: config.primaryColor,
+                      textAlign: "center",
+                      fontSize: 14,
+                      fontWeight: "700",
+                    }}
+                  >
+                    OK
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -878,34 +1090,33 @@ function Register({ navigation }) {
         </Modal>
       </Portal>
     </Provider>
-
-  )
+  );
 }
 
-export default Register
+export default Register;
 
 const styles = StyleSheet.create({
   registerContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
     paddingHorizontal: 30,
   },
   containerStyle: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingTop: 15,
     paddingBottom: 12,
     marginHorizontal: 80,
     borderRadius: 10,
-    zIndex: 2
+    zIndex: 2,
   },
 
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -917,77 +1128,76 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   headingText: {
     color: config.primaryColor,
     fontSize: 17,
     letterSpacing: 1,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   registerHeading: {
     fontSize: 20,
-    fontWeight: '600'
+    fontWeight: "600",
   },
   commonFieldMainBox: {
     marginTop: 12,
-    width: '100%'
+    width: "100%",
   },
   phoneFieldContainer: {
-    position: 'relative',
-    width: '100%'
+    position: "relative",
+    width: "100%",
   },
   indiaIcon: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 15,
-    left: 15
+    left: 15,
   },
   nineOneText: {
     fontSize: 14,
   },
   phoneField: {
-    width: '100%',
+    width: "100%",
     marginTop: 15,
     paddingHorizontal: 79,
     paddingVertical: 9,
     fontSize: 14,
-    backgroundColor: '#f5f5f6',
+    backgroundColor: "#f5f5f6",
     letterSpacing: 2,
     borderRadius: 16,
     borderWidth: 0.5,
-    borderColor: 'lightgray'
-
+    borderColor: "lightgray",
   },
   commonFieldContainer: {
-    position: 'relative',
-    width: '100%'
+    position: "relative",
+    width: "100%",
   },
   commonField: {
-    width: '100%',
+    width: "100%",
     marginTop: 15,
     paddingHorizontal: 40,
     paddingVertical: 9,
     fontSize: 14,
-    backgroundColor: '#f5f5f6',
+    backgroundColor: "#f5f5f6",
     letterSpacing: 2,
     borderRadius: 16,
     borderWidth: 0.5,
-    borderColor: 'lightgray'
+    borderColor: "lightgray",
   },
   commonIcon: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 12,
     left: 15,
-    color: '#555'
+    color: "#555",
   },
   signUpBtn: {
-    width: '100%',
+    width: "100%",
     marginTop: 10,
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 10,
     backgroundColor: config.primaryColor,
@@ -996,27 +1206,27 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 90,
-    elevation: 9
+    elevation: 9,
   },
   signInText: {
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
     letterSpacing: 1,
-    color: 'white'
+    color: "white",
   },
   orText: {
     marginVertical: 20,
-    color: 'gray'
+    color: "gray",
   },
   dontHaveAccountBox: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // marginTop:10,
   },
   termsAndCondition: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '100%',
-    marginTop: 10
-  }
-})
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
+    marginTop: 10,
+  },
+});

@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -27,19 +27,7 @@ function RedeemProd({ navigation }) {
   const [filterProducts, setFilterProducts] = useState([]);
   const [filterProductsBtn, setFilterProductsBtn] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const categories = [
-    "All",
-    "Oils",
-    "Festivity",
-    "Home & Kitchen",
-    "Electronics",
-    "D2C Products",
-    "Evouchers",
-    "Health & Beauty",
-    "Travel & Luggage",
-    "Fashion & Lifestyle",
-  ];
+  const [giftCategories, setGiftCategories] = useState([]);
 
   const filterByCategory = (category) => {
     if (category === "All") {
@@ -47,15 +35,43 @@ function RedeemProd({ navigation }) {
     } else {
       const filteredProductsBtn = apiResponse.filter(
         (item) =>
-          item?.giftCategory?.name.toLowerCase() === category.toLowerCase()
+          item?.giftCategory?._id.toLowerCase() === category.toLowerCase()
       );
       setFilterProductsBtn(filteredProductsBtn);
+    }
+  };
+
+  const getGiftCategories = async () => {
+    try {
+      const response = await fetch(
+        `${config.GIFT_URL}gift/get-gift-categories-ids`,
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!!data && data?.categories.length) {
+        setGiftCategories(data.categories);
+      }
+
+      console.log("response", response);
+    } catch (err) {
+      Toast.show({
+        type: "error",
+        position: "top",
+        text2: err.response.data.message,
+        visibilityTime: 4000,
+        autoHide: true,
+      });
     }
   };
 
   useEffect(() => {
     if (userData && userData.accessToken) {
       setAccessToken(userData.accessToken);
+      getGiftCategories();
     }
   }, [userData]);
 
@@ -98,7 +114,7 @@ function RedeemProd({ navigation }) {
 
   const onChangeHandler = function (query) {
     console.log(query);
-    setSelectedCategory(null); // Clear selected category
+    setSelectedCategory(null);
     const filterProducts = apiResponse.filter((item) =>
       item.product_name.toLowerCase().includes(query.toLowerCase())
     );
@@ -142,7 +158,7 @@ function RedeemProd({ navigation }) {
         position: "top",
         text1: "Error",
         text2: error.response.data.message,
-        visibilityTime: 4000, // 4 seconds
+        visibilityTime: 4000,
         autoHide: true,
       });
       setLoading(false);
@@ -246,31 +262,56 @@ function RedeemProd({ navigation }) {
             showsHorizontalScrollIndicator={false}
             style={styles.categoriesContainer}
           >
-            {categories.map((category, index) => (
+            <Fragment>
               <TouchableOpacity
-                key={index}
+                key={"12300"}
                 style={[
                   styles.categoryButton,
-                  selectedCategory === category &&
-                    styles.selectedCategoryButton,
+                  selectedCategory === "12300" && styles.selectedCategoryButton,
                 ]}
                 onPress={() => {
-                  setSelectedCategory(category);
-                  filterByCategory(category);
+                  setSelectedCategory("12300");
+                  filterByCategory("12300");
                 }}
                 // onPress={onChangeHandlerForBtn}
               >
                 <Text
                   style={[
                     styles.categoryButtonText,
-                    selectedCategory === category &&
+                    selectedCategory === "12300" &&
                       styles.selectedcategoryButtonText,
                   ]}
                 >
-                  {category}
+                  All
                 </Text>
               </TouchableOpacity>
-            ))}
+              {!!giftCategories &&
+                giftCategories.map((category, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.categoryButton,
+                      selectedCategory === category?._id &&
+                        styles.selectedCategoryButton,
+                    ]}
+                    onPress={() => {
+                      setSelectedCategory(category?._id);
+                      filterByCategory(category?._id);
+                    }}
+                    // onPress={onChangeHandlerForBtn}
+                  >
+                    <Text
+                      style={[
+                        styles.categoryButtonText,
+                        selectedCategory === category &&
+                          styles.selectedcategoryButtonText,
+                      ]}
+                    >
+                      {category?.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+            </Fragment>
           </ScrollView>
           {/* <FlatList
             data={filterProducts.length ? filterProducts : apiResponse}
@@ -279,7 +320,7 @@ function RedeemProd({ navigation }) {
             showsVerticalScrollIndicator={false}
             numColumns={2}
           /> */}
-          {selectedCategory && selectedCategory !== "All" ? (
+          {selectedCategory && selectedCategory !== "12300" ? (
             <FlatList
               data={filterProductsBtn.length ? filterProductsBtn : []}
               renderItem={({ item }) => <ProductCard product={item} />}
@@ -289,7 +330,7 @@ function RedeemProd({ navigation }) {
               ListEmptyComponent={
                 <View style={{ alignSelf: "center" }}>
                   <Text style={{ fontSize: 18, color: "black" }}>
-                    No products available for the {selectedCategory} category
+                    No products available for the category
                   </Text>
                 </View>
               }

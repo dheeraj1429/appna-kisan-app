@@ -148,8 +148,8 @@ android {
         applicationId 'com.blackhatcode.in.ssa_app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 28
-        versionName "3.0.14"
+        versionCode 29
+        versionName "3.0.15"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         multiDexEnabled true
 
